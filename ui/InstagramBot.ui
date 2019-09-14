@@ -1,0 +1,2775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InstagramBot</class>
+ <widget class="QMainWindow" name="InstagramBot">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>840</width>
+    <height>583</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>840</width>
+    <height>583</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>840</width>
+    <height>583</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>InstagramBot  (ver - 1.0.1)</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons/InstagramBot.qrc">
+    <normaloff>:/Main Icon/InstagramBot.png</normaloff>:/Main Icon/InstagramBot.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QListWidget{
+background-color: #000;
+border: 2px solid #ccc;
+padding-top:2px;
+}
+QListWidget:focus { 
+outline: none; 
+}
+QListWidget:item{
+font-size: 40px;
+color:#fff;
+padding:10px;
+margin:2px 0px;
+background:indigo;
+border:1px solid #000;
+}
+QListWidget:item:hover{
+border:1px solid #fff;
+}
+QListWidget:item:enabled:selected {
+    background-color: #F56040;
+}
+
+QLabel#label_title3,QLabel#label_title6,QLabel#label_title4,QLabel#label_title1,QLabel#label_title2,QLabel#label_title7,QLabel#label_title8,QLabel#label_title5{
+color: #fff;
+font-family: Arial, Helvetica, sans-serif;
+font-size:16px;
+font-weight: bold;
+background-color:#C13584;
+padding:0px 24px 0px;
+margin:0px;
+border: 2px solid #ccc;
+border-radius:5px;
+}
+QLabel#label_16,QLabel#label_17{
+font-weight:bold;
+display:inline-block;
+background-color:#ccc;
+color:indigo;
+padding:5px;
+}
+#label_23{
+color:red;
+}
+QFrame#frame_5,QFrame#frame_6,QFrame#frame_8,QFrame#frame_10,QFrame#frame_11{
+border: 1px solid #ccc;
+}
+QPushButton{
+border: 1px solid #ccc;
+background-color:#5851DB;
+color:#fff;
+font-weight:normal;
+display:block;
+padding:4px;
+/*cursor: pointer;*/
+}
+QPushButton:hover{
+background-color:#100;
+}
+QPushButton:focus { 
+outline: none; 
+}
+QPushButton::!enabled{
+background-color:gray;
+}
+#label_36{
+color:green;
+}
+#label_13{
+color:green;
+}
+#frame_status{
+background-color:#fff;
+border:1px solid #111111;
+}
+#label_status{
+color:#228B22;
+}
+QFrame#frame_logo{
+	background-image: url(:/Logo/InstagramBot_logo.png);
+}
+QLabel#label_powered_by{
+color:;
+font-weight:bold;
+font-size:9px;
+}
+#statusbar{
+color:#000;
+font-weight:bold;
+font-size:9px;
+text-align: right;
+}</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>24</width>
+    <height>24</height>
+   </size>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QListWidget" name="listwidget">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>40</y>
+      <width>168</width>
+      <height>451</height>
+     </rect>
+    </property>
+    <property name="cursor" stdset="0">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="toolTip">
+     <string extracomment="Menus"/>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::SelectedClicked</set>
+    </property>
+    <property name="showDropIndicator" stdset="0">
+     <bool>false</bool>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::SingleSelection</enum>
+    </property>
+    <item>
+     <property name="text">
+      <string>Find Suitable Users</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Follow/Unfollow</string>
+     </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
+     </property>
+     <property name="flags">
+      <set>ItemIsSelectable|ItemIsEnabled</set>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Find Following &amp; Followers</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Find Suitable Posts</string>
+     </property>
+     <property name="flags">
+      <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable</set>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Like/Unlike</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+       <kerning>false</kerning>
+      </font>
+     </property>
+     <property name="flags">
+      <set>ItemIsSelectable</set>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Comment</string>
+     </property>
+     <property name="flags">
+      <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable</set>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Download Posts</string>
+     </property>
+     <property name="flags">
+      <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable</set>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Post/Repost Images</string>
+     </property>
+     <property name="flags">
+      <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable</set>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Accounts Settings</string>
+     </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
+     </property>
+     <property name="flags">
+      <set>ItemIsSelectable|ItemIsEnabled</set>
+     </property>
+    </item>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>171</x>
+      <y>-21</y>
+      <width>661</width>
+      <height>491</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string/>
+     </attribute>
+     <widget class="Line" name="line_4">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>70</y>
+        <width>671</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_title3">
+      <property name="geometry">
+       <rect>
+        <x>1</x>
+        <y>4</y>
+        <width>651</width>
+        <height>69</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Find suitable IG users to follow for more followback</string>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>80</y>
+        <width>318</width>
+        <height>391</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Search Type :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="combo_find_users">
+         <item>
+          <property name="text">
+           <string>Explore</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Comments List from a User post feed</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Likes List from a User post feed</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Comments List from a Hashtag</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Likes List from a Hashtag</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="line_find_users">
+         <property name="placeholderText">
+          <string>username or hashtag</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>** All fetched usernames would be stored under myList Folder</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Minimum number of followers that user have -</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="min_followers">
+         <property name="maximum">
+          <number>1000000000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="value">
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>Maximum number of followers that user have -</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="max_followers">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>1000000000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="value">
+          <number>1000</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Minimum Ratio of Following &amp; Followers  :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="follow_ratio">
+         <property name="singleStep">
+          <double>0.050000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Exclude User Type :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="check_is_private">
+         <property name="text">
+          <string>private</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="check_is_verified">
+         <property name="text">
+          <string>verified</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="check_is_celebrity">
+         <property name="text">
+          <string>celebrity</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="button_find_users_task">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Add Job to the Queue</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+      <zorder>combo_find_users</zorder>
+      <zorder>label</zorder>
+      <zorder>label_11</zorder>
+      <zorder>button_find_users_task</zorder>
+      <zorder>check_is_celebrity</zorder>
+      <zorder>label_12</zorder>
+      <zorder>line_find_users</zorder>
+      <zorder>check_is_private</zorder>
+      <zorder>check_is_verified</zorder>
+      <zorder>label_13</zorder>
+      <zorder>min_followers</zorder>
+      <zorder>max_followers</zorder>
+      <zorder>label_14</zorder>
+      <zorder>label_15</zorder>
+      <zorder>follow_ratio</zorder>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_1">
+     <attribute name="title">
+      <string/>
+     </attribute>
+     <widget class="Line" name="line_6">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>70</y>
+        <width>661</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_title1">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>4</y>
+        <width>321</width>
+        <height>69</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Follow Instagram Users</string>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>311</width>
+        <height>371</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QComboBox" name="combo_follow_users">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>39</y>
+         <width>291</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Follow users from my List</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Auto Followback my followers</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="button_follow_task">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>330</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Add Job to the Queue</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="path_follow_users">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>67</y>
+         <width>211</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="placeholderText">
+        <string>Text(.txt) file location</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_16">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Auto Follow Type :</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="button_follow_users">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>65</y>
+         <width>71</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Browse File</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="daily_follow_limit">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>98</y>
+         <width>71</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>10000</number>
+       </property>
+       <property name="value">
+        <number>50</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_30">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Daily Follow Limit :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_31">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>132</y>
+         <width>261</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Minute gap between consecutive follows               to</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="min_follow_interval">
+       <property name="geometry">
+        <rect>
+         <x>208</x>
+         <y>130</y>
+         <width>40</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>1440</number>
+       </property>
+       <property name="value">
+        <number>15</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="max_follow_interval">
+       <property name="geometry">
+        <rect>
+         <x>261</x>
+         <y>130</y>
+         <width>40</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>1440</number>
+       </property>
+       <property name="value">
+        <number>30</number>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_6">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>90</y>
+        <width>311</width>
+        <height>371</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QComboBox" name="combo_unfollow_users">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>39</y>
+         <width>291</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Unfollow users form my List</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Auto Unfollow users those did not followback</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unfollow all</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="button_unfollow_task">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>330</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Add Job to the Queue</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="path_unfollow_users">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>67</y>
+         <width>211</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="placeholderText">
+        <string>Text(.txt) file location</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_17">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Auto Unfollow Type :</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="button_unfollow_users">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>65</y>
+         <width>71</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Browse File</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="check_unfollow_users">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>160</y>
+         <width>291</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>unfollow iff the user did not followback within           days</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="followback_day_limit">
+       <property name="geometry">
+        <rect>
+         <x>245</x>
+         <y>160</y>
+         <width>31</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>30</number>
+       </property>
+       <property name="value">
+        <number>2</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_38">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>132</y>
+         <width>261</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Minute gap between consecutive unfollows              to</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="max_unfollow_interval">
+       <property name="geometry">
+        <rect>
+         <x>268</x>
+         <y>130</y>
+         <width>40</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>1440</number>
+       </property>
+       <property name="value">
+        <number>30</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_39">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Daily Unfollow Limit :</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="daily_unfollow_limit">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>98</y>
+         <width>71</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>10000</number>
+       </property>
+       <property name="value">
+        <number>50</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="min_unfollow_interval">
+       <property name="geometry">
+        <rect>
+         <x>216</x>
+         <y>130</y>
+         <width>40</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>1440</number>
+       </property>
+       <property name="value">
+        <number>15</number>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="check_is_celebrity_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>261</y>
+         <width>298</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>celebrity</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="check_is_verified_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>238</y>
+         <width>298</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>verified</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_exclude">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>190</y>
+         <width>298</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Exclude User Type :</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="check_is_private_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>215</y>
+         <width>298</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>private</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="label_title2">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>4</y>
+        <width>321</width>
+        <height>69</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Unfollow Instagram Users</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>325</x>
+        <y>3</y>
+        <width>3</width>
+        <height>70</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string/>
+     </attribute>
+     <widget class="QLabel" name="label_title4">
+      <property name="geometry">
+       <rect>
+        <x>1</x>
+        <y>4</y>
+        <width>651</width>
+        <height>69</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Find Following and Followers by Instagram &quot;Username&quot;</string>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>80</y>
+        <width>351</width>
+        <height>381</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Find Type :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="combo_find_following_followers">
+         <item>
+          <property name="text">
+           <string>Followers</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Following</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Following+Followers</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Followback</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Fan</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="line_find_following_followers">
+         <property name="placeholderText">
+          <string>Add usernames (separated by comas)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>OR</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Add Profile URLs (separated by new lines)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="textEdit_find_following_followers"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>OR</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="path_find_following_followers">
+         <property name="placeholderText">
+          <string>Text/CSV file location (which has username's)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_36">
+         <property name="text">
+          <string>Content of the file could be separated by , or ; or SPACE or NewLine</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="browse_find_following_followers">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Browse File</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="button_find_following_followers_task">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Add Job to the Queue</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="Line" name="line_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>70</y>
+        <width>671</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_8">
+     <attribute name="title">
+      <string/>
+     </attribute>
+     <widget class="QFrame" name="frame_13">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>80</y>
+        <width>318</width>
+        <height>381</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_27">
+         <property name="text">
+          <string>Search Type :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="combo_find_posts">
+         <item>
+          <property name="text">
+           <string>Explore</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Username</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Hashtag</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="line_find_posts">
+         <property name="placeholderText">
+          <string>username or hashtag</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_40">
+         <property name="text">
+          <string>** All fetched posts url would be stored under myList Folder</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_41">
+         <property name="text">
+          <string>Minimum number of likes that post have -</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="min_likes">
+         <property name="maximum">
+          <number>1000000000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="value">
+          <number>50</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_42">
+         <property name="text">
+          <string>Maximum number of likes that post have -</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="max_likes">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>1000000000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="value">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Minimum number of comment that post have -</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="min_comment">
+         <property name="maximum">
+          <number>1000000000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="value">
+          <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_43">
+         <property name="text">
+          <string>Maximum number of comment that post have -</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="max_comment">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>1000000000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="value">
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_44">
+         <property name="text">
+          <string>Max Post Age (in Days) :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="find_posts_age">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>365</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="button_find_posts_task">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Add Job to the Queue</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QLabel" name="label_title5">
+      <property name="geometry">
+       <rect>
+        <x>1</x>
+        <y>4</y>
+        <width>651</width>
+        <height>69</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Find suitable IG posts to Like/Comment for more follower</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line_8">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>70</y>
+        <width>671</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string/>
+     </attribute>
+     <widget class="QFrame" name="frame_10">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>311</width>
+        <height>361</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QComboBox" name="combo_like_posts">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>39</y>
+         <width>291</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Like Posts from my List</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Like Posts from Explore</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Like Posts from Hashtags</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Like Posts from Users post feed</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="pushButton_17">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>330</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Add Job to the Queue</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="path_like_posts">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>67</y>
+         <width>211</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="placeholderText">
+        <string>Text(.txt) file location</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_24">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Auto Like Type :</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="button_like_posts">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>65</y>
+         <width>71</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Browse File</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="check_like_posts">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>161</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Like only non followers posts</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radio_like_posts1">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>125</y>
+         <width>82</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Like all posts</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radio_like_posts2">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>125</y>
+         <width>111</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Like random posts</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="Line" name="line_5">
+      <property name="geometry">
+       <rect>
+        <x>325</x>
+        <y>3</y>
+        <width>3</width>
+        <height>70</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_title6">
+      <property name="geometry">
+       <rect>
+        <x>1</x>
+        <y>4</y>
+        <width>321</width>
+        <height>69</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Like Instagram Posts</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_title7">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>4</y>
+        <width>321</width>
+        <height>69</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Unlike Instagram Posts</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line_7">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>70</y>
+        <width>661</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_11">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>90</y>
+        <width>311</width>
+        <height>361</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QComboBox" name="combo_unlike_posts">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>39</y>
+         <width>291</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Unlike posts form my List</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unlike my recent likes</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unlike all posts</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="pushButton_19">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>330</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Add Job to the Queue</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="path_unlike_posts">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>67</y>
+         <width>211</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="placeholderText">
+        <string>Text(.txt) file location</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_29">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Auto Unlike Type :</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="button_unlike_posts">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>65</y>
+         <width>71</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Browse File</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_7">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>291</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>unlike iff the user did not followback within               days</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBox_6">
+       <property name="geometry">
+        <rect>
+         <x>243</x>
+         <y>100</y>
+         <width>31</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>7</number>
+       </property>
+       <property name="value">
+        <number>2</number>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_9">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>125</y>
+         <width>161</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Unlike only non followers posts</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_34">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>182</y>
+         <width>261</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Minute gap  between consecutive unlikes              to</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBox_13">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>150</y>
+         <width>71</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>10000</number>
+       </property>
+       <property name="value">
+        <number>50</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_35">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>152</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Daily Unlike Limit :</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBox_14">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>180</y>
+         <width>40</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>1440</number>
+       </property>
+       <property name="value">
+        <number>30</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBox_15">
+       <property name="geometry">
+        <rect>
+         <x>207</x>
+         <y>180</y>
+         <width>40</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>1440</number>
+       </property>
+       <property name="value">
+        <number>15</number>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="label_32">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>272</y>
+        <width>261</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Minute gap  between consecutive likes                 to</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBox_10">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>270</y>
+        <width>40</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>1440</number>
+      </property>
+      <property name="value">
+       <number>30</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_33">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>240</y>
+        <width>91</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Daily Like Limit :</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBox_11">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>238</y>
+        <width>71</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>10000</number>
+      </property>
+      <property name="value">
+       <number>50</number>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBox_12">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>270</y>
+        <width>40</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>1440</number>
+      </property>
+      <property name="value">
+       <number>15</number>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string/>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string/>
+     </attribute>
+     <widget class="QLabel" name="label_title8">
+      <property name="geometry">
+       <rect>
+        <x>1</x>
+        <y>4</y>
+        <width>651</width>
+        <height>69</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Download Images,Videos,Statistics of Posts by IG &quot;Username&quot; or &quot;Hashtag&quot;</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line_3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>70</y>
+        <width>661</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_4">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>80</y>
+        <width>351</width>
+        <height>381</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Target Type :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_3">
+         <item>
+          <property name="text">
+           <string>Username</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Hashtag</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_4">
+         <property name="placeholderText">
+          <string>Add target</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_12">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_37">
+            <property name="text">
+             <string>Post Type :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_7">
+            <property name="text">
+             <string>Image</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_8">
+            <property name="text">
+             <string>Video</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_9">
+            <property name="text">
+             <string>Slider</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_10">
+            <property name="text">
+             <string>All</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_3">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Post Age :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton">
+            <property name="text">
+             <string> Todays</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_2">
+            <property name="text">
+             <string>Last Week</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_4">
+            <property name="text">
+             <string>Last Month</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_3">
+            <property name="text">
+             <string>All</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_5">
+         <property name="placeholderText">
+          <string>Excel file location</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_4">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Add Job to the Queue</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_6">
+     <attribute name="title">
+      <string/>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_7">
+     <attribute name="title">
+      <string/>
+     </attribute>
+     <widget class="QFrame" name="frame_7">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>651</width>
+        <height>461</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QFrame" name="frame_9">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>10</y>
+         <width>651</width>
+         <height>451</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QTableWidget" name="logintable">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>30</y>
+          <width>381</width>
+          <height>361</height>
+         </rect>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <row>
+         <property name="text">
+          <string>New Row</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item row="0" column="1">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+       </widget>
+       <widget class="QFrame" name="frame_8">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>221</width>
+          <height>181</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLineEdit" name="line_username">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>12</y>
+           <width>201</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Instagram Username</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="line_password">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>42</y>
+           <width>201</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+         <property name="placeholderText">
+          <string>Instagram Password</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="line_proxy_ip">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>131</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Proxy IP</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="add">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>146</y>
+           <width>71</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Add Account</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_25">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>70</y>
+           <width>141</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Proxy Settings (Optional)</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="line_proxy_port">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>90</y>
+           <width>61</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Proxy Port</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="line_proxy_user">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>116</y>
+           <width>100</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Proxy User ID</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="line_proxy_password">
+         <property name="geometry">
+          <rect>
+           <x>112</x>
+           <y>116</y>
+           <width>100</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Proxy Password</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_collon">
+         <property name="geometry">
+          <rect>
+           <x>144</x>
+           <y>92</y>
+           <width>16</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>:</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QPushButton" name="remove">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>418</y>
+          <width>151</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Remove selected Accounts</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_20">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>10</y>
+          <width>161</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Instagram Account information :</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_21">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>71</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Instagram.com</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_22">
+        <property name="geometry">
+         <rect>
+          <x>275</x>
+          <y>398</y>
+          <width>251</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>This Version of the app does not support multi users</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_23">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>398</y>
+          <width>46</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>**</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_logo">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>172</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_powered_by">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>467</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>[ Powered by MediaBOTS ]</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_status">
+    <property name="geometry">
+     <rect>
+      <x>172</x>
+      <y>470</y>
+      <width>659</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_status">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>2</y>
+       <width>651</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Status : </string>
+     </property>
+    </widget>
+   </widget>
+   <zorder>listwidget</zorder>
+   <zorder>tabWidget</zorder>
+   <zorder>frame_logo</zorder>
+   <zorder>label_powered_by</zorder>
+   <zorder>frame_status</zorder>
+   <zorder>progress_bar</zorder>
+  </widget>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="sizeGripEnabled">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>840</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About Us</string>
+    </property>
+    <addaction name="actionEmail_Us"/>
+    <addaction name="separator"/>
+    <addaction name="actionMediaBOTS"/>
+   </widget>
+   <widget class="QMenu" name="menuHome">
+    <property name="title">
+     <string>Home Page</string>
+    </property>
+    <addaction name="actionGithub_Project_URL"/>
+    <addaction name="actionDoccumentation_Video"/>
+    <addaction name="action_Tutorial_How_to_built"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionOpen_an_Issue"/>
+   </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen_User_Folder"/>
+    <addaction name="actionQueue"/>
+    <addaction name="actionInsights"/>
+    <addaction name="actionView_Statistic_Report_of_other_users_posts"/>
+    <addaction name="actionLogs"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuDonate">
+    <property name="title">
+     <string>Donate</string>
+    </property>
+    <addaction name="actionBTC_Donation"/>
+    <addaction name="actionPatreon_Donation"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuHome"/>
+   <addaction name="menuHelp"/>
+   <addaction name="menuAbout"/>
+   <addaction name="menuDonate"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <property name="floatable">
+    <bool>true</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionOpen_User_Folder"/>
+   <addaction name="actionLogs"/>
+   <addaction name="actionQueue"/>
+   <addaction name="actionInsights"/>
+   <addaction name="actionView_Statistic_Report_of_other_users_posts"/>
+   <addaction name="actionGithub_Project_URL"/>
+   <addaction name="actionEmail_Us"/>
+  </widget>
+  <action name="actionEmail_Us">
+   <property name="icon">
+    <iconset resource="icons/InstagramBot.qrc">
+     <normaloff>:/Others/email_trans.png</normaloff>:/Others/email_trans.png</iconset>
+   </property>
+   <property name="text">
+    <string>Email Us</string>
+   </property>
+  </action>
+  <action name="actionMediaBOTS">
+   <property name="icon">
+    <iconset resource="icons/InstagramBot.qrc">
+     <normaloff>:/Others/mb_trans.png</normaloff>:/Others/mb_trans.png</iconset>
+   </property>
+   <property name="text">
+    <string>MediaBOTS</string>
+   </property>
+  </action>
+  <action name="actionOpen_an_Issue">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/InstagramBot.qrc">
+     <normaloff>:/Others/issue_trans.png</normaloff>:/Others/issue_trans.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open an Issue</string>
+   </property>
+  </action>
+  <action name="actionGithub_Project_URL">
+   <property name="icon">
+    <iconset resource="icons/InstagramBot.qrc">
+     <normaloff>:/Others/github_trans.png</normaloff>:/Others/github_trans.png</iconset>
+   </property>
+   <property name="text">
+    <string>Source Code</string>
+   </property>
+   <property name="iconText">
+    <string>Github Project URL</string>
+   </property>
+  </action>
+  <action name="actionDoccumentation_Video">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Documentation Video</string>
+   </property>
+  </action>
+  <action name="action_Tutorial_How_to_built">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>[Tutorial] How to build this App</string>
+   </property>
+  </action>
+  <action name="actionQueue">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/InstagramBot.qrc">
+     <normaloff>:/Others/queue_trans.png</normaloff>:/Others/queue_trans.png</iconset>
+   </property>
+   <property name="text">
+    <string>Job Queue</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="icons/InstagramBot.qrc">
+     <normaloff>:/Others/exit_trans.png</normaloff>:/Others/exit_trans.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionOpen_User_Folder">
+   <property name="icon">
+    <iconset resource="icons/InstagramBot.qrc">
+     <normaloff>:/Others/app_trans.png</normaloff>:/Others/app_trans.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open App Folder</string>
+   </property>
+  </action>
+  <action name="actionInsights">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/InstagramBot.qrc">
+     <normaloff>:/Others/insights_trans.png</normaloff>:/Others/insights_trans.png</iconset>
+   </property>
+   <property name="text">
+    <string>Insights (Progress report of My account)</string>
+   </property>
+   <property name="iconText">
+    <string>Insights</string>
+   </property>
+  </action>
+  <action name="actionView_Statistic_Report_of_other_users_posts">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/InstagramBot.qrc">
+     <normaloff>:/Others/stat_trans.png</normaloff>:/Others/stat_trans.png</iconset>
+   </property>
+   <property name="text">
+    <string>View Statistic Report of other users Posts</string>
+   </property>
+   <property name="iconText">
+    <string>Statistic Report of others</string>
+   </property>
+  </action>
+  <action name="actionBTC_Donation">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/InstagramBot.qrc">
+     <normaloff>:/Others/btc_trans.png</normaloff>:/Others/btc_trans.png</iconset>
+   </property>
+   <property name="text">
+    <string>BTC Donation</string>
+   </property>
+  </action>
+  <action name="actionPatreon_Donation">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Patreon Donation</string>
+   </property>
+  </action>
+  <action name="actionLogs">
+   <property name="icon">
+    <iconset resource="icons/InstagramBot.qrc">
+     <normaloff>:/Others/logs_trans.png</normaloff>:/Others/logs_trans.png</iconset>
+   </property>
+   <property name="text">
+    <string>Logs</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>listwidget</tabstop>
+  <tabstop>combo_find_users</tabstop>
+  <tabstop>line_find_users</tabstop>
+  <tabstop>min_followers</tabstop>
+  <tabstop>max_followers</tabstop>
+  <tabstop>follow_ratio</tabstop>
+  <tabstop>check_is_private</tabstop>
+  <tabstop>check_is_verified</tabstop>
+  <tabstop>check_is_celebrity</tabstop>
+  <tabstop>button_find_users_task</tabstop>
+  <tabstop>comboBox_3</tabstop>
+  <tabstop>spinBox_15</tabstop>
+  <tabstop>checkBox_7</tabstop>
+  <tabstop>radioButton_7</tabstop>
+  <tabstop>radioButton_8</tabstop>
+  <tabstop>radioButton_9</tabstop>
+  <tabstop>radioButton_10</tabstop>
+  <tabstop>radioButton_2</tabstop>
+  <tabstop>line_proxy_ip</tabstop>
+  <tabstop>radioButton_4</tabstop>
+  <tabstop>radioButton_3</tabstop>
+  <tabstop>line_username</tabstop>
+  <tabstop>line_password</tabstop>
+  <tabstop>logintable</tabstop>
+  <tabstop>lineEdit_5</tabstop>
+  <tabstop>pushButton_4</tabstop>
+  <tabstop>combo_find_following_followers</tabstop>
+  <tabstop>line_find_following_followers</tabstop>
+  <tabstop>textEdit_find_following_followers</tabstop>
+  <tabstop>path_find_following_followers</tabstop>
+  <tabstop>browse_find_following_followers</tabstop>
+  <tabstop>button_find_following_followers_task</tabstop>
+  <tabstop>combo_find_posts</tabstop>
+  <tabstop>line_find_posts</tabstop>
+  <tabstop>min_likes</tabstop>
+  <tabstop>max_likes</tabstop>
+  <tabstop>min_comment</tabstop>
+  <tabstop>max_comment</tabstop>
+  <tabstop>find_posts_age</tabstop>
+  <tabstop>button_find_posts_task</tabstop>
+  <tabstop>combo_like_posts</tabstop>
+  <tabstop>pushButton_17</tabstop>
+  <tabstop>path_like_posts</tabstop>
+  <tabstop>button_like_posts</tabstop>
+  <tabstop>check_like_posts</tabstop>
+  <tabstop>radio_like_posts1</tabstop>
+  <tabstop>radio_like_posts2</tabstop>
+  <tabstop>combo_unlike_posts</tabstop>
+  <tabstop>pushButton_19</tabstop>
+  <tabstop>path_unlike_posts</tabstop>
+  <tabstop>button_unlike_posts</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>spinBox_6</tabstop>
+  <tabstop>checkBox_9</tabstop>
+  <tabstop>spinBox_13</tabstop>
+  <tabstop>spinBox_14</tabstop>
+  <tabstop>spinBox_10</tabstop>
+  <tabstop>spinBox_11</tabstop>
+  <tabstop>spinBox_12</tabstop>
+  <tabstop>radioButton</tabstop>
+  <tabstop>lineEdit_4</tabstop>
+  <tabstop>combo_follow_users</tabstop>
+  <tabstop>path_follow_users</tabstop>
+  <tabstop>button_follow_users</tabstop>
+  <tabstop>daily_follow_limit</tabstop>
+  <tabstop>min_follow_interval</tabstop>
+  <tabstop>max_follow_interval</tabstop>
+  <tabstop>button_follow_task</tabstop>
+  <tabstop>combo_unfollow_users</tabstop>
+  <tabstop>path_unfollow_users</tabstop>
+  <tabstop>button_unfollow_users</tabstop>
+  <tabstop>daily_unfollow_limit</tabstop>
+  <tabstop>min_unfollow_interval</tabstop>
+  <tabstop>max_unfollow_interval</tabstop>
+  <tabstop>check_unfollow_users</tabstop>
+  <tabstop>followback_day_limit</tabstop>
+  <tabstop>button_unfollow_task</tabstop>
+  <tabstop>add</tabstop>
+  <tabstop>line_proxy_port</tabstop>
+  <tabstop>line_proxy_user</tabstop>
+  <tabstop>line_proxy_password</tabstop>
+  <tabstop>remove</tabstop>
+ </tabstops>
+ <resources>
+  <include location="icons/InstagramBot.qrc"/>
+ </resources>
+ <connections/>
+</ui>

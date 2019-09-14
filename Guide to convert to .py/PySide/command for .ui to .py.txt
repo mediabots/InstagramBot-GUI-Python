@@ -1,2 +1,2 @@
 cd c:\python34
-pyside-uic.exe .\ui\InstagramBot.ui -o InstagramBot_ui.py
+.\scripts\pyside-uic.exe .\ui\InstagramBot.ui -o InstagramBot_ui.py

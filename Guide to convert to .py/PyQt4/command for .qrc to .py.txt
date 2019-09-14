@@ -1,2 +1,2 @@
 cd c:\python34 
-.\lib\site-packages\pyqt4\pyrcc4.exe .\icons\InstagramBot.qrc -o InstagramBot_rc.py -py3
+.\lib\site-packages\pyqt4\pyrcc4.exe .\ui\icons\InstagramBot.qrc -o InstagramBot_rc.py -py3

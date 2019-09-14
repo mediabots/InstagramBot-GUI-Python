@@ -1,3 +1,2 @@
+requests
 PyInstaller==3.5
-PySide==1.2.4
-requests==2.22.0

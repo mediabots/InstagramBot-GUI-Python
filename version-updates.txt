@@ -1,8 +1,13 @@
-MediaBOTS.net - version 1.0.1 - Initial
+MediaBOTS.net - version 1.0.1 - Initial(15 Aug 2019)
+comes with following features-
 I) Find suitable Users to Follow
 II) Find suitable Users to Follow
 III) Find a list of Following & Followers, as well as Followback & Fans of a specific Instagram username.
 IV) Add your Instagram login information with Proxy
 V) Full Detailed Logs File for everyday
 
+--------------------
+MediaBOTS.net - version 1.0.2 - 2nd(16 Aug 2019)
+added following features-
+I) added something else
 --------------------

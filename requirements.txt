@@ -1,2 +1,4 @@
+pip==19.2.3
 requests
+https://download.lfd.uci.edu/pythonlibs/g5apjq5m/PySide-1.2.4-cp35-cp35m-win_amd64.whl
 PyInstaller==3.5

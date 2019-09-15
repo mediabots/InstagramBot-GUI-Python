@@ -1,0 +1,8 @@
+MediaBOTS.net - version 1.0.1 - Initial
+I) Find suitable Users to Follow
+II) Find suitable Users to Follow
+III) Find a list of Following & Followers, as well as Followback & Fans of a specific Instagram username.
+IV) Add your Instagram login information with Proxy
+V) Full Detailed Logs File for everyday
+
+--------------------

@@ -1,5 +1,6 @@
-# InstagramBot-GUI-in-Python
+# InstagramBot-GUI-Python
 Instagram Bot with Graphical user Interface &amp; Multi tasking; fully written in Python
+GUI developed with the help of Python module: PySide/PyQt
 
 
 ## Python Version Support:-

@@ -6,6 +6,8 @@ GUI developed with the help of Python module: PySide/PyQt
 
 ## Python Version Support:-
 
+### Python 3
+
 **Python 3.4.0**
 
 For 32bit:
@@ -28,8 +30,26 @@ For 64bit:
 
 PySide via .whl Or PyQt4 by .exe 
 
+### Python 2
+
 **Python 2.7.8**
+
+At first Download get-pip.py from and move get-pip.py fiel to your c:\Python27 directory
+and then run coammnd:
+
+python get-pip.py
+
+it will install pip 
 
 For 32bit:
 
-| 32bit,64bit | PySide via pip, PyQt by .exe ; PySide via pip(but giving dll missing error,but suprisingly it still working. May be vc_redist.x64.exe installatio has some effct on it), PyQt4 by .exe**
+PySide via pip Or PyQt by .exe
+
+For 64bit:
+
+PySide via pip (though it is giving dll missing error, but suprisingly it is still working) Or PyQt4 by .exe
+
+## Other Dependent Python modules:-
+
+requests
+

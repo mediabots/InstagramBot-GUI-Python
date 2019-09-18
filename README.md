@@ -34,8 +34,7 @@ PySide via .whl Or PyQt4 by .exe
 
 **Python 2.7.8**
 
-At first Download get-pip.py from and move get-pip.py fiel to your c:\Python27 directory
-and then run coammnd:
+At first Download and save get-pip.py from https://bootstrap.pypa.io/get-pip.py and move get-pip.py file into your c:\Python27 directory and then run below coammnd:
 
 python get-pip.py
 

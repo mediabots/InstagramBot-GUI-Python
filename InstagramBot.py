@@ -555,8 +555,6 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		self.thread_check_update.signalCheckUpdate.connect(self.check_app_update)
 		
 		# Gui Thread
-		#self.gui_thread_1 = MyGuiThreadOne('gui branch-thread 1') 
-		#self.gui_thread_1.start()
 		self.gui_thread_2 = MyGuiThreadTwo('gui branch-thread 2') 
 		self.gui_thread_2.start()
 		
@@ -1038,7 +1036,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			if followback:
 				# overwrite usernames_to_follow_or_unfollow
 				usernames_to_follow_or_unfollow = my_followers
-			write_me_log(usernames_to_follow_or_unfollow)
+			#write_me_log(usernames_to_follow_or_unfollow) # for Debug purpose
 			for username_to_follow_or_unfollow in usernames_to_follow_or_unfollow:
 				if (follow and username_to_follow_or_unfollow not in my_following and username_to_follow_or_unfollow not in bad_usernames and \
 				username_to_follow_or_unfollow+",\n" not in unfollow_file_content) or (not follow and username_to_follow_or_unfollow in my_following and \
@@ -1967,34 +1965,3 @@ if __name__=='__main__':
 	splash.finish(dialog)
 	
 	sys.exit(app.exec_())
-
-########### D E B U G ################
-
-#login
-#non_gui_main_thread = InstagramBot()
-#if not non_gui_main_thread.successful_login:
-#	non_gui_main_thread.login()
-
-'''
->>> from PySide.QtCore import *
->>> import sys
->>> from PySide.QtGui import *
->>> mw=QMainWindow()
->>> cw=QWidget(mw)
->>> listwidget = QListWidget(cw)
->>> item = QListWidgetItem(listwidget)
->>> item.setSelected(True)
->>> tabWidget = QTabWidget(cw)
->>> tab = QWidget()
->>> tabWidget.addTab(tab, "")
-0
->>> tab_2 = QWidget()
->>> tabWidget.addTab(tab_2,"")
-1
->>> item.isSelected()
-True
-tabWidget.currentIndex()
-1
->>> tabWidget.currentChanged
-<PySide.QtCore.SignalInstance object at 0x0341AF50>
-'''

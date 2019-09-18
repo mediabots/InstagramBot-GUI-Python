@@ -6,7 +6,3 @@ III) Find a list of Following & Followers, as well as Followback & Fans of a spe
 IV) Add your Instagram login information with Proxy
 V) Full Detailed Logs File for everyday
 --------------------
-MediaBOTS.net - version 1.0.2 - 2nd(16 Aug 2019)
-added following features-
-I) added something else
---------------------

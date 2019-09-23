@@ -18,9 +18,9 @@ Dependent Python modules:
 License:
 	CC/Open-source/Free
 Version:
-	1.0.1
+	1.0.2
 Release Date:
-	18-Aug-2019
+	23-Aug-2019
 '''	
 
 ########### Python Modules/Packages
@@ -44,9 +44,9 @@ import requests
 import pickle
 import random
 try:
-	from urllib.parse import unquote,quote
+	from urllib.parse import unquote,quote # For python 3
 except:
-	from urllib import unquote,quote
+	from urllib import unquote,quote # for Python 2
 import datetime
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -63,33 +63,43 @@ import InstagramBot_ui
 
 gui_queue = Queue()
 os_user_directory = os.path.expanduser("~")
-app_version = "1.0.1"
+app_version = "1.0.2"
+directory_chnaged = False
+documents = "Documents"
+
+# Only for Multiple account feature (beta version)
+if os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","multi_enabled.txt")):
+	os_user_directory = os.path.abspath(os.curdir)
+	directory_chnaged = True
+	documents = ""
 
 try:
-	if not os.path.exists(os.path.join(os_user_directory,"Documents","MediaBOTS")):
-		os.mkdir(os.path.join(os_user_directory,"Documents","MediaBOTS"))
-	if not os.path.exists(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT")):
-		os.mkdir(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT"))
-	if not os.path.exists(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","users")):
-		os.mkdir(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","users"))
-	if not os.path.exists(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","others")):
-		os.mkdir(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","others"))
-	if not os.path.exists(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","userid to username.txt")):
-		with open(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","userid to username.txt"),"w") as f:
+	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS")):
+		os.mkdir(os.path.join(os_user_directory,documents,"MediaBOTS"))
+	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT")):
+		os.mkdir(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT"))
+	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","users")):
+		os.mkdir(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","users"))
+	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","others")):
+		os.mkdir(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","others"))
+	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","hashes")):
+		os.mkdir(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","hashes"))
+	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","userid to username.txt")):
+		with open(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","userid to username.txt"),"w") as f:
 			f.write("")
-	if not os.path.exists(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","user does not exist.txt")):
-		with open(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","user does not exist.txt"),"w") as f:
+	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","user does not exist.txt")):
+		with open(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","user does not exist.txt"),"w") as f:
 			f.write("")
-	if not os.path.exists(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","Logs")):
-		os.mkdir(os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","Logs"))
-	log_path = os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","Logs",datetime.datetime.now().strftime("%d-%m-%Y")+".txt")
+	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","Logs")):
+		os.mkdir(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","Logs"))
+	log_path = os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","Logs",datetime.datetime.now().strftime("%d-%m-%Y")+".txt")
 except:
-	gui_queue.put("[Error] You don't have write permission under '{}' Folder!!\r\nExiting......".format(os.path.join(os_user_directory,"Documents")))
+	gui_queue.put("[Error] You don't have write permission under '{}' Folder!!\r\nExiting......".format(os.path.join(os_user_directory,documents)))
 	time.sleep(30)
 	sys.exit()
 
 #initializing global variables
-path_app_directory = os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT")
+path_app_directory = os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT")
 
 id_to_user = dict()
 user_to_id =  dict()
@@ -194,22 +204,22 @@ def get_username_by_user_id_via_api(self,user_id,login=True): #
 					write_me_log("{} ,redirecting to login page".format(len(resp.content)))
 					return (user_name,ret)
 				elif not resp.content or resp.text == '{}': # if resp is Blank/None 
-					write_me_log("[Error] User details not Found!")
+					write_me_log("[Err] User details not Found!")
 					return (user_name,ret)
 				else:
 					user = resp.json()["user"] # this may lead an exception 
 					user_name = user["username"]
 					if login:
-						ret = (user["follower_count"],user["following_count"],user["is_private"],user["is_verified"],user["is_business"],user['full_name'])
+						ret = (user["follower_count"],user["following_count"],user["is_private"],user["is_verified"],user["is_business"],user['full_name'],user["media_count"])
 					id_to_user[user_id] = user_name #   stored in dictionary, in case it need to be fetched again
 					shared_resource_lock.acquire()
 					with open(os.path.join(path_app_directory,"userid to username.txt"),"a+") as f:
 						f.write("{}:{}\n".format(user_id,user_name))
 					shared_resource_lock.release()
 			elif resp.status_code == 404:
-				write_me_log("[Error] No User Found!")
+				write_me_log("[Err] No User Found!")
 			else:
-				write_me_log("[Error] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+				write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
 		else:
 			write_me_log("[Exception(Exception)] ")
 			app_exit()	
@@ -238,7 +248,7 @@ def get_username_by_user_id(self,user_id): # no login required  # better use get
 		if not excep:
 			if resp and resp.status_code == 200:
 				if (not resp.content or resp.text == '{}'):
-					write_me_log("[Error] User details not Found!")
+					write_me_log("[Err] User details not Found!")
 					return False
 				user_name = resp.json()["data"]["user"]["reel"]["owner"]["username"] # this may lead an exception 
 				id_to_user[user_id] = user_name #   stored in dictionary, in case it need to be fetched again
@@ -247,9 +257,9 @@ def get_username_by_user_id(self,user_id): # no login required  # better use get
 					f.write("{}:{}\n".format(user_id,user_name))
 				shared_resource_lock.release()
 			elif resp.status_code == 404:
-				write_me_log("[Error] No User Found!")
+				write_me_log("[Err] No User Found!")
 			else:
-				write_me_log("[Error] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+				write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
 		else:
 			write_me_log("[Exception(Exception-II)] ")
 			app_exit()
@@ -282,7 +292,7 @@ def get_user_id_by_username(self,user_name):  # no login required
 		if not excep:
 			if resp and resp.status_code == 200:
 				if (not resp.content or resp.text == '{}'):
-					write_me_log("[Error] User details not Found!")
+					write_me_log("[Err] User details not Found!")
 					return False
 				user = resp.json()["graphql"]["user"] # this may lead an exception 
 				user_id = user["id"] 
@@ -300,9 +310,9 @@ def get_user_id_by_username(self,user_name):  # no login required
 					f.write("{}:{}\n".format(user_id,user_name))
 				shared_resource_lock.release()
 			elif resp.status_code == 404:
-				write_me_log("[Error] No User Found!")
+				write_me_log("[Err] No User Found!")
 			else:
-				write_me_log("[Error] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+				write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
 		else:
 			write_me_log("[Exception(Exception-II)] ")
 			app_exit()
@@ -330,18 +340,18 @@ def get_user_details(self,user_name,login=False): # no login required
 		if not excep:
 			if resp and resp.status_code == 200:
 				if (not resp.content or resp.text == '{}'):
-					write_me_log("[Error] User details not Found!")
+					write_me_log("[Err] User details not Found!")
 					return False
 				data = resp.json() # resp.json() may return {} or something else # this may also lead an exception 
 				user = data["graphql"]["user"]
 				if login:
 					return (user["followed_by_viewer"],user["follows_viewer"],user["requested_by_viewer"],user["id"])
 				else:
-					return (user["edge_followed_by"]["count"],user["edge_follow"]["count"],user["is_private"],user["is_verified"],user["is_business_account"],user['full_name'])
+					return (user["edge_followed_by"]["count"],user["edge_follow"]["count"],user["is_private"],user["is_verified"],user["is_business_account"],user['full_name'],user["edge_owner_to_timeline_media"]["count"])
 			elif resp.status_code == 404:
-				write_me_log("[Error] No User Found!!")
+				write_me_log("[Err] No User Found!!")
 			else:
-				write_me_log("[Error] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+				write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
 		else:
 			write_me_log("[Exception(Exception-II)] ")
 			app_exit()
@@ -435,7 +445,7 @@ def get_post_details(shortcode,about,type): # no login required
 						list_username += list(each["node"]["username"] for each in data["data"]["shortcode_media"][edge__by]["edges"])
 					page_num+=1
 				else:
-					write_me_log("[Error] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+					write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
 			else:
 				write_me_log("[Exception] Exception! <during : get_post_details()>")
 				app_exit()
@@ -554,6 +564,10 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		self.thread_check_update.start()
 		self.thread_check_update.signalCheckUpdate.connect(self.check_app_update)
 		
+		self.thread_check_status = ThreadCheckStatus()
+		self.thread_check_status.start()
+		self.thread_check_status.signalCheckStatus.connect(self.check_app_status)
+		
 		# Gui Thread
 		self.gui_thread_2 = MyGuiThreadTwo('gui branch-thread 2') 
 		self.gui_thread_2.start()
@@ -591,7 +605,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		self.tracker_path = ""
 		self.track_dict = {}
 		#
-		self.path_users_directory = os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","users") # get path of the users directory 
+		self.path_users_directory = os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","users") # get path of the users directory 
 		if os.listdir(self.path_users_directory):
 			user_folders = [file_ for file_ in os.listdir(self.path_users_directory) if os.path.isdir(os.path.join(self.path_users_directory,file_))]
 			##user_files = [file_ for file_ in os.listdir(self.path_users_directory) if os.path.isfile(os.path.join(self.path_users_directory,file_)) and file_.endswith(".txt")]
@@ -614,9 +628,12 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		
 		if self.username:
 			self.line_find_users.setText(self.username)
+			self.line_download_type.setText(self.username)
 		else:
 			self.line_find_users.setText("[At first, add an Instagram account]")
+			self.line_download_type.setText("[At first, add an Instagram account]")
 		self.line_find_users.setReadOnly(True)
+		self.line_download_type.setReadOnly(True)
 		
 		# Account Settings
 		self.logintable.setColumnCount(0)
@@ -647,6 +664,15 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			self.logintable.setItem(self.logintable.rowCount()-1, 2, QTableWidgetItem(self.proxy))
 		# 
 		self.logintable.itemChanged.connect(self.login_data_changed)
+		#
+		#Multi Account
+		self.button_enable_multi_account.clicked.connect(self.enable_multi_account)
+		self.label_enable_multi_users_2.hide()
+		if directory_chnaged:
+			self.label_enable_multi_users_1.hide()
+			self.label_enable_multi_users_2.show()
+			self.button_enable_multi_account.setEnabled(False)
+			self.button_enable_multi_account.setText("Multiple Account Support Enabled")
 		
 		# Find Following & Followers
 		self.browse_find_following_followers.clicked.connect(self.browse_following_followers)
@@ -679,6 +705,8 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		#
 		self.button_unfollow_task.clicked.connect(self.add_unfollow_task)
 		#
+		#Download Posts
+		self.button_download_post_task.clicked.connect(self.add_download_post_task)
 		##self.button_follow_users.clicked.connect(self.browse_follow_users) #disabled
 		##self.button_unfollow_users.clicked.connect(self.browse_unfollow_users) #disabled
 		#
@@ -705,6 +733,14 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		#
 		self.button_find_users_task.clicked.connect(self.add_find_users_task)
 		
+		# Download Posts
+		self.combo_download_type.currentIndexChanged.connect(self.select_download_type)
+		#
+		self.radio_download_type_all.setChecked(True)
+		self.radio_download_post_age_today.setChecked(True)
+		#
+		self.line_download_post_excel_location.setEnabled(False)
+		
 		#QActions
 		self.actionEmail_Us.triggered.connect(self.open_email)
 		self.actionOpen_User_Folder.triggered.connect(self.open_users_folder)
@@ -715,22 +751,24 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		self.actionLogs.triggered.connect(self.open_logs)
 		self.actionExit.triggered.connect(self.close) # self.close is a default function 
 	# Thread's
-	def update_label(self,value1 ,value2):
+	'''def update_label(self,value1 ,value2):
 		self.label.setText(value1)
-		##self.progress_bar.setValue(value2) # -> progress_bar need to be added by designer.exe before availabling this command 
+		##self.progress_bar.setValue(value2) # -> progress_bar need to be added by designer.exe before availabling this command '''
 	def check_app_update(self): 
-		#print("App Update choice")
+		write_me_log("App Update choice")
 		should_download = QMessageBox.question(self,"Application Update","A newer version of the InstagramBOT is available, would you like to Download the latest version?",
 											QMessageBox.Yes, QMessageBox.No)
 		if should_download == QMessageBox.Yes:
-			#print("Downloading...")  # For DEBUG only
+			write_me_log("Downloading...")  # For DEBUG only
 			url = QUrl('https://github.com/mediabots/InstagramBot-GUI-Python')
 			if not QDesktopServices.openUrl(url):
 				QMessageBox.warning(self, 'Application Update', 'Could not open url : https://github.com/mediabots/InstagramBot-GUI-Python')
 		else:
-			#print("Continuing with the old version of InstagramBOT")  # For DEBUG only
+			write_me_log("Continuing with the old version of InstagramBOT")  # For DEBUG only
 			pass
-	
+	def check_app_status(self,message): 
+		self.statusBar().showMessage(message)
+		##self.statusBar().setStyleSheet("color: brown");
 	# ------------ TOOLBAR ------------
 	def open_email(self):
 		url = QUrl('mailto:mediabots@mail.ru')
@@ -792,7 +830,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		)
 		if should_close == QMessageBox.Yes:
 			event.accept()
-			##os._exit(1)
+			os._exit(1)
 			##sys.exit()
 			##exit()
 		else:
@@ -974,7 +1012,8 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		if not os.path.exists(self.counter_path):
 			self.initialize_counter()
 		else:
-			self.read_counter()
+			if not self.count_dict:
+				self.read_counter()
 		# determining follow or unfollow
 		if follow:
 			text_file_path = self.path_follow_users.text()
@@ -1012,18 +1051,27 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				my_following_app = create_or_get_follow_text_file(os.path.join(self.path_users_directory,self.username,"myStatus"),["following_via_app.txt"],[[]])[0] # <Doc> pass [[]] to read(iff exists) or create a blank
 				usernames = []
 				followback_day_limit = int(self.followback_day_limit.text())
+				# loading todays paths & dicts for temporary
+				'''today_counter_path = self.counter_path
 				today_tracker_path = self.tracker_path
+				today_count_dict = self.count_dict
+				today_track_dict = self.track_dict'''
 				dates = [(datetime.datetime.utcnow() - datetime.timedelta(days=day)).strftime("%d-%m-%Y") for day in range(followback_day_limit)]
 				write_me_log(dates) # For Debug
-				for each_date in dates:
+				for idx,each_date in enumerate(dates):
 					if os.path.exists(os.path.join(self.path_users_directory,self.username,"etc","tracker",each_date+".txt")):
-						self.tracker_path = os.path.join(self.path_users_directory,self.username,"etc","tracker",each_date+".txt")
-						self.read_tracker()
-						shared_resource_lock.acquire()
-						usernames += self.track_dict["following"] # this would return "following" usernames of each_date from read_tracker
-						shared_resource_lock.release()
-				# restoring tracker_path to today
+						#self.counter_path = os.path.join(self.path_users_directory,self.username,"etc","counter",each_date+".txt")
+						tracker_path = os.path.join(self.path_users_directory,self.username,"etc","tracker",each_date+".txt")
+						##self.read_tracker() # avoid read_tracker tracker, since its not calling  read_counter() on its function body
+						track_dict = self.read_tracker(tracker_path) 
+						##shared_resource_lock.acquire()
+						usernames += track_dict["following"] # this would return "following" usernames of each_date from read_tracker
+						##shared_resource_lock.release()
+				# restoring paths & dicts to todays
+				'''self.counter_path = today_counter_path
 				self.tracker_path = today_tracker_path
+				self.count_dict = today_count_dict
+				self.track_dict = today_track_dict'''
 				# overwrite usernames_to_follow_or_unfollow list values
 				usernames_to_follow_or_unfollow = list(set(my_following_app) - set(my_followers) - set(usernames))
 				#write_me_log(usernames_to_follow_or_unfollow) # for Debug
@@ -1070,7 +1118,8 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 							write_me_log("{} already {}".format(username_to_follow_or_unfollow,counter_type))
 							# update following.txt file as well as update my_following variable
 							update_follow_text_file(os.path.join(self.path_users_directory,self.username,"myStatus"),["following.txt","followers+following.txt"],[my_following,0],username_to_follow_or_unfollow,append=follow) # <Doc> 3rd parameter is list ,and its sublist is also a list unless its correspondence .txt file has variable
-							self.update_counter(counter_type,username_to_follow_or_unfollow)
+							# should not update counter, because that user was not followed/unfollowed on that day.
+							##self.update_counter(counter_type,username_to_follow_or_unfollow) # <- BUG Spotted
 							write_me_log("wait")
 							time.sleep(random.randrange(5,10)) #wait # though default sleep/wait is present, but it might be continued,so sleep externally requires
 							write_me_log("continued") # for DEBUG
@@ -1119,7 +1168,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 										write_me_log("Sleeping for {} mins".format(sleep))# for DEBUG
 										time.sleep(sleep*60)
 								else:
-									write_me_log("[Error] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+									write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
 							else:
 								write_me_log("[Exception] Exception! <during : follow_unfollow_list()>")
 								app_exit()
@@ -1131,8 +1180,13 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			time.sleep(60)				
 			if followback or self.check_unfollow_users.isChecked(): # if only need to followback or unfollow_if, while loop should stop after 1st iteration
 				break
+	#dialog.counter_path = os.path.join(dialog.path_users_directory,dialog.username,"etc","counter",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt") #or use today() instead of utcnow()
+	#dialog.tracker_path = os.path.join(dialog.path_users_directory,dialog.username,"etc","tracker",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt") #or use today() instead of utcnow()	
+			
 	def initialize_counter(self):
 		shared_resource_lock.acquire()
+		self.counter_path = os.path.join(self.path_users_directory,dialog.username,"etc","counter",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt")
+		self.tracker_path = os.path.join(self.path_users_directory,dialog.username,"etc","tracker",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt")
 		with open(self.counter_path,"w+") as f:
 			f.write("following:0,unfollowing:0,like:0,unlike:0")
 		self.count_dict = {"following":0,"unfollowing":0,"like":0,"unlike":0}
@@ -1145,27 +1199,38 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		self.track_dict = {"following":[],"unfollowing":[],"like":[],"unlike":[]}
 		shared_resource_lock.release()
 	def read_counter(self):
+		counter_path = os.path.join(self.path_users_directory,dialog.username,"etc","counter",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt")
+		if self.counter_path != counter_path: # if day expired
+			self.initialize_counter()
 		shared_resource_lock.acquire()
 		_list = open(self.counter_path,"r").read().strip().split(",")
 		self.count_dict = {each.split(":")[0] : int(each.split(":")[1]) for each in _list}
 		shared_resource_lock.release()
 		self.read_tracker()
-	def read_tracker(self):
+	def read_tracker(self,tracker_path=""):
+		if tracker_path:
+			_list = open(tracker_path,"r").read().strip().split(",")
+			track_dict = {each.split(":")[0] : list(filter(None,each.split(":")[1].split(";"))) for each in _list}
+			return track_dict
 		shared_resource_lock.acquire()
 		_list = open(self.tracker_path,"r").read().strip().split(",")
 		self.track_dict = {each.split(":")[0] : list(filter(None,each.split(":")[1].split(";"))) for each in _list} # <trick> use filter to remove '' from a list
 		shared_resource_lock.release()
+		if self.count_dict["following"] != self.track_dict["following"].__len__() or self.count_dict["unfollowing"] != self.track_dict["unfollowing"].__len__():
+			write_me_log("\nBUZZ!!!!!!!!!!!!!!!!!!\n")
 	def update_counter(self,key,value):
 		write_me_log("Accessing update_counter()") # For DEBUG
-		# In case date changed(in a new day), then it would have a new counter_path, so that implies a count_dict and text file(for counter_path)
-		if not os.path.exists(self.counter_path):
+		# In case date changed(in a new day), then it would have a new counter_path, so that implies a count_dict and text file(for counter_path) as well as track_dict & tracker_path
+		self.counter_path = os.path.join(self.path_users_directory,dialog.username,"etc","counter",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt")
+		self.tracker_path = os.path.join(self.path_users_directory,dialog.username,"etc","tracker",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt")
+		if not os.path.exists(self.counter_path): # if day is a new day
 			self.initialize_counter()
 		shared_resource_lock.acquire()
 		self.count_dict[key]+=1 # or self.count_dict.update({key:self.count_dict.get(key)+1})
 		with open(self.counter_path,"w+") as f:
 			f.write(','.join("{}:{}".format(each[0],each[1]) for each in list(self.count_dict.items())))
 		shared_resource_lock.release()
-		self.update_tracker(key,value)
+		self.update_tracker(key,value)  ## counter_path  , tracker_path | count_dict , track_dict
 	def update_tracker(self,key,value):
 		shared_resource_lock.acquire()
 		self.track_dict[key].append(value)
@@ -1173,7 +1238,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			f.write(','.join("{}:{}".format(each[0],';'.join(each[1])) for each in list(self.track_dict.items())))
 		shared_resource_lock.release()
 	# Find/Search suitable users from user own explore, other users comments & likes
-	def find_suitable_users(self):
+	def find_suitable_users(self): # Partial Login required
 		# variables
 		page_num = 1
 		has_next_page = True
@@ -1269,7 +1334,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 								self.find_suitable_users_conditions(user_name,ret)	
 						page_num+=1
 					else:
-						write_me_log("[Error] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+						write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
 				else:
 					write_me_log("[Exception] Exception! <during : find_suitable_users()>")
 					app_exit()
@@ -1429,7 +1494,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 						follow_list.append(user["node"]["username"])
 					page_num+=1
 				else:
-					write_me_log("[Error] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+					write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
 			else:
 				write_me_log("[Exception] Exception! <during : get_follow_list_of_a_username()>")
 				app_exit()
@@ -1440,6 +1505,211 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		# End of while loop
 		
 		return follow_list
+	# Download posts
+	def downloading(self): # Partial Login required
+		# variables
+		page_num = 1
+		has_next_page = True
+		user_id = ""
+		hashtag = ""
+		data_type = "user"
+		after = ""
+		
+		# choices
+		if self.combo_download_type.currentText() == "Explore":
+			#login if user not already logged in 
+			if not self.successful_login: 
+				self.login()
+			hash = "ecd67af449fb6edab7c69a205413bfa7" #for explore, hash is private
+			edge__by = "edge_web_discover_media"
+			first = 24
+			_type = "explore"
+			after = 0
+		elif (self.combo_download_type.currentText() == "Username"):
+			hash = "f2405b236d85e8296cf30347c9f08c2a" #hash is public
+			edge__by = "edge_owner_to_timeline_media"
+			first = 12
+			_type = "post feed"
+			user_name = self.line_download_type.text()
+			if user_name:
+				user_id = get_user_id_by_username(self,user_name)[0]
+				# no sleep/wait gap required , since it only called for once
+			if not user_id:
+				user_does_not_exist(user_name)
+				write_me_log("returned") # For Debug
+				return # since it is unable to fetch user_id , no need to continue	
+		elif (self.combo_download_type.currentText() == "Hashtag"):
+			hash = "f12c9ec5e46a3173b2969c712ad84744" #for ...
+			edge__by = "edge_hashtag_to_media"
+			first = 9
+			_type = "hashtag feed"
+			hashtag = str(self.line_download_type.text()).lower().replace("#","").strip() # wrapped str() to support python 2.7
+			data_type = "hashtag"
+		
+		write_me_log(_type) 
+		
+		while has_next_page:
+			write_me_log(">>> Scanning {}: {} to {}".format(_type,((page_num-1)*first)+1,(page_num*first-1)+1))
+			if not after:
+				params = {'query_hash':hash,'variables':'{"first":'+str(first)+'}'}
+			else:
+				params = {'query_hash':hash,'variables':'{"first":'+str(first)+',"after":"'+str(after)+'"}'}
+			if user_id: # only applicable for "post feed"
+				params.update({'variables':params["variables"][:-1]+',"id":"'+user_id+'"}'})
+			elif hashtag:
+				params.update({'variables':params["variables"][:-1]+',"tag_name":"'+hashtag+'"}'})
+			try:
+				if _type == "explore":
+					resp,excep = session_func(self.session_main,url_graphql,redirects=False,params=params,proxies=proxies)
+				else:
+					resp,excep = session_func(session_temp,url_graphql,redirects=False,params=params)
+				if not excep:
+					if resp and resp.status_code == 200:
+						# print(resp.url) For GEBUG
+						data = resp.json()
+						has_next_page = bool(data["data"][data_type][edge__by]["page_info"]["has_next_page"])
+						if has_next_page:
+							if isinstance(after,int):
+								after += 1
+							else:
+								after = data["data"][data_type][edge__by]["page_info"]["end_cursor"]
+						post_lists = data["data"][data_type][edge__by]["edges"]
+						self.download_posts(post_lists)
+						page_num+=1
+					else:
+						write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+				else:
+					write_me_log("[Exception] Exception! <during : downloading()>")
+					app_exit()
+			except Exception as err:
+				write_me_log("[Exception] exception error <during : downloading() >>> {}".format(err))
+				app_exit()
+			time.sleep(random.randrange(5,10)) 
+		# End of while loop
+	def download_posts(self,post_lists): # No Login required
+		# vars
+		get_post_age = 1 if self.radio_download_post_age_today.isChecked() else 7 if self.radio_download_post_age_week.isChecked() else 30 if self.radio_download_post_age_month.isChecked() else 999999
+		get_post_type = 'GraphImage' if self.radio_download_type_image.isChecked() else 'GraphSidecar' if self.radio_download_type_slider.isChecked() else 'GraphVideo' if self.radio_download_type_video.isChecked() else 'All'
+		write_me_log(get_post_age,get_post_type) # for DEBUG
+		ret = ()
+		
+		# creating mandatory directory for posts
+		if post_lists:
+			if self.combo_download_type.currentText() == "Explore":
+				_directory = os.path.join(self.path_users_directory,self.username,"explore")
+			elif self.combo_download_type.currentText() == "Username":
+				if self.username == self.line_download_type.text():
+					_directory = os.path.join(self.path_users_directory,self.username,"myStatus","posted")
+				else:
+					_directory = os.path.join(path_app_directory,"others",self.line_download_type.text())
+			else:
+				_directory = os.path.join(path_app_directory,"hashes",self.line_download_type.text())
+			if not os.path.exists(_directory): # if user directory not present, create a one
+				os.mkdir(_directory)
+		
+		write_me_log(len(post_lists))
+		for post in post_lists:
+			try:
+				urls = []
+				string = ""
+				video_view_count = ""
+				# check if post type is All or specific
+				if get_post_type == "All" or get_post_type == post["node"]["__typename"]:
+					t1 = datetime.datetime.utcfromtimestamp(post["node"]["taken_at_timestamp"]).replace(microsecond=0)
+					t2 = datetime.datetime.utcnow().replace(microsecond=0)
+					post_age = (t2-t1).days
+					# Checking if post age within set limit
+					if post_age < get_post_age:
+						# if post contains multiple images or slides
+						if post["node"]["__typename"] == "GraphSidecar" and post.get('node').get('edge_sidecar_to_children'): # <Trick> always check if nearest attribute of the json could be reachable before direct accessing via [''] 
+							for sub_post in post['node']['edge_sidecar_to_children']['edges']:
+								write_me_log(sub_post['node']['display_url']) # for DEBUG
+								urls.append(sub_post['node']['display_url'])
+						#if post is a video
+						elif post["node"]["__typename"] == "GraphVideo":
+							##post_url = url_home+'p/'+post["node"]["shortcode"]
+							post_url = url_home+'p/'+post["node"]["shortcode"]+"?__a=1"
+							resp,excep = session_func(session_temp,post_url)
+							if not excep:
+								if resp and resp.status_code == 200:
+									video_url = resp.json().get("graphql").get("shortcode_media").get("video_url")
+									video_view_count = resp.json().get("graphql").get("shortcode_media").get("video_view_count")
+									write_me_log(video_url) # for DEBUG
+									##video_url = re.search('(?<="video_url":")[a-zA-Z0-9:/.=?_-]+', resp.text).group(0) # deprecated
+									#video_view_count = re.search('(?<="video_view_count":)[0-9]+', resp.text).group(0)
+									urls.append(video_url)
+								else:
+									write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+							else:
+								write_me_log("[Exception] Exception! <during : download_posts()>")
+								app_exit()
+						# if post contains single image
+						else:
+							write_me_log(post["node"]["display_url"]) # for DEBUG
+							urls.append(post["node"]["display_url"])
+						# Creating folder for the post
+						if not os.path.exists(os.path.join(_directory,post["node"]["shortcode"])):
+							os.mkdir(os.path.join(_directory,post["node"]["shortcode"]))
+						# Downloading & Saving files to directory
+						for idx,each_url in enumerate(urls):
+							resp,excep = session_func(session_temp,each_url)
+							if not excep:
+								if resp and resp.status_code == 200:
+									if len(urls) > 1:
+										name = "{}-{}.{}".format(post["node"]["shortcode"],idx+1,each_url.split("?")[0].split(".")[-1])
+									else:
+										name = "{}.{}".format(post["node"]["shortcode"],each_url.split("?")[0].split(".")[-1])
+									with open(os.path.join(_directory,post["node"]["shortcode"],name),"wb+") as f:
+										f.write(resp.content)
+								else:
+									write_me_log("[Err] {} Page not responding properly!! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+							else:
+								write_me_log("[Exception] Exception!! <during : download_posts()>")
+								app_exit()
+						# preparing STAT file
+						if not ret or self.combo_download_type.currentText() != "Username":
+							user_name,ret = get_username_by_user_id_via_api(self,post["node"]["owner"]["id"],login=False)
+							if not ret:
+								user_name = get_username_by_user_id(self,post["node"]["owner"]["id"])
+								if user_name:
+									ret = get_user_details(self,user_name)
+						if ret:
+							string += "Full Name : {}\n Posts Count : {}\n Followers : {}\n Following : {}\n Private Account? : {}\n Verified Account? : {}\n Business Account? : {}\n".format(ret[5],ret[6],ret[0],ret[1],ret[2],ret[3],ret[4])
+						string += " Post type : {}\n".format(post["node"]["__typename"].replace("Graph",""))
+						string += " Comments : {}\n".format(post["node"]["edge_media_to_comment"]["count"])
+						#print(post["node"]["edge_media_to_comment"]["count"])
+						if self.combo_download_type.currentText() == "Explore":
+							string += " Likes : {}\n".format(post["node"]["edge_liked_by"]["count"])
+						else:
+							string += " Likes : {}\n".format(post["node"]["edge_media_preview_like"]["count"]) 
+						if video_view_count:
+							string += " Views : {}\n".format(video_view_count)
+						#print(post["node"]["edge_liked_by"]["count"])
+						##print(post["node"]["dimensions"]["height"])
+						##print(post["node"]["dimensions"]["width"])
+						string += " Post Created at : {}\n".format(datetime.datetime.utcfromtimestamp(post["node"]["taken_at_timestamp"]).strftime('%Y-%m-%d %H:%M:%S'))
+						#print(datetime.datetime.utcfromtimestamp(post["node"]["taken_at_timestamp"]).strftime('%Y-%m-%d %H:%M:%S'))
+						try:
+							string += " Image may contain : {}\n".format(post["node"]["accessibility_caption"])
+							#print(post["node"]["accessibility_caption"])
+						except:
+							pass
+						if len(post["node"]["edge_media_to_caption"]["edges"]):
+							content_text = post["node"]["edge_media_to_caption"]["edges"][0]["node"]["text"]
+							string += " Text : {}\n".format(content_text)
+							##print(content_text.encode("utf-8"))
+							#print(content_text.encode("ascii",errors="ignore"))
+							if content_text.strip():
+								hashes = [_each for _each in content_text.strip().replace("\n"," ").replace("#"," #").strip().split("\n")[-1].split(" ") if _each.startswith("#")] # <Trick> replace # with [SPACE]#, so if hashes exist without any space, it will create a space(which is splitting value here) between them in the text.
+								string += " Hashes : {}\n".format(' '.join(hashes))
+								string += " Number of Hashes : {}\n".format(len(hashes))
+						# Saving STAT file
+						with open(os.path.join(_directory,post["node"]["shortcode"],"statistic.txt"),"wb+") as f:
+							f.write(string.encode("utf-8")) # <class 'bytes'>
+			except Exception as err:
+				write_me_log("[Exception] exception error <during : download_posts() >>> {}".format(err))
+				app_exit()
+
 	# ------- SLOTS -------
 	# Find suitable users
 	def add_find_users_task(self):
@@ -1466,11 +1736,26 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		else:
 			queue.put(self.follow_user)
 			###queue.put(self.temp_to_do)
-	'''def temp_to_do(self):
-		for i in range(10,20):
-			write_me_log (i)
-			time.sleep(5)'''	
+	# Download Posts
+	def add_download_post_task(self):
+		queue.put(self.downloading)	
 	# @@@@@@@@@@@@@@@@@@@@@@@@
+	# Download posts
+	def select_download_type(self):
+		if (self.combo_download_type.currentText() == "Explore"):
+			if self.username:
+				self.line_download_type.setText(self.username)
+			else:
+				self.line_download_type.setText("[At first, add an Instagram account]")
+			self.line_download_type.setReadOnly(True)
+		elif (self.combo_download_type.currentText() == "Username"):
+			self.line_download_type.clear()
+			self.line_download_type.setReadOnly(False)
+			self.line_download_type.setPlaceholderText("Add a username (eg, ronaldo)")
+		elif (self.combo_download_type.currentText() == "Hashtag"):
+			self.line_download_type.clear()
+			self.line_download_type.setReadOnly(False)
+			self.line_download_type.setPlaceholderText("Add a hashtag (eg, #ok)")
 	# Find suitable users
 	def select_find_users(self):
 		if (self.combo_find_users.currentText() == "Explore"):
@@ -1632,10 +1917,16 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				#set username in lineEdit fields
 				self.path_like_posts.setText(self.username)
 				self.line_find_users.setText(self.username)
+				self.line_download_type.setText(self.username)
 			else:
 				QMessageBox.warning(self,"Warning!","username & password field can't be empty.")
 		else:
-			QMessageBox.information(self,"Information","A user is already exist.\nPlease check below location:\n {}".format(self.path_users_directory))
+			if directory_chnaged:
+				QMessageBox.information(self,"Information","Watch My Video Tutorial, to see how you can use multiple accounts with multiple App instances.")
+				url = QUrl('https://github.com/mediabots/InstagramBot-GUI-Python')
+				QDesktopServices.openUrl(url)
+			else:
+				QMessageBox.information(self,"Information","A user is already exist.\nPlease check below location:\n {}".format(self.path_users_directory))
 		
 	def addAccoutToFile(self,username,password,proxy):
 		if os.path.exists(self.path_users_directory):
@@ -1647,6 +1938,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			self.addOtherFiles()
 		else:
 			write_me_log("[Error] users Directory not present under {}\r\nExiting......".format(self.path_users_directory))
+			app_exit()
 	def addOtherFiles(self):
 		if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myList")):
 			os.mkdir(os.path.join(self.path_users_directory,self.username,"myList"))
@@ -1683,6 +1975,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		#unset username in lineEdit fields
 		self.path_like_posts.setText("[At first, add an Instagram account]")
 		self.line_find_users.setText("[At first, add an Instagram account]")
+		self.line_download_type.setText("[At first, add an Instagram account]")
 	def removeAccountFromFile(self,user_ids):
 		for folder_ in os.listdir(self.path_users_directory):
 				if os.path.isdir(os.path.join(self.path_users_directory,folder_)) and folder_ in user_ids:
@@ -1719,6 +2012,19 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 								f.write(file_content.replace(file_content.split(",")[2],proxy+"\n")) # update new proxy
 							else:
 								f.write(file_content.replace(file_content.split(",")[2].strip(),proxy)) # update new proxy
+	def enable_multi_account(self):
+		if thread_list.__len__():
+			QMessageBox.warning(self,"Warning","Currently App is processing some task.\n To enable this feature, either wait for completion of the task or Restart the App")	
+		else:
+			with open(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","multi_enabled.txt"),"w") as f:
+				f.write(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","multi_enabled.txt"))
+			self.label_enable_multi_users_1.hide()
+			self.label_enable_multi_users_2.show()
+			self.button_enable_multi_account.setEnabled(False)
+			self.button_enable_multi_account.setText("Multiple Account Support Enabled")
+			QMessageBox.warning(self,"Warning","Multiple Account Support successfully Enabled.\n App is going to close within 5 seconds, to make this change effective.")
+			time.sleep(5)
+			app_exit()
 	# etc
 	def Clicked(self):
 		for i in range(9):
@@ -1802,9 +2108,9 @@ class MyThread(Thread):
 			#write_me_log ("Starting " + self.name + "\n")
 			time.sleep(1) # recheck in every 5 secs
 			# updating path related to datetime/time 
-			log_path = os.path.join(os_user_directory,"Documents","MediaBOTS","InstagramBOT","Logs",datetime.datetime.now().strftime("%d-%m-%Y")+".txt")
-			dialog.counter_path = os.path.join(dialog.path_users_directory,dialog.username,"etc","counter",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt") #or use today() instead of utcnow()
-			dialog.tracker_path = os.path.join(dialog.path_users_directory,dialog.username,"etc","tracker",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt") #or use today() instead of utcnow()	
+			log_path = os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","Logs",datetime.datetime.now().strftime("%d-%m-%Y")+".txt")
+			##dialog.counter_path = os.path.join(dialog.path_users_directory,dialog.username,"etc","counter",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt") #or use today() instead of utcnow()
+			##dialog.tracker_path = os.path.join(dialog.path_users_directory,dialog.username,"etc","tracker",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt") #or use today() instead of utcnow()	
 			#
 			c=0
 			len_thread_list = len(thread_list)
@@ -1820,6 +2126,8 @@ class MyThread(Thread):
 							dialog.button_unfollow_task.setEnabled(True)
 						elif each.name == "find_following_followers":
 							dialog.button_find_following_followers_task.setEnabled(True)
+						elif each.name == "downloading":
+							dialog.button_download_post_task.setEnabled(True)
 					c+=1
 			if not queue.empty():
 				item = queue.get()
@@ -1845,26 +2153,9 @@ class MyThread(Thread):
 				_instance.button_unfollow_task.setEnabled(False)
 			elif thread_list[len(thread_list)-1].name == "find_following_followers":
 				_instance.button_find_following_followers_task.setEnabled(False)
+			elif thread_list[len(thread_list)-1].name == "downloading":
+				_instance.button_download_post_task.setEnabled(False)
 			
-class MyGuiThreadOne(QThread):   #Disabled
-	##global dialog,thread_list
-	def __init__(self,name):
-		QThread.__init__(self)
-		self.name = name
-	def __del__(self):
-		self.wait()
-	def run(self):
-		while True:
-			time.sleep(5) # recheck in every 5 secs
-			if thread_list:
-				#with threading.Lock():
-				dialog.statusBar().showMessage("Running.. {} task".format(len(thread_list)))
-				#dialog.statusBar().setStyleSheet("color: red");
-			else:
-				#with threading.Lock():
-				dialog.statusBar().showMessage("Idle!!")
-				#dialog.statusBar().setStyleSheet("color: green");
-
 class MyGuiThreadTwo(QThread):
 	##global gui_queue,dialog
 	def __init__(self,name):
@@ -1881,8 +2172,29 @@ class MyGuiThreadTwo(QThread):
 						dialog.label_status.setText(str(gui_queue.get()))
 					time.sleep(1) # hold on for 1 secs
 # subclass to check whether a new app version is available 
+
+class ThreadCheckStatus(QThread):   
+	##global dialog,thread_list
+	try:
+		signalCheckStatus = QtCore.Signal(str) 
+	except:
+		#Or pyqtSignal for PyQt4
+		signalCheckStatus = QtCore.pyqtSignal(str)
+	def __init__(self):
+		QThread.__init__(self)
+	def __del__(self):
+		self.wait()
+	def run(self):
+		while True:
+			time.sleep(5) # recheck in every 5 secs
+			if thread_list:
+				self.message = "Running.. {} task".format(len(thread_list))
+			else:
+				self.message = "Idle!!"
+				 
+			self.signalCheckStatus.emit(self.message)
+			
 class ThreadCheckUpdate(QThread):
-	# For Thread Only
 	try:
 		signalCheckUpdate = QtCore.Signal() 
 	except:
@@ -1894,7 +2206,7 @@ class ThreadCheckUpdate(QThread):
 		self.val = ""
 	def run(self):
 		while True:
-			#print("..")
+			#print("..") # For DEBUG
 			time.sleep(3)  # recheck in every 3 secs
 			if not os.path.exists(log_path):
 				try:

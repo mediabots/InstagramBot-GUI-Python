@@ -6,3 +6,10 @@ III) Find a list of Following & Followers, as well as Followback & Fans of a spe
 IV) Add your Instagram login information with Proxy
 V) Full Detailed Logs File for everyday
 --------------------
+MediaBOTS.net - version 1.0.2 - Initial(23 Aug 2019)
+New Features-
+VI) Download Posts
+VII) Handle Multiple Instagram Accounts
+Bug Fixed for-
+Auto unfollow if the user did not followback within x days
+--------------------

@@ -74,3 +74,12 @@ or
 https://www.riverbankcomputing.com/software/pyqt/download
 
 
+## Demo Video
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=6HdsJ54bfoE" target="_blank"><img src="http://img.youtube.com/vi/6HdsJ54bfoE/0.jpg" 
+alt='Intro to "InstagramBot" for Windows | Portable App(GUI,Multi Tasking) | PyQt4/PySide Python [Part-1]' width="480" height="360" border="10" /></a>
+
+### [Tutorial] How to Handle Multiple Instagram Accounts on InstagramBot
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=XCvXpeTSxpU" target="_blank"><img src="http://img.youtube.com/vi/XCvXpeTSxpU/0.jpg" 
+alt="InstagramBot GUI For Windows - How to handle Multiple Instagram accounts [Tutorial]" width="480" height="360" border="10" /></a>
+

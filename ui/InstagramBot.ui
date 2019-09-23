@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>InstagramBot  (ver - 1.0.1)</string>
+   <string>InstagramBot  (ver - 1.0.2)</string>
   </property>
   <property name="windowIcon">
    <iconset resource="icons/InstagramBot.qrc">
@@ -74,7 +74,7 @@ padding:5px;
 #label_23{
 color:red;
 }
-QFrame#frame_5,QFrame#frame_6,QFrame#frame_8,QFrame#frame_10,QFrame#frame_11{
+QFrame#frame_5,QFrame#frame_6,QFrame#frame_8,QFrame#frame_10,QFrame#frame_11,QFrame#frame_14{
 border: 1px solid #ccc;
 }
 QPushButton{
@@ -239,9 +239,6 @@ text-align: right;
      <property name="text">
       <string>Download Posts</string>
      </property>
-     <property name="flags">
-      <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable</set>
-     </property>
     </item>
     <item>
      <property name="text">
@@ -272,13 +269,13 @@ text-align: right;
     <property name="geometry">
      <rect>
       <x>171</x>
-      <y>-21</y>
+      <y>-22</y>
       <width>661</width>
       <height>491</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>8</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -676,7 +673,7 @@ text-align: right;
         </rect>
        </property>
        <property name="minimum">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="maximum">
         <number>1440</number>
@@ -909,7 +906,7 @@ text-align: right;
         </rect>
        </property>
        <property name="minimum">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="maximum">
         <number>1440</number>
@@ -1541,7 +1538,7 @@ text-align: right;
        </rect>
       </property>
       <property name="text">
-       <string>Like Instagram Posts</string>
+       <string>Like Instagram Posts/Comments</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_title7">
@@ -1549,12 +1546,12 @@ text-align: right;
        <rect>
         <x>330</x>
         <y>4</y>
-        <width>321</width>
+        <width>322</width>
         <height>69</height>
        </rect>
       </property>
       <property name="text">
-       <string>Unlike Instagram Posts</string>
+       <string>Unlike Instagram Posts/Comments</string>
       </property>
      </widget>
      <widget class="Line" name="line_7">
@@ -1940,7 +1937,12 @@ text-align: right;
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_3">
+        <widget class="QComboBox" name="combo_download_type">
+         <item>
+          <property name="text">
+           <string>Explore</string>
+          </property>
+         </item>
          <item>
           <property name="text">
            <string>Username</string>
@@ -1954,9 +1956,9 @@ text-align: right;
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_4">
+        <widget class="QLineEdit" name="line_download_type">
          <property name="placeholderText">
-          <string>Add target</string>
+          <string>Add a username (eg, ronaldo)</string>
          </property>
         </widget>
        </item>
@@ -1977,28 +1979,28 @@ text-align: right;
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_7">
+           <widget class="QRadioButton" name="radio_download_type_image">
             <property name="text">
              <string>Image</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_8">
-            <property name="text">
-             <string>Video</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="radioButton_9">
+           <widget class="QRadioButton" name="radio_download_type_slider">
             <property name="text">
              <string>Slider</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_10">
+           <widget class="QRadioButton" name="radio_download_type_video">
+            <property name="text">
+             <string>Video</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radio_download_type_all">
             <property name="text">
              <string>All</string>
             </property>
@@ -2024,28 +2026,28 @@ text-align: right;
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="radio_download_post_age_today">
             <property name="text">
              <string> Todays</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="radio_download_post_age_week">
             <property name="text">
              <string>Last Week</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_4">
+           <widget class="QRadioButton" name="radio_download_post_age_month">
             <property name="text">
              <string>Last Month</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_3">
+           <widget class="QRadioButton" name="radio_download_post_age_all">
             <property name="text">
              <string>All</string>
             </property>
@@ -2055,7 +2057,7 @@ text-align: right;
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_5">
+        <widget class="QLineEdit" name="line_download_post_excel_location">
          <property name="placeholderText">
           <string>Excel file location</string>
          </property>
@@ -2075,7 +2077,7 @@ text-align: right;
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="button_download_post_task">
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
@@ -2115,9 +2117,9 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>10</y>
+         <y>0</y>
          <width>651</width>
-         <height>451</height>
+         <height>471</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -2132,7 +2134,7 @@ text-align: right;
           <x>260</x>
           <y>30</y>
           <width>381</width>
-          <height>361</height>
+          <height>376</height>
          </rect>
         </property>
         <property name="alternatingRowColors">
@@ -2318,7 +2320,7 @@ text-align: right;
         <property name="geometry">
          <rect>
           <x>260</x>
-          <y>418</y>
+          <y>437</y>
           <width>151</width>
           <height>23</height>
          </rect>
@@ -2356,27 +2358,87 @@ text-align: right;
        <widget class="QLabel" name="label_22">
         <property name="geometry">
          <rect>
-          <x>275</x>
-          <y>398</y>
-          <width>251</width>
-          <height>16</height>
+          <x>278</x>
+          <y>406</y>
+          <width>361</width>
+          <height>31</height>
          </rect>
         </property>
         <property name="text">
-         <string>This Version of the app does not support multi users</string>
+         <string>This Version of the App can handle one Account from one App instance.
+So to use Multiple Accounts, you have to run multiple copies of this App. </string>
         </property>
        </widget>
        <widget class="QLabel" name="label_23">
         <property name="geometry">
          <rect>
           <x>260</x>
-          <y>398</y>
+          <y>410</y>
           <width>46</width>
           <height>13</height>
          </rect>
         </property>
         <property name="text">
          <string>**</string>
+        </property>
+       </widget>
+       <widget class="QFrame" name="frame_14">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>230</y>
+          <width>221</width>
+          <height>101</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QPushButton" name="button_enable_multi_account">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>201</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Enable Multiple Account Support</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_enable_multi_users_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>40</y>
+           <width>201</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Make sure, InstagramBot[32bit].exe 
+or InstagramBot[64bit].exe file is present 
+beside Application Root Folder</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QLabel" name="label_enable_multi_users_1">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>270</y>
+          <width>201</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Enabling this Option, would change the 
+location of the current Application 
+Root Folder</string>
         </property>
        </widget>
       </widget>
@@ -2430,7 +2492,7 @@ text-align: right;
     <widget class="QLabel" name="label_status">
      <property name="geometry">
       <rect>
-       <x>5</x>
+       <x>4</x>
        <y>2</y>
        <width>651</width>
        <height>16</height>
@@ -2441,12 +2503,6 @@ text-align: right;
      </property>
     </widget>
    </widget>
-   <zorder>listwidget</zorder>
-   <zorder>tabWidget</zorder>
-   <zorder>frame_logo</zorder>
-   <zorder>label_powered_by</zorder>
-   <zorder>frame_status</zorder>
-   <zorder>progress_bar</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar">
    <property name="enabled">
@@ -2556,7 +2612,7 @@ text-align: right;
   </action>
   <action name="actionOpen_an_Issue">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon">
     <iconset resource="icons/InstagramBot.qrc">
@@ -2656,7 +2712,7 @@ text-align: right;
   </action>
   <action name="actionBTC_Donation">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon">
     <iconset resource="icons/InstagramBot.qrc">
@@ -2695,22 +2751,21 @@ text-align: right;
   <tabstop>check_is_verified</tabstop>
   <tabstop>check_is_celebrity</tabstop>
   <tabstop>button_find_users_task</tabstop>
-  <tabstop>comboBox_3</tabstop>
+  <tabstop>combo_download_type</tabstop>
   <tabstop>spinBox_15</tabstop>
   <tabstop>checkBox_7</tabstop>
-  <tabstop>radioButton_7</tabstop>
-  <tabstop>radioButton_8</tabstop>
-  <tabstop>radioButton_9</tabstop>
-  <tabstop>radioButton_10</tabstop>
-  <tabstop>radioButton_2</tabstop>
+  <tabstop>radio_download_type_image</tabstop>
+  <tabstop>radio_download_type_video</tabstop>
+  <tabstop>radio_download_type_all</tabstop>
+  <tabstop>radio_download_post_age_week</tabstop>
   <tabstop>line_proxy_ip</tabstop>
-  <tabstop>radioButton_4</tabstop>
-  <tabstop>radioButton_3</tabstop>
+  <tabstop>radio_download_post_age_month</tabstop>
+  <tabstop>radio_download_post_age_all</tabstop>
   <tabstop>line_username</tabstop>
   <tabstop>line_password</tabstop>
   <tabstop>logintable</tabstop>
-  <tabstop>lineEdit_5</tabstop>
-  <tabstop>pushButton_4</tabstop>
+  <tabstop>line_download_post_excel_location</tabstop>
+  <tabstop>button_download_post_task</tabstop>
   <tabstop>combo_find_following_followers</tabstop>
   <tabstop>line_find_following_followers</tabstop>
   <tabstop>textEdit_find_following_followers</tabstop>
@@ -2744,8 +2799,8 @@ text-align: right;
   <tabstop>spinBox_10</tabstop>
   <tabstop>spinBox_11</tabstop>
   <tabstop>spinBox_12</tabstop>
-  <tabstop>radioButton</tabstop>
-  <tabstop>lineEdit_4</tabstop>
+  <tabstop>radio_download_post_age_today</tabstop>
+  <tabstop>line_download_type</tabstop>
   <tabstop>combo_follow_users</tabstop>
   <tabstop>path_follow_users</tabstop>
   <tabstop>button_follow_users</tabstop>

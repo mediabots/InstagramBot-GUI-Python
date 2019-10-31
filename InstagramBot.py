@@ -15,12 +15,15 @@ GUI Package used in Python:
 	PySide/PyQt4
 Dependent Python modules:
 	requests
+	PySide/PyQt4
+	Pillow
+	emojis
 License:
 	CC/Open-source/Free
 Version:
 	1.0.3
 Release Date:
-	6-Oct-2019
+	31-Oct-2019
 '''	
 
 ########### Python Modules/Packages
@@ -207,7 +210,7 @@ def get_username_by_user_id_via_api(self,user_id,login=True): #
 		if login:
 			resp,excep = session_func(self.session_main,_url_info,headers=api_headers_1,redirects=False,wait=0) # <Doc> for API, host must changed to 'i.instagram.com'
 		else:
-			resp,excep = session_func(session_temp,_url_info,redirects=False,wait=0) 
+			resp,excep = session_func(session_temp,_url_info,headers=api_headers_1,redirects=False,wait=0) 
 		if not excep:
 			if resp and resp.status_code == 200:
 				if "login" in resp.url: # if resp.url is 'https://www.instagram.com/accounts/login/' . Only could happen, if login=False
@@ -304,21 +307,25 @@ def get_user_id_by_username(self,user_name):  # no login required
 				if (not resp.content or resp.text == '{}'):
 					write_me_log("[Err] User details not Found!")
 					return False
-				user = resp.json()["graphql"]["user"] # this may lead an exception 
-				user_id = user["id"] 
-				is_private = user["is_private"]
-				is_verified = user["is_verified"]
-				is_business_account = user["is_business_account"]
-				following_count = user["edge_follow"]["count"]
-				followers_count = user["edge_followed_by"]["count"]
-				post_count = user["edge_owner_to_timeline_media"]["count"]
-				is_joined_recently = user["is_joined_recently"]
-				user_to_id[user_name] = user_id #   stored in dictionary, in case it need to be fetched again
-				id_to_user[user_id] = user_name #   stored in dictionary, in case it need to be fetched again
-				shared_resource_lock.acquire()
-				with open(os.path.join(path_app_directory,"userid to username.txt"),"a+") as f:
-					f.write("{}:{}\n".format(user_id,user_name))
-				shared_resource_lock.release()
+				try:
+					user = resp.json()["graphql"]["user"] # this may lead an exception 
+					user_id = user["id"] 
+					is_private = user["is_private"]
+					is_verified = user["is_verified"]
+					is_business_account = user["is_business_account"]
+					following_count = user["edge_follow"]["count"]
+					followers_count = user["edge_followed_by"]["count"]
+					post_count = user["edge_owner_to_timeline_media"]["count"]
+					is_joined_recently = user["is_joined_recently"]
+
+					user_to_id[user_name] = user_id #   stored in dictionary, in case it need to be fetched again
+					id_to_user[user_id] = user_name #   stored in dictionary, in case it need to be fetched again
+					shared_resource_lock.acquire()
+					with open(os.path.join(path_app_directory,"userid to username.txt"),"a+") as f:
+						f.write("{}:{}\n".format(user_id,user_name))
+					shared_resource_lock.release()
+				except Exception as err:
+					write_me_log("[Exception] wrong JSON format from -> resp.json()['graphql']['user'] <during : get_user_id_by_username() >>> {}".format(err))
 			elif resp.status_code == 404:
 				write_me_log("[Err] No User Found!")
 			else:
@@ -938,7 +945,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		)
 		if should_close == QMessageBox.Yes:
 			event.accept()
-			os._exit(1)
+			#os._exit(1)
 			##sys.exit()
 			##exit()
 		else:
@@ -1486,7 +1493,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				if self.check_is_celebrity.isChecked() and  ret[4]:
 					write_me_log("is_celebrity")  # For DEBUG
 					return
-				if (ret[0] >= int(self.min_followers.text()) and ret[0] <= int(self.max_followers.text()) and ret[1]/followers >= float(self.follow_ratio.text())):
+				if (ret[0] >= int(self.min_followers.text()) and ret[0] <= int(self.max_followers.text()) and ret[1]/followers >= float(self.follow_ratio.text().replace(",","."))):
 					# set this suitable user to myList
 					write_me_log(user_name)  # For DEBUG
 					my_list_follow.append(user_name)
@@ -1636,7 +1643,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		data_type = "user"
 		self.after = ""
 		self.more_posts_to_lookout = True
-		self.post_lists = list()
+		self.post_list_shortcodes = list()
 		if download:
 			choices = self.combo_download_type.currentText()
 			target_text = self.line_download_type.text()
@@ -1679,6 +1686,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		
 		while has_next_page and self.more_posts_to_lookout:
 			write_me_log(">>> Scanning {}: {} to {}".format(_type,((self.page_num-1)*first)+1,(self.page_num*first-1)+1))
+			print(self.after,self.page_num)
 			if not self.after:
 				params = {'query_hash':hash,'variables':'{"first":'+str(first)+'}'}
 			else:
@@ -1687,11 +1695,13 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				params.update({'variables':params["variables"][:-1]+',"id":"'+user_id+'"}'})
 			elif hashtag:
 				params.update({'variables':params["variables"][:-1]+',"tag_name":"'+hashtag+'"}'})
+			print(params)
 			try:
 				if _type == "explore":
 					resp,excep = session_func(self.session_main,url_graphql,redirects=False,params=params,proxies=proxies)
 				else:
 					resp,excep = session_func(session_temp,url_graphql,redirects=False,params=params)
+				print(resp.url)
 				if not excep:
 					if resp and resp.status_code == 200:
 						# print(resp.url) For GEBUG
@@ -1716,6 +1726,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			time.sleep(random.randrange(5,10)) 
 		# End of while loop
 	def download_posts(self,post_lists,choices,target_text,repost=False): # No Login required
+		print(len(post_lists))
 		# vars
 		get_post_age = 1 if self.radio_download_post_age_today.isChecked() else 7 if self.radio_download_post_age_week.isChecked() else 30 if self.radio_download_post_age_month.isChecked() else 999999
 		get_post_type = 'GraphImage' if self.radio_download_type_image.isChecked() else 'GraphSidecar' if self.radio_download_type_slider.isChecked() else 'GraphVideo' if self.radio_download_type_video.isChecked() else 'All'
@@ -1723,30 +1734,39 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		if repost:
 			get_post_type = 'GraphImage,GraphSidecar'
 			get_post_age = 0 if self.radio_repost_post_age_future.isChecked() else 1 if self.radio_repost_post_age_today.isChecked() else 7 if self.radio_repost_post_age_week.isChecked() else 30 if self.radio_repost_post_age_month.isChecked() else 999999
+			post_lists = post_lists[:10]
 		write_me_log(get_post_age,get_post_type) # for DEBUG
 		ret = ()
 		
 		if get_post_age == 0:
-			if not self.post_lists:
-				self.post_lists = post_lists.copy()
-			else:
-				self.post_lists += post_lists
+			if not self.post_list_shortcodes:
+				self.post_list_shortcodes = [post["node"]["shortcode"] for post in post_lists]
+			##else:
+			##	self.post_lists += post_lists
+			##	self.post_lists = list(set(self.post_lists))
+			print(len(self.post_list_shortcodes))
 			# remove older post's
-			for post in post_lists:
-				if post in self.post_lists:
-					post_lists.remove(post)
+			c=0
+			len_post_lists = len(post_lists)
+			while len_post_lists > c:
+				for post in post_lists:
+					if post["node"]["shortcode"] in self.post_list_shortcodes or post["node"]["shortcode"] in self.poster_list:
+						print(1)
+						post_lists.remove(post)
+					c+=1
 			# tricking variables of downloading_posts()
 			if isinstance(self.after,int):
 				self.after = 0
 			else:
 				self.after = ""
 			self.page_num = 0
+			print(self.after,self.page_num)
 			if not post_lists: # if post_lists is empty return otherwise download & post
-				time.sleep(1*60)
 				print("returning")
+				time.sleep(4*60)
 				return
-			
 		# creating mandatory directory for posts
+		print("len(post_lists) : {}".format(len(post_lists))) # DEBUG
 		if post_lists:
 			if choices == "Explore" or choices == "Repost from Explore":
 				_directory = os.path.join(self.path_users_directory,self.username,"etc","explore")
@@ -1762,11 +1782,11 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				_directory = os.path.join(path_app_directory,"hashes",target_text)
 			if not os.path.exists(_directory): # if user directory not present, create a one
 				os.mkdir(_directory)
-		
 		write_me_log(len(post_lists))
 		#print(self.poster_list) # DEBUG
 		for post in post_lists:
 			if repost and post["node"]["shortcode"] in self.poster_list: # in case a specific post already downloaded during reposting
+				print("continued")
 				continue
 			try:
 				urls = []
@@ -1777,10 +1797,8 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 					t1 = datetime.datetime.utcfromtimestamp(post["node"]["taken_at_timestamp"]).replace(microsecond=0)
 					t2 = datetime.datetime.utcnow().replace(microsecond=0)
 					post_age = (t2-t1).days
-					# Checking if post age within set limit
-					if get_post_age == 0:
-						pass # already taken care 
-					elif post_age < get_post_age:
+					# Checking if post age within set limit 
+					if get_post_age == 0 or post_age < get_post_age:
 						# if post contains multiple images or slides | side note - GraphSidecar & GraphVideo would not be considered for reposting
 						if post["node"]["__typename"] == "GraphSidecar" and post.get('node').get('edge_sidecar_to_children'): # <Trick> always check if nearest attribute of the json could be reachable before direct accessing via [''] 
 							for sub_post in post['node']['edge_sidecar_to_children']['edges']:
@@ -2040,7 +2058,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 						
 			time.sleep(60)	
 			# break unless it is monitoring(post mode) the folder
-			if repost and not self.radio_repost_post_age_future.isChecked():
+			if repost: ## and not self.radio_repost_post_age_future.isChecked():
 				break
 	# Reposting
 	def reposting(self,repost=True): # login required

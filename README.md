@@ -121,7 +121,7 @@ or
 https://www.riverbankcomputing.com/software/pyqt/download
 
 
-## How to Run & Build the App (Documentation)
+## How to Build & Run the App (Documentation)
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=KEl1n5S-RSw" target="_blank"><img src="http://img.youtube.com/vi/KEl1n5S-RSw/0.jpg" 
 alt='How to Build and Run "InstagramBot" App for Windows OS [with Python3]' width="480" height="360" border="10" /></a>

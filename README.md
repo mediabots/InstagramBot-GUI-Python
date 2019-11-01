@@ -12,23 +12,7 @@ GUI developed with the help of Python module: PySide/PyQt
 
 #### Python 3
 
-**Python 3.4.0**
-
-Download Python from here : https://www.python.org/downloads/release/python-340/
-
-Next, Upgrade PIP using below command:-
-
-`python -m pip install --upgrade pip`
-
-Then install requirements ::
-
-For 32bit:
-
-`pip install -r ./requirements/Windows/Python3.4.0_x86.txt`
-
-For 64bit:
-
-`pip install -r ./requirements/Windows/Python3.4.0_x64.txt`
+________________________________
 
 **Python 3.5.0**
 
@@ -50,7 +34,30 @@ For 64bit:
 
 `pip install -r ./requirements/Windows/Python3.5.0_x64.txt`
 
+________________________________
+
+**Python 3.4.0**
+
+Download Python from here : https://www.python.org/downloads/release/python-340/
+
+Next, Upgrade PIP using below command:-
+
+`python -m pip install --upgrade pip`
+
+Then install requirements ::
+
+For 32bit:
+
+`pip install -r ./requirements/Windows/Python3.4.0_x86.txt`
+
+For 64bit:
+
+`pip install -r ./requirements/Windows/Python3.4.0_x64.txt`
+
+
 #### Python 2
+
+________________________________
 
 **Python 2.7.8**
 

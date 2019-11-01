@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '.\ui\InstagramBot.ui'
 #
-# Created: Fri Nov  1 17:27:36 2019
+# Created: Fri Nov  1 20:41:53 2019
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -919,7 +919,7 @@ class Ui_InstagramBot(object):
         self.toolBox_repost.setGeometry(QtCore.QRect(10, 164, 291, 191))
         self.toolBox_repost.setObjectName("toolBox_repost")
         self.page_5 = QtGui.QWidget()
-        self.page_5.setGeometry(QtCore.QRect(0, 0, 291, 137))
+        self.page_5.setGeometry(QtCore.QRect(0, 0, 100, 30))
         self.page_5.setObjectName("page_5")
         self.frame_repost = QtGui.QFrame(self.page_5)
         self.frame_repost.setGeometry(QtCore.QRect(-10, -8, 311, 151))
@@ -957,7 +957,7 @@ class Ui_InstagramBot(object):
         self.textEdit_mentions_repost.setObjectName("textEdit_mentions_repost")
         self.toolBox_repost.addItem(self.page_5, "")
         self.page_6 = QtGui.QWidget()
-        self.page_6.setGeometry(QtCore.QRect(0, 0, 291, 137))
+        self.page_6.setGeometry(QtCore.QRect(0, 0, 100, 30))
         self.page_6.setObjectName("page_6")
         self.radio_repost_post_age_week = QtGui.QRadioButton(self.page_6)
         self.radio_repost_post_age_week.setGeometry(QtCore.QRect(113, 20, 72, 17))
@@ -1168,7 +1168,7 @@ class Ui_InstagramBot(object):
         self.actionDoccumentation_Video.setEnabled(True)
         self.actionDoccumentation_Video.setObjectName("actionDoccumentation_Video")
         self.action_Tutorial_How_to_built = QtGui.QAction(InstagramBot)
-        self.action_Tutorial_How_to_built.setEnabled(False)
+        self.action_Tutorial_How_to_built.setEnabled(True)
         self.action_Tutorial_How_to_built.setObjectName("action_Tutorial_How_to_built")
         self.actionQueue = QtGui.QAction(InstagramBot)
         self.actionQueue.setEnabled(False)

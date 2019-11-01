@@ -37,6 +37,7 @@ At first, Download "Microsoft Visual C++ 2015 Redistributable Update 3 RC" from 
 Then Download Python from here : https://www.python.org/downloads/release/python-350/
 
 Next, Upgrade PIP using below command:-
+
 `python -m pip install --upgrade pip`
 
 Then install requirements ::
@@ -62,6 +63,7 @@ Then Download and save get-pip.py from https://bootstrap.pypa.io/get-pip.py and 
 it will install pip 
 
 Next, Upgrade PIP using below command:-
+
 `python -m pip install --upgrade pip`
 
 For 32bit:
@@ -74,8 +76,10 @@ PySide through pip (though it is giving dll missing error, but suprisingly it is
 
 ## Other Dependent Python modules:-
 
-requests
-Pillow
+requests,
+
+Pillow,
+
 emojis
 
 

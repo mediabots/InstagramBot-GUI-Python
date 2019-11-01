@@ -13,3 +13,12 @@ VII) Handle Multiple Instagram Accounts
 Bug Fixed for-
 Auto unfollow if the user did not followback within x days
 --------------------
+MediaBOTS.net - version 1.0.3 - Initial(31 October 2019)
+New Features- 
+VIII) Post/Repost Images - along with your own #Hashtag, @mentions, Headers, emojis & Watermark.
+Bug Fixed for-
+"Find Suitable Users" option
+Features Updated for-
+Follow/Unfollow users{"Headers" & "Cookies" are updated for Browser}
+Find Suitable users{New Instagram Mobile "User-Agents" are introduced on Browser}
+--------------------

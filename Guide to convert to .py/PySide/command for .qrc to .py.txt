@@ -1,2 +1,0 @@
-cd c:\python34 
-.\lib\site-packages\pyside\pyside-rcc.exe .\ui\icons\InstagramBot.qrc -o InstagramBot_rc.py -py3

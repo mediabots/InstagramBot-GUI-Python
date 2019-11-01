@@ -1,2 +1,0 @@
-cd c:\python34
-.\scripts\pyside-uic.exe .\ui\InstagramBot.ui -o InstagramBot_ui.py

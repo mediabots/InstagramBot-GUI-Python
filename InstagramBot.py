@@ -306,7 +306,7 @@ def get_user_id_by_username(self,user_name):  # no login required
 			if resp and resp.status_code == 200:
 				if (not resp.content or resp.text == '{}'):
 					write_me_log("[Err] User details not Found!")
-					return False
+					return user_id,is_private
 				try:
 					user = resp.json()["graphql"]["user"] # this may lead an exception 
 					user_id = user["id"] 
@@ -439,7 +439,7 @@ def get_post_details(shortcode,about,type): # no login required
 
 	list_username = []
 	while has_next_page:
-		write_me_log(">>> .scanning posts: {} to {}".format(((page_num-1)*first)+1,(page_num*first-1)+1))
+		write_me_log(">>> .scanning {}: {} to {}".format(about,((page_num-1)*first)+1,(page_num*first-1)+1))
 		if not after:
 			params = {'query_hash':hash,'variables':'{"first":'+str(first)+',"shortcode":"'+shortcode+'"}'}
 		else:
@@ -684,7 +684,6 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 					user_file_content = open(os.path.join(self.path_users_directory,user_folder,user_folder+".txt"),"r").read().strip().split("\n")[0]
 					if user_file_content and len(user_file_content.split(","))==3:
 						self.username,self.password,self.proxy=user_file_content.split(",")
-						print(100)
 						#write_me_log(self.proxy) # for DEBUG
 						# <Trick> Duplicate here due to version control of the app. {Already added same code in addOtherFiles()}
 						if not os.path.exists(os.path.join(self.path_users_directory,self.username,"etc","to be posted")):
@@ -859,6 +858,8 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		#QActions
 		self.actionEmail_Us.triggered.connect(self.open_email)
 		self.actionOpen_User_Folder.triggered.connect(self.open_users_folder)
+		self.action_Tutorial_How_to_built.triggered.connect(self.open_youtube_tut_playlist)
+		self.actionDoccumentation_Video.triggered.connect(self.open_youtube_doc_playlist)
 		self.actionGithub_Project_URL.triggered.connect(self.open_github_project)
 		self.actionMediaBOTS.triggered.connect(self.open_home_page)
 		self.actionOpen_an_Issue.triggered.connect(self.open_github_issue_page)
@@ -893,6 +894,14 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		url = QUrl(path_app_directory)
 		if not QDesktopServices.openUrl(url):
 			QMessageBox.warning(self, 'Folder', 'Could not open Folder : {}'.format(path_app_directory))
+	def open_youtube_tut_playlist(self):
+		url = QUrl('https://youtube.com/watch?v=KEl1n5S-RSw&list=PLmJkl1orcCfdpicPTPwZzbarqbq0yZa9r')   
+		if not QDesktopServices.openUrl(url):
+			QMessageBox.warning(self, 'Youtube Tut Page', 'Could not open url: https://youtube.com/watch?v=KEl1n5S-RSw&list=PLmJkl1orcCfdpicPTPwZzbarqbq0yZa9r')
+	def open_youtube_doc_playlist(self):
+		url = QUrl('https://youtube.com/playlist?list=PLmJkl1orcCfeL_QxkLvkoWCdS_YzmeKvz')   
+		if not QDesktopServices.openUrl(url):
+			QMessageBox.warning(self, 'Youtube Doc Page', 'Could not open url: https://youtube.com/playlist?list=PLmJkl1orcCfeL_QxkLvkoWCdS_YzmeKvz')
 	def open_github_project(self):
 		#import webbrowser
 		#webbrowser.open("http://www.google.com")
@@ -945,7 +954,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		)
 		if should_close == QMessageBox.Yes:
 			event.accept()
-			#os._exit(1)
+			os._exit(1)
 			##sys.exit()
 			##exit()
 		else:
@@ -1686,7 +1695,6 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		
 		while has_next_page and self.more_posts_to_lookout:
 			write_me_log(">>> Scanning {}: {} to {}".format(_type,((self.page_num-1)*first)+1,(self.page_num*first-1)+1))
-			print(self.after,self.page_num)
 			if not self.after:
 				params = {'query_hash':hash,'variables':'{"first":'+str(first)+'}'}
 			else:
@@ -1695,16 +1703,15 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				params.update({'variables':params["variables"][:-1]+',"id":"'+user_id+'"}'})
 			elif hashtag:
 				params.update({'variables':params["variables"][:-1]+',"tag_name":"'+hashtag+'"}'})
-			print(params)
+			#print(params) # DEBUG
 			try:
 				if _type == "explore":
 					resp,excep = session_func(self.session_main,url_graphql,redirects=False,params=params,proxies=proxies)
 				else:
 					resp,excep = session_func(session_temp,url_graphql,redirects=False,params=params)
-				print(resp.url)
 				if not excep:
 					if resp and resp.status_code == 200:
-						# print(resp.url) For GEBUG
+						#print(resp.url) For GEBUG
 						data = resp.json()
 						has_next_page = bool(data["data"][data_type][edge__by]["page_info"]["has_next_page"])
 						if has_next_page:
@@ -1726,7 +1733,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			time.sleep(random.randrange(5,10)) 
 		# End of while loop
 	def download_posts(self,post_lists,choices,target_text,repost=False): # No Login required
-		print(len(post_lists))
+		#print(len(post_lists)) # DEBUG
 		# vars
 		get_post_age = 1 if self.radio_download_post_age_today.isChecked() else 7 if self.radio_download_post_age_week.isChecked() else 30 if self.radio_download_post_age_month.isChecked() else 999999
 		get_post_type = 'GraphImage' if self.radio_download_type_image.isChecked() else 'GraphSidecar' if self.radio_download_type_slider.isChecked() else 'GraphVideo' if self.radio_download_type_video.isChecked() else 'All'
@@ -1744,14 +1751,14 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			##else:
 			##	self.post_lists += post_lists
 			##	self.post_lists = list(set(self.post_lists))
-			print(len(self.post_list_shortcodes))
+			#print(len(self.post_list_shortcodes)) # DEBUG
 			# remove older post's
 			c=0
 			len_post_lists = len(post_lists)
 			while len_post_lists > c:
 				for post in post_lists:
 					if post["node"]["shortcode"] in self.post_list_shortcodes or post["node"]["shortcode"] in self.poster_list:
-						print(1)
+						#print("removing") # DEBUG
 						post_lists.remove(post)
 					c+=1
 			# tricking variables of downloading_posts()
@@ -1760,13 +1767,13 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			else:
 				self.after = ""
 			self.page_num = 0
-			print(self.after,self.page_num)
+			#print(self.after,self.page_num) # DEBUG
 			if not post_lists: # if post_lists is empty return otherwise download & post
-				print("returning")
+				write_me_log("returning")
 				time.sleep(4*60)
 				return
 		# creating mandatory directory for posts
-		print("len(post_lists) : {}".format(len(post_lists))) # DEBUG
+		#print("len(post_lists) : {}".format(len(post_lists))) # DEBUG
 		if post_lists:
 			if choices == "Explore" or choices == "Repost from Explore":
 				_directory = os.path.join(self.path_users_directory,self.username,"etc","explore")
@@ -1786,7 +1793,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		#print(self.poster_list) # DEBUG
 		for post in post_lists:
 			if repost and post["node"]["shortcode"] in self.poster_list: # in case a specific post already downloaded during reposting
-				print("continued")
+				write_me_log("continued") # DEBUG
 				continue
 			try:
 				urls = []
@@ -1893,10 +1900,10 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 							update_file(os.path.join(self.path_users_directory,self.username,"myStatus","poster.txt"),self.poster_list,post["node"]["shortcode"])
 							# copy whole shortcode directory to etc/temp folder for posting later
 							try:
-								print("coping folder")
+								write_me_log("coping folder")
 								shutil.copytree(os.path.join(_directory,post["node"]["shortcode"]), os.path.join(self.path_users_directory,self.username,"etc","temp",post["node"]["shortcode"]), symlinks=False, ignore=None)
 								try:
-									print("preparing post")
+									write_me_log("preparing post")
 									self.posting(os.path.join(self.path_users_directory,self.username,"etc","temp"),repost=repost)
 								except Exception as err:
 									write_me_log("[Exception] exception error2 <during : download_posts() >>> {}".format(err))
@@ -1922,7 +1929,6 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		else:
 			if not self.count_dict: # don't worry #under INSPECTION, this condition might useless, and may cause two(2) unnecessary self.read_counter() call in later section  
 				self.read_counter()
-		print(directory_path)
 		# determining post or repost
 		if not repost:
 			# setting directory_path for monitoring
@@ -1951,7 +1957,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		#print(self.poster_list) # DEBUG
 		while True:
 			for each_folder in os.listdir(directory_path):
-				print(each_folder)
+				#print(each_folder) # DEBUG
 				# Vars
 				content_text = ""
 				text_file = "my_text.txt"
@@ -2032,18 +2038,18 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 						update_file(os.path.join(self.path_users_directory,self.username,"myStatus","posted.txt"),self.posted_list,shortcode)
 						try:
 							# renaming folder from its old shortcode or general name to new shortcode
-							print("renaming folder")
+							write_me_log("renaming folder")
 							os.rename(os.path.join(directory_path,each_folder),os.path.join(directory_path,shortcode))
 							try:
 								# moving folder to etc/posted folder 
-								print("moving folder")
-								print(os.path.join(directory_path,shortcode))
+								write_me_log("moving folder")
+								#print(os.path.join(directory_path,shortcode)) # DEBUG
 								shutil.move(os.path.join(directory_path,shortcode), os.path.join(self.path_users_directory,self.username,"etc","posted"))
 							except:
 								write_me_log("Could not move the folder: {} from {} to {}".format(shortcode,directory_path,os.path.join(self.path_users_directory,self.username,"etc","posted")))
 						except:
 							write_me_log("Could not rename the folder: {} to {}".format(os.path.join(directory_path,each_folder),os.path.join(directory_path,shortcode)))
-						print("Updating counter")
+						#print("Updating counter") # DEBUG
 						self.update_counter(counter_type)
 						min_time_interval,max_time_interval = (int(self.min_repost_interval.text()),int(self.max_repost_interval.text())) if repost \
 						else (int(self.min_post_interval.text()),int(self.max_post_interval.text())) 
@@ -2086,7 +2092,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		self.session_main.headers["X-Instagram-Rupload-Params"] = json.dumps({"media_type":1,"upload_id":upload_id,"upload_media_height":h,"upload_media_width":w})
 		#upload
 		try:
-			print("uploading on IG")	# DEBUG
+			write_me_log("uploading on IG")	# DEBUG
 			resp,excep = session_func(self.session_main,upload_url,headers=headers,data=open(photo,"rb").read(),proxies=proxies,method="post")
 			if not excep:
 				if resp and resp.status_code == 200:
@@ -2110,7 +2116,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 					caption = content_text.encode("utf-8")
 					payload = {"upload_id":upload_id,"caption":caption,"usertags":"","custom_accessibility_caption":"","retry_timeout":""}
 					try:
-						print("configuring on IG")	# DEBUG
+						write_me_log("configuring on IG")	# DEBUG
 						resp2,excep2 = session_func(self.session_main,configure_url,headers=headers,data=payload,proxies=proxies,method="post")
 						if not excep2:
 							if resp2 and resp2.status_code == 200:
@@ -2613,18 +2619,25 @@ class MyThread(Thread):
 						thread_list.remove(each)
 						if each.name == "find_suitable_users":
 							dialog.button_find_users_task.setEnabled(True)
+							dialog.button_find_users_task.setText("Add Job to the Queue")
 						elif each.name == "follow_user":
 							dialog.button_follow_task.setEnabled(True)
+							dialog.button_follow_task.setText("Add Job to the Queue")
 						elif each.name == "unfollow_user":
 							dialog.button_unfollow_task.setEnabled(True)
+							dialog.button_unfollow_task.setText("Add Job to the Queue")
 						elif each.name == "find_following_followers":
 							dialog.button_find_following_followers_task.setEnabled(True)
+							dialog.button_find_following_followers_task.setText("Add Job to the Queue")
 						elif each.name == "downloading_posts":
 							dialog.button_download_post_task.setEnabled(True)
+							dialog.button_download_post_task.setText("Add Job to the Queue")
 						elif each.name == "posting":
 							dialog.button_post_task.setEnabled(True)
+							dialog.button_post_task.setText("Add Job to the Queue")
 						elif each.name == "reposting":
 							dialog.button_repost_task.setEnabled(True)
+							dialog.button_repost_task.setText("Add Job to the Queue")
 					c+=1
 			if not queue.empty():
 				item = queue.get()
@@ -2644,18 +2657,25 @@ class MyThread(Thread):
 			shared_resource_lock.release()
 			if thread_list[len(thread_list)-1].name == "find_suitable_users":
 				_instance.button_find_users_task.setEnabled(False)
+				_instance.button_find_users_task.setText("Job is processing")
 			elif thread_list[len(thread_list)-1].name == "follow_user":
 				_instance.button_follow_task.setEnabled(False)
+				_instance.button_follow_task.setText("Job is processing")
 			elif thread_list[len(thread_list)-1].name == "unfollow_user":
 				_instance.button_unfollow_task.setEnabled(False)
+				_instance.button_unfollow_task.setText("Job is processing")
 			elif thread_list[len(thread_list)-1].name == "find_following_followers":
 				_instance.button_find_following_followers_task.setEnabled(False)
+				_instance.button_find_following_followers_task.setText("Job is processing")
 			elif thread_list[len(thread_list)-1].name == "downloading_posts":
 				_instance.button_download_post_task.setEnabled(False)
+				_instance.button_download_post_task.setText("Job is processing")
 			elif thread_list[len(thread_list)-1].name == "posting":
 				_instance.button_post_task.setEnabled(False)
+				_instance.button_post_task.setText("Job is processing")
 			elif thread_list[len(thread_list)-1].name == "reposting":
 				_instance.button_repost_task.setEnabled(False)
+				_instance.button_repost_task.setText("Job is processing")
 class MyGuiThreadTwo(QThread):
 	##global gui_queue,dialog
 	def __init__(self,name):

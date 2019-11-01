@@ -8,39 +8,60 @@ GUI developed with the help of Python module: PySide/PyQt
 
 ## Python Version Support:-
 
-### Python 3
+### For Windows Users
+
+#### Python 3
 
 **Python 3.4.0**
 
+Download Python from here : https://www.python.org/downloads/release/python-340/
+
+Next, Upgrade PIP using below command:-
+`python -m pip install --upgrade pip`
+
+Then install requirements ::
+
 For 32bit:
 
-PySide through pip Or PyQt4 via sourceforge.com
+pip install -r ./requirements/Windows/Python3.4.0_x86.txt
 
 For 64bit:
 
-PySide by .whl Or PyQt4 via sourceforge.com
+pip install -r ./requirements/Windows/Python3.4.0_x64.txt
 
 **Python 3.5.0**
 
 At first, Download "Microsoft Visual C++ 2015 Redistributable Update 3 RC" from https://www.microsoft.com/en-us/download/details.aspx?id=52685 and install vc_redist.x86.exe for 32bit or vc_redist.x64.exe for 64bit
 
+Then Download Python from here : https://www.python.org/downloads/release/python-350/
+
+Next, Upgrade PIP using below command:-
+`python -m pip install --upgrade pip`
+
+Then install requirements ::
+
 For 32bit: 
 
-PySide via .whl Or PyQt4 by via sourceforge.com
+pip install -r ./requirements/Windows/Python3.5.0_x86.txt
 
 For 64bit:
 
-PySide via .whl Or PyQt4 by via sourceforge.com
+pip install -r ./requirements/Windows/Python3.5.0_x64.txt
 
-### Python 2
+#### Python 2
 
 **Python 2.7.8**
 
-At first Download and save get-pip.py from https://bootstrap.pypa.io/get-pip.py and move get-pip.py file into your Python27 directory and change your Terminsl current directory to Python27 & then run below coammnds:
+Download Python from here : https://www.python.org/downloads/release/python-340/
+
+Then Download and save get-pip.py from https://bootstrap.pypa.io/get-pip.py and move get-pip.py file into your Python27 directory and change your Terminsl current directory to Python27 & then run below coammnds:
 
 `python get-pip.py`
 
 it will install pip 
+
+Next, Upgrade PIP using below command:-
+`python -m pip install --upgrade pip`
 
 For 32bit:
 
@@ -53,6 +74,8 @@ PySide through pip (though it is giving dll missing error, but suprisingly it is
 ## Other Dependent Python modules:-
 
 requests
+Pillow
+emojis
 
 
 ## External sites to download wheel(.whl) & executable(.exe) files for GUI Development:-
@@ -72,6 +95,11 @@ or
 https://sourceforge.net/projects/pyqt/files/PyQt4/
 or
 https://www.riverbankcomputing.com/software/pyqt/download
+
+
+## How to Build the App (Documentation)
+
+Video will be avaialble soon
 
 
 ## Demo Video

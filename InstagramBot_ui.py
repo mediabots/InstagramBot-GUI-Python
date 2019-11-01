@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '.\ui\InstagramBot.ui'
 #
-# Created: Fri Nov  1 12:23:55 2019
+# Created: Fri Nov  1 17:27:36 2019
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -338,7 +338,7 @@ class Ui_InstagramBot(object):
         self.followback_day_limit.setGeometry(QtCore.QRect(245, 180, 31, 22))
         self.followback_day_limit.setMinimum(1)
         self.followback_day_limit.setMaximum(30)
-        self.followback_day_limit.setProperty("value", 2)
+        self.followback_day_limit.setProperty("value", 7)
         self.followback_day_limit.setObjectName("followback_day_limit")
         self.label_38 = QtGui.QLabel(self.frame_6)
         self.label_38.setGeometry(QtCore.QRect(10, 152, 261, 16))
@@ -618,7 +618,7 @@ class Ui_InstagramBot(object):
         self.spinBox_6.setGeometry(QtCore.QRect(243, 110, 31, 22))
         self.spinBox_6.setMinimum(1)
         self.spinBox_6.setMaximum(7)
-        self.spinBox_6.setProperty("value", 2)
+        self.spinBox_6.setProperty("value", 7)
         self.spinBox_6.setObjectName("spinBox_6")
         self.checkBox_9 = QtGui.QCheckBox(self.frame_11)
         self.checkBox_9.setGeometry(QtCore.QRect(10, 130, 291, 17))
@@ -1244,7 +1244,7 @@ class Ui_InstagramBot(object):
 
         self.retranslateUi(InstagramBot)
         self.tabWidget.setCurrentIndex(0)
-        self.toolBox_repost.setCurrentIndex(1)
+        self.toolBox_repost.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(InstagramBot)
         InstagramBot.setTabOrder(self.listwidget, self.combo_find_users)
         InstagramBot.setTabOrder(self.combo_find_users, self.line_find_users)

@@ -1,0 +1,5 @@
+requests
+PySide
+PyInstaller==3.5
+Pillow
+emojis==0.4.0

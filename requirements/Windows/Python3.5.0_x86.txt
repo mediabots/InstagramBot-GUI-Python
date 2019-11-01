@@ -1,0 +1,5 @@
+requests
+https://download.lfd.uci.edu/pythonlibs/g5apjq5m/PySide-1.2.4-cp35-cp35m-win32.whl
+PyInstaller==3.5
+Pillow
+emojis==0.4.0

@@ -2702,8 +2702,8 @@ background-color:#fff;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>291</width>
-          <height>137</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2842,8 +2842,8 @@ background-color:#fff;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>291</width>
-          <height>137</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3588,7 +3588,7 @@ Root Folder</string>
   </action>
   <action name="action_Tutorial_How_to_built">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>[Tutorial] How to build this App</string>

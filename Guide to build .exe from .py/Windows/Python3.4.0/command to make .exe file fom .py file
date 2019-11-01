@@ -1,0 +1,2 @@
+cd c:\python34
+.\scripts\PyInstaller.exe InstagramBot.py --onefile --icon=InstagramBot.ico --version-file=version.txt --windowed --clean

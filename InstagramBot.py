@@ -917,9 +917,9 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		if not QDesktopServices.openUrl(url):
 			QMessageBox.warning(self, 'Home Page', 'Could not open url: https://github.com/mediabots/InstagramBot-GUI-Python/issues/new')
 	def open_btc_donation_page(self):
-		url = QUrl('https://www.blockchain.com/btc/address/3Qdt3Cm19TUgFsqpfKnnms9ALxmgqLabou')
+		url = QUrl('https://www.blockchain.com/btc/address/3MwfRuVdjQn2KpRTin4EWVJ4VSmGgcP4ih')
 		if not QDesktopServices.openUrl(url):
-			QMessageBox.warning(self, 'BTC Donation', 'Could not open url: https://www.blockchain.com/btc/address/3Qdt3Cm19TUgFsqpfKnnms9ALxmgqLabou')
+			QMessageBox.warning(self, 'BTC Donation', 'Could not open url: https://www.blockchain.com/btc/address/3MwfRuVdjQn2KpRTin4EWVJ4VSmGgcP4ih')
 	def open_logs(self):
 		url = QUrl(log_path)  
 		if not QDesktopServices.openUrl(url):

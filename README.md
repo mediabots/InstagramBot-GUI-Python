@@ -24,7 +24,11 @@ Next, Upgrade PIP using below command:-
 
 `python -m pip install --upgrade pip`
 
-Then install requirements ::
+Then, download the Github Repoitory file from https://github.com/mediabots/InstagramBot-GUI-Python/archive/master.zip
+
+Extract all the content of "InstagramBot-GUI-Python-master" Folder to Python main Directory.
+
+At last, install requirements ::
 
 For 32bit: 
 
@@ -44,7 +48,11 @@ Next, Upgrade PIP using below command:-
 
 `python -m pip install --upgrade pip`
 
-Then install requirements ::
+Then, download the Github Repoitory file from https://github.com/mediabots/InstagramBot-GUI-Python/archive/master.zip
+
+Extract all the content of "InstagramBot-GUI-Python-master" Folder to Python main Directory.
+
+At last, install requirements ::
 
 For 32bit:
 
@@ -72,6 +80,10 @@ it will install pip
 Next, Upgrade PIP using below command:-
 
 `python -m pip install --upgrade pip`
+
+Then, download the Github Repoitory file from https://github.com/mediabots/InstagramBot-GUI-Python/archive/master.zip
+
+Extract all the content of "InstagramBot-GUI-Python-master" Folder to Python main Directory.
 
 For 32bit:
 
@@ -109,9 +121,10 @@ or
 https://www.riverbankcomputing.com/software/pyqt/download
 
 
-## How to Build the App (Documentation)
+## How to Run & Build the App (Documentation)
 
-Video will be avaialble soon
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=KEl1n5S-RSw" target="_blank"><img src="http://img.youtube.com/vi/KEl1n5S-RSw/0.jpg" 
+alt='How to Build and Run "InstagramBot" App for Windows OS [with Python3]' width="480" height="360" border="10" /></a>
 
 
 ## Demo Video

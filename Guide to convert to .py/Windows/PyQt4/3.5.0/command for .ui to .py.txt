@@ -1,0 +1,2 @@
+cd c:\python35
+.\lib\site-packages\pyqt4\pyuic4.bat .\ui\InstagramBot.ui -o InstagramBot_ui.py

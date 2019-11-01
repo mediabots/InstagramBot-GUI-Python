@@ -1,5 +1,0 @@
-requests
-https://download.qt.io/official_releases/pyside/PySide-1.2.4-cp34-none-win_amd64.whl
-PyInstaller==3.5
-Pillow
-emojis==0.4.0

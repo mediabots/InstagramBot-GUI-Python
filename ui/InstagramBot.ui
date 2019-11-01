@@ -6,24 +6,36 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>840</width>
-    <height>583</height>
+    <width>854</width>
+    <height>600</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>840</width>
-    <height>583</height>
+    <width>854</width>
+    <height>600</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>840</width>
-    <height>583</height>
+    <width>1368</width>
+    <height>768</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>854</width>
+    <height>600</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>InstagramBot  (ver - 1.0.2)</string>
+   <string>InstagramBot  (ver - 1.0.3)</string>
   </property>
   <property name="windowIcon">
    <iconset resource="icons/InstagramBot.qrc">
@@ -53,7 +65,7 @@ QListWidget:item:enabled:selected {
     background-color: #F56040;
 }
 
-QLabel#label_title3,QLabel#label_title6,QLabel#label_title4,QLabel#label_title1,QLabel#label_title2,QLabel#label_title7,QLabel#label_title8,QLabel#label_title5{
+QLabel#label_title3,QLabel#label_title6,QLabel#label_title4,QLabel#label_title1,QLabel#label_title2,QLabel#label_title7,QLabel#label_title8,QLabel#label_title5,QLabel#label_title9,QLabel#label_title10{
 color: #fff;
 font-family: Arial, Helvetica, sans-serif;
 font-size:16px;
@@ -64,7 +76,7 @@ margin:0px;
 border: 2px solid #ccc;
 border-radius:5px;
 }
-QLabel#label_16,QLabel#label_17{
+QLabel#label_16,QLabel#label_17,QLabel#label_51,QLabel#label_52{
 font-weight:bold;
 display:inline-block;
 background-color:#ccc;
@@ -74,7 +86,7 @@ padding:5px;
 #label_23{
 color:red;
 }
-QFrame#frame_5,QFrame#frame_6,QFrame#frame_8,QFrame#frame_10,QFrame#frame_11,QFrame#frame_14{
+QFrame#frame_5,QFrame#frame_6,QFrame#frame_8,QFrame#frame_10,QFrame#frame_11,QFrame#frame_14,QFrame#frame_15,QFrame#frame_16,QFrame#frame_4,#frame,#frame_2,#frame_13{
 border: 1px solid #ccc;
 }
 QPushButton{
@@ -95,11 +107,11 @@ outline: none;
 QPushButton::!enabled{
 background-color:gray;
 }
-#label_36{
+#label_36,#label_13,#label_astric{
 color:green;
 }
-#label_13{
-color:green;
+#label_note{
+font-size:9px;
 }
 #frame_status{
 background-color:#fff;
@@ -121,6 +133,19 @@ color:#000;
 font-weight:bold;
 font-size:9px;
 text-align: right;
+}
+QToolBox#toolBox_repost{
+background-color:none;
+}
+QToolBox QToolBoxButton{
+background-color:gray;
+color: #fff;
+width:10px;
+}
+QToolBox::tab:selected{
+}
+QToolBox QScrollArea&gt;QWidget&gt;QWidget{
+background-color:#fff;
 }</string>
   </property>
   <property name="iconSize">
@@ -141,8 +166,8 @@ text-align: right;
      <rect>
       <x>5</x>
       <y>40</y>
-      <width>168</width>
-      <height>451</height>
+      <width>181</width>
+      <height>471</height>
      </rect>
     </property>
     <property name="cursor" stdset="0">
@@ -206,7 +231,7 @@ text-align: right;
     </item>
     <item>
      <property name="text">
-      <string>Find Suitable Posts</string>
+      <string>Find Suitable Posts,etc</string>
      </property>
      <property name="flags">
       <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable</set>
@@ -214,7 +239,7 @@ text-align: right;
     </item>
     <item>
      <property name="text">
-      <string>Like/Unlike</string>
+      <string>Like/Unlike Posts</string>
      </property>
      <property name="font">
       <font>
@@ -229,7 +254,7 @@ text-align: right;
     </item>
     <item>
      <property name="text">
-      <string>Comment</string>
+      <string>Comment on Posts</string>
      </property>
      <property name="flags">
       <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable</set>
@@ -243,9 +268,6 @@ text-align: right;
     <item>
      <property name="text">
       <string>Post/Repost Images</string>
-     </property>
-     <property name="flags">
-      <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable</set>
      </property>
     </item>
     <item>
@@ -268,14 +290,17 @@ text-align: right;
     </property>
     <property name="geometry">
      <rect>
-      <x>171</x>
-      <y>-22</y>
+      <x>190</x>
+      <y>-21</y>
       <width>661</width>
-      <height>491</height>
+      <height>511</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="currentIndex">
-     <number>8</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -310,8 +335,8 @@ text-align: right;
      <widget class="QFrame" name="frame">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>80</y>
+        <x>10</x>
+        <y>90</y>
         <width>318</width>
         <height>391</height>
        </rect>
@@ -528,7 +553,7 @@ text-align: right;
         <x>10</x>
         <y>90</y>
         <width>311</width>
-        <height>371</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -541,7 +566,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>39</y>
+         <y>40</y>
          <width>291</width>
          <height>20</height>
         </rect>
@@ -561,7 +586,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>330</y>
+         <y>360</y>
          <width>291</width>
          <height>23</height>
         </rect>
@@ -577,8 +602,8 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>67</y>
-         <width>211</width>
+         <y>72</y>
+         <width>201</width>
          <height>20</height>
         </rect>
        </property>
@@ -605,9 +630,9 @@ text-align: right;
        </property>
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>65</y>
-         <width>71</width>
+         <x>220</x>
+         <y>70</y>
+         <width>81</width>
          <height>23</height>
         </rect>
        </property>
@@ -622,7 +647,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>230</x>
-         <y>98</y>
+         <y>110</y>
          <width>71</width>
          <height>22</height>
         </rect>
@@ -641,8 +666,8 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>100</y>
-         <width>91</width>
+         <y>112</y>
+         <width>221</width>
          <height>16</height>
         </rect>
        </property>
@@ -654,7 +679,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>132</y>
+         <y>152</y>
          <width>261</width>
          <height>16</height>
         </rect>
@@ -667,7 +692,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>208</x>
-         <y>130</y>
+         <y>150</y>
          <width>40</width>
          <height>22</height>
         </rect>
@@ -686,7 +711,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>261</x>
-         <y>130</y>
+         <y>150</y>
          <width>40</width>
          <height>22</height>
         </rect>
@@ -708,7 +733,7 @@ text-align: right;
         <x>340</x>
         <y>90</y>
         <width>311</width>
-        <height>371</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -721,7 +746,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>39</y>
+         <y>40</y>
          <width>291</width>
          <height>20</height>
         </rect>
@@ -746,7 +771,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>330</y>
+         <y>360</y>
          <width>291</width>
          <height>23</height>
         </rect>
@@ -762,8 +787,8 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>67</y>
-         <width>211</width>
+         <y>72</y>
+         <width>201</width>
          <height>20</height>
         </rect>
        </property>
@@ -787,9 +812,9 @@ text-align: right;
       <widget class="QPushButton" name="button_unfollow_users">
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>65</y>
-         <width>71</width>
+         <x>220</x>
+         <y>70</y>
+         <width>81</width>
          <height>23</height>
         </rect>
        </property>
@@ -804,7 +829,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>160</y>
+         <y>180</y>
          <width>291</width>
          <height>20</height>
         </rect>
@@ -817,7 +842,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>245</x>
-         <y>160</y>
+         <y>180</y>
          <width>31</width>
          <height>22</height>
         </rect>
@@ -836,7 +861,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>132</y>
+         <y>152</y>
          <width>261</width>
          <height>16</height>
         </rect>
@@ -849,7 +874,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>268</x>
-         <y>130</y>
+         <y>150</y>
          <width>40</width>
          <height>22</height>
         </rect>
@@ -868,8 +893,8 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>100</y>
-         <width>101</width>
+         <y>112</y>
+         <width>221</width>
          <height>16</height>
         </rect>
        </property>
@@ -881,7 +906,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>230</x>
-         <y>98</y>
+         <y>110</y>
          <width>71</width>
          <height>22</height>
         </rect>
@@ -900,7 +925,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>216</x>
-         <y>130</y>
+         <y>150</y>
          <width>40</width>
          <height>22</height>
         </rect>
@@ -919,7 +944,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>261</y>
+         <y>280</y>
          <width>298</width>
          <height>17</height>
         </rect>
@@ -932,7 +957,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>238</y>
+         <y>257</y>
          <width>298</width>
          <height>17</height>
         </rect>
@@ -945,7 +970,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>190</y>
+         <y>209</y>
          <width>298</width>
          <height>19</height>
         </rect>
@@ -958,7 +983,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>215</y>
+         <y>234</y>
          <width>298</width>
          <height>17</height>
         </rect>
@@ -1015,10 +1040,10 @@ text-align: right;
      <widget class="QFrame" name="frame_2">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>80</y>
+        <x>10</x>
+        <y>90</y>
         <width>351</width>
-        <height>381</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -1152,10 +1177,10 @@ text-align: right;
      <widget class="QFrame" name="frame_13">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>80</y>
+        <x>10</x>
+        <y>90</y>
         <width>318</width>
-        <height>381</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -1363,7 +1388,7 @@ text-align: right;
         <x>10</x>
         <y>90</y>
         <width>311</width>
-        <height>361</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -1376,7 +1401,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>39</y>
+         <y>40</y>
          <width>291</width>
          <height>20</height>
         </rect>
@@ -1406,7 +1431,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>330</y>
+         <y>350</y>
          <width>291</width>
          <height>23</height>
         </rect>
@@ -1422,8 +1447,8 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>67</y>
-         <width>211</width>
+         <y>72</y>
+         <width>201</width>
          <height>20</height>
         </rect>
        </property>
@@ -1450,9 +1475,9 @@ text-align: right;
        </property>
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>65</y>
-         <width>71</width>
+         <x>220</x>
+         <y>70</y>
+         <width>81</width>
          <height>23</height>
         </rect>
        </property>
@@ -1468,7 +1493,7 @@ text-align: right;
         <rect>
          <x>10</x>
          <y>100</y>
-         <width>161</width>
+         <width>291</width>
          <height>17</height>
         </rect>
        </property>
@@ -1483,8 +1508,8 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>125</y>
-         <width>82</width>
+         <y>130</y>
+         <width>121</width>
          <height>17</height>
         </rect>
        </property>
@@ -1501,9 +1526,9 @@ text-align: right;
        </property>
        <property name="geometry">
         <rect>
-         <x>110</x>
-         <y>125</y>
-         <width>111</width>
+         <x>130</x>
+         <y>130</y>
+         <width>171</width>
          <height>17</height>
         </rect>
        </property>
@@ -1573,7 +1598,7 @@ text-align: right;
         <x>340</x>
         <y>90</y>
         <width>311</width>
-        <height>361</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -1586,7 +1611,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>39</y>
+         <y>40</y>
          <width>291</width>
          <height>20</height>
         </rect>
@@ -1611,7 +1636,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>330</y>
+         <y>350</y>
          <width>291</width>
          <height>23</height>
         </rect>
@@ -1627,8 +1652,8 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>67</y>
-         <width>211</width>
+         <y>72</y>
+         <width>201</width>
          <height>20</height>
         </rect>
        </property>
@@ -1652,9 +1677,9 @@ text-align: right;
       <widget class="QPushButton" name="button_unlike_posts">
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>65</y>
-         <width>71</width>
+         <x>220</x>
+         <y>70</y>
+         <width>81</width>
          <height>23</height>
         </rect>
        </property>
@@ -1669,7 +1694,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>100</y>
+         <y>110</y>
          <width>291</width>
          <height>20</height>
         </rect>
@@ -1682,7 +1707,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>243</x>
-         <y>100</y>
+         <y>110</y>
          <width>31</width>
          <height>22</height>
         </rect>
@@ -1701,8 +1726,8 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>125</y>
-         <width>161</width>
+         <y>130</y>
+         <width>291</width>
          <height>17</height>
         </rect>
        </property>
@@ -1714,7 +1739,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>182</y>
+         <y>202</y>
          <width>261</width>
          <height>16</height>
         </rect>
@@ -1727,7 +1752,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>230</x>
-         <y>150</y>
+         <y>160</y>
          <width>71</width>
          <height>22</height>
         </rect>
@@ -1746,8 +1771,8 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>152</y>
-         <width>91</width>
+         <y>162</y>
+         <width>211</width>
          <height>16</height>
         </rect>
        </property>
@@ -1759,7 +1784,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>260</x>
-         <y>180</y>
+         <y>200</y>
          <width>40</width>
          <height>22</height>
         </rect>
@@ -1778,7 +1803,7 @@ text-align: right;
        <property name="geometry">
         <rect>
          <x>207</x>
-         <y>180</y>
+         <y>200</y>
          <width>40</width>
          <height>22</height>
         </rect>
@@ -1798,7 +1823,7 @@ text-align: right;
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>272</y>
+        <y>292</y>
         <width>261</width>
         <height>16</height>
        </rect>
@@ -1811,7 +1836,7 @@ text-align: right;
       <property name="geometry">
        <rect>
         <x>270</x>
-        <y>270</y>
+        <y>290</y>
         <width>40</width>
         <height>22</height>
        </rect>
@@ -1830,8 +1855,8 @@ text-align: right;
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>240</y>
-        <width>91</width>
+        <y>252</y>
+        <width>221</width>
         <height>16</height>
        </rect>
       </property>
@@ -1843,7 +1868,7 @@ text-align: right;
       <property name="geometry">
        <rect>
         <x>240</x>
-        <y>238</y>
+        <y>250</y>
         <width>71</width>
         <height>22</height>
        </rect>
@@ -1862,7 +1887,7 @@ text-align: right;
       <property name="geometry">
        <rect>
         <x>210</x>
-        <y>270</y>
+        <y>290</y>
         <width>40</width>
         <height>22</height>
        </rect>
@@ -1916,10 +1941,10 @@ text-align: right;
      <widget class="QFrame" name="frame_4">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>80</y>
+        <x>10</x>
+        <y>90</y>
         <width>351</width>
-        <height>381</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -2093,6 +2118,921 @@ text-align: right;
      <attribute name="title">
       <string/>
      </attribute>
+     <widget class="QLabel" name="label_title9">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>4</y>
+        <width>321</width>
+        <height>69</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Post to your Instagram Account</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line_9">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>70</y>
+        <width>661</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_title10">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>4</y>
+        <width>321</width>
+        <height>69</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Repost to your Instagram Account</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line_10">
+      <property name="geometry">
+       <rect>
+        <x>325</x>
+        <y>3</y>
+        <width>3</width>
+        <height>70</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_15">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>311</width>
+        <height>391</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QComboBox" name="combo_post_images">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>291</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Post from my Monitored Folder</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="button_post_task">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>360</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Add Job to the Queue</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="path_post_images">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>72</y>
+         <width>201</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="placeholderText">
+        <string>Folder location</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_51">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Auto Post Type :</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="button_post_images">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>70</y>
+         <width>81</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Browse File</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="daily_post_limit">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>108</y>
+         <width>71</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>10000</number>
+       </property>
+       <property name="value">
+        <number>50</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_47">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>211</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Daily Posts Limit :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_48">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>142</y>
+         <width>261</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Minute gap between consecutive posts                  to</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="min_post_interval">
+       <property name="geometry">
+        <rect>
+         <x>208</x>
+         <y>140</y>
+         <width>40</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>1440</number>
+       </property>
+       <property name="value">
+        <number>15</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="max_post_interval">
+       <property name="geometry">
+        <rect>
+         <x>261</x>
+         <y>140</y>
+         <width>40</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>1440</number>
+       </property>
+       <property name="value">
+        <number>30</number>
+       </property>
+      </widget>
+      <widget class="QFrame" name="frame_post_basic">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>190</y>
+         <width>301</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QLabel" name="label_45">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>70</y>
+          <width>91</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>@mentions</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_18">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>91</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Header Text</string>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="textEdit_hashtags_post">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>32</y>
+          <width>201</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_46">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>40</y>
+          <width>91</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>#Hashtags</string>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="textEdit_header_post">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>2</y>
+          <width>201</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="textEdit_mentions_post">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>60</y>
+          <width>201</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QCheckBox" name="check_include_own_hashtag_post">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>170</y>
+         <width>298</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Add default Header, #Hashtag and @mentions</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_opacity_post">
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>320</y>
+         <width>21</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>100</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horizontalSlider_post_opacity">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>320</y>
+         <width>161</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="value">
+        <number>80</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="path_post_watermark">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>290</y>
+         <width>201</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="placeholderText">
+        <string>Watermark image(.png) file location</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="button_post_watermark">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>290</y>
+         <width>81</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Browse File</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_53">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>320</y>
+         <width>111</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Watermark Opacity:</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_16">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>90</y>
+        <width>311</width>
+        <height>391</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QComboBox" name="combo_repost_images">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>291</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Repost from Explore</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Repost from a User post feed</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Repost from a Hashtag</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="button_repost_task">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>360</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Add Job to the Queue</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_52">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>291</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Auto Repost Type :</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="daily_repost_limit">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>110</y>
+         <width>71</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>10000</number>
+       </property>
+       <property name="value">
+        <number>50</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_49">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>211</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Daily Reposts Limit :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_50">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>142</y>
+         <width>261</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Minute gap between consecutive reposts              to</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="min_repost_interval">
+       <property name="geometry">
+        <rect>
+         <x>208</x>
+         <y>140</y>
+         <width>40</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>1440</number>
+       </property>
+       <property name="value">
+        <number>15</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="max_repost_interval">
+       <property name="geometry">
+        <rect>
+         <x>261</x>
+         <y>140</y>
+         <width>40</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>1440</number>
+       </property>
+       <property name="value">
+        <number>30</number>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="line_repost_images">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>291</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="placeholderText">
+        <string>username or hashtag</string>
+       </property>
+      </widget>
+      <widget class="QToolBox" name="toolBox_repost">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>164</y>
+         <width>291</width>
+         <height>191</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="page_5">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>291</width>
+          <height>137</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>&gt; Basic Options</string>
+        </attribute>
+        <widget class="QFrame" name="frame_repost">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>-8</y>
+           <width>311</width>
+           <height>151</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QCheckBox" name="check_include_own_hashtag_repost">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>298</width>
+            <height>17</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Include my own Header, #Hashtag and @mentions</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="check_clear_hashtags">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>298</width>
+            <height>17</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Clear existing #Hashtag,URL and @mentions from Posts</string>
+          </property>
+         </widget>
+         <widget class="QFrame" name="frame_repost_basic">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>50</y>
+            <width>301</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label_28">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>70</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>@mentions</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_6">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Header Text</string>
+           </property>
+          </widget>
+          <widget class="QTextEdit" name="textEdit_hashtags_repost">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>32</y>
+             <width>211</width>
+             <height>31</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_10">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>40</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>#Hashtags</string>
+           </property>
+          </widget>
+          <widget class="QTextEdit" name="textEdit_header_repost">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>2</y>
+             <width>211</width>
+             <height>31</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QTextEdit" name="textEdit_mentions_repost">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>62</y>
+             <width>211</width>
+             <height>31</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_6">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>291</width>
+          <height>137</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>&gt; Advanced Options</string>
+        </attribute>
+        <widget class="QRadioButton" name="radio_repost_post_age_week">
+         <property name="geometry">
+          <rect>
+           <x>113</x>
+           <y>20</y>
+           <width>72</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Last Week</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radio_repost_post_age_month">
+         <property name="geometry">
+          <rect>
+           <x>185</x>
+           <y>20</y>
+           <width>71</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Last Month</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radio_repost_post_age_today">
+         <property name="geometry">
+          <rect>
+           <x>54</x>
+           <y>20</y>
+           <width>60</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string> Todays</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radio_repost_post_age_all">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>20</y>
+           <width>34</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>All</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_19">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>291</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Post Age :</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radio_repost_post_age_future">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>60</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Future</string>
+         </property>
+        </widget>
+        <widget class="QSlider" name="horizontalSlider_repost_opacity">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>100</y>
+           <width>161</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>80</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_26">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>100</y>
+           <width>111</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Watermark Opacity:</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_opacity_repost">
+         <property name="geometry">
+          <rect>
+           <x>270</x>
+           <y>100</y>
+           <width>21</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>100</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="button_repost_watermark">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>210</x>
+           <y>68</y>
+           <width>81</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Browse File</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="path_repost_watermark">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>70</y>
+           <width>201</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Watermark image(.png) file location</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_note">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>281</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string> Future option would monitor the traget 24x7</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_astric">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>50</y>
+           <width>16</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>**</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_7">
      <attribute name="title">
@@ -2119,7 +3059,7 @@ text-align: right;
          <x>0</x>
          <y>0</y>
          <width>651</width>
-         <height>471</height>
+         <height>491</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -2132,9 +3072,9 @@ text-align: right;
         <property name="geometry">
          <rect>
           <x>260</x>
-          <y>30</y>
+          <y>50</y>
           <width>381</width>
-          <height>376</height>
+          <height>371</height>
          </rect>
         </property>
         <property name="alternatingRowColors">
@@ -2175,9 +3115,9 @@ text-align: right;
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>30</y>
-          <width>221</width>
-          <height>181</height>
+          <y>50</y>
+          <width>231</width>
+          <height>201</height>
          </rect>
         </property>
         <property name="frameShape">
@@ -2190,8 +3130,8 @@ text-align: right;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>12</y>
-           <width>201</width>
+           <y>20</y>
+           <width>211</width>
            <height>24</height>
           </rect>
          </property>
@@ -2203,8 +3143,8 @@ text-align: right;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>42</y>
-           <width>201</width>
+           <y>50</y>
+           <width>211</width>
            <height>24</height>
           </rect>
          </property>
@@ -2225,7 +3165,7 @@ text-align: right;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>90</y>
+           <y>100</y>
            <width>131</width>
            <height>20</height>
           </rect>
@@ -2238,8 +3178,8 @@ text-align: right;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>146</y>
-           <width>71</width>
+           <y>160</y>
+           <width>81</width>
            <height>23</height>
           </rect>
          </property>
@@ -2254,8 +3194,8 @@ text-align: right;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>70</y>
-           <width>141</width>
+           <y>80</y>
+           <width>201</width>
            <height>16</height>
           </rect>
          </property>
@@ -2266,8 +3206,8 @@ text-align: right;
         <widget class="QLineEdit" name="line_proxy_port">
          <property name="geometry">
           <rect>
-           <x>150</x>
-           <y>90</y>
+           <x>160</x>
+           <y>100</y>
            <width>61</width>
            <height>20</height>
           </rect>
@@ -2280,8 +3220,8 @@ text-align: right;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>116</y>
-           <width>100</width>
+           <y>130</y>
+           <width>101</width>
            <height>20</height>
           </rect>
          </property>
@@ -2292,8 +3232,8 @@ text-align: right;
         <widget class="QLineEdit" name="line_proxy_password">
          <property name="geometry">
           <rect>
-           <x>112</x>
-           <y>116</y>
+           <x>120</x>
+           <y>130</y>
            <width>100</width>
            <height>20</height>
           </rect>
@@ -2305,8 +3245,8 @@ text-align: right;
         <widget class="QLabel" name="label_collon">
          <property name="geometry">
           <rect>
-           <x>144</x>
-           <y>92</y>
+           <x>150</x>
+           <y>100</y>
            <width>16</width>
            <height>16</height>
           </rect>
@@ -2316,25 +3256,12 @@ text-align: right;
          </property>
         </widget>
        </widget>
-       <widget class="QPushButton" name="remove">
-        <property name="geometry">
-         <rect>
-          <x>260</x>
-          <y>437</y>
-          <width>151</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Remove selected Accounts</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_20">
         <property name="geometry">
          <rect>
           <x>260</x>
-          <y>10</y>
-          <width>161</width>
+          <y>20</y>
+          <width>381</width>
           <height>16</height>
          </rect>
         </property>
@@ -2346,8 +3273,8 @@ text-align: right;
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>10</y>
-          <width>71</width>
+          <y>20</y>
+          <width>221</width>
           <height>16</height>
          </rect>
         </property>
@@ -2359,7 +3286,7 @@ text-align: right;
         <property name="geometry">
          <rect>
           <x>278</x>
-          <y>406</y>
+          <y>427</y>
           <width>361</width>
           <height>31</height>
          </rect>
@@ -2373,7 +3300,7 @@ So to use Multiple Accounts, you have to run multiple copies of this App. </stri
         <property name="geometry">
          <rect>
           <x>260</x>
-          <y>410</y>
+          <y>430</y>
           <width>46</width>
           <height>13</height>
          </rect>
@@ -2386,8 +3313,8 @@ So to use Multiple Accounts, you have to run multiple copies of this App. </stri
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>230</y>
-          <width>221</width>
+          <y>270</y>
+          <width>231</width>
           <height>101</height>
          </rect>
         </property>
@@ -2401,8 +3328,8 @@ So to use Multiple Accounts, you have to run multiple copies of this App. </stri
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>10</y>
-           <width>201</width>
+           <y>20</y>
+           <width>211</width>
            <height>23</height>
           </rect>
          </property>
@@ -2414,7 +3341,7 @@ So to use Multiple Accounts, you have to run multiple copies of this App. </stri
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>40</y>
+           <y>50</y>
            <width>201</width>
            <height>41</height>
           </rect>
@@ -2430,8 +3357,8 @@ beside Application Root Folder</string>
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>270</y>
-          <width>201</width>
+          <y>320</y>
+          <width>211</width>
           <height>41</height>
          </rect>
         </property>
@@ -2443,12 +3370,25 @@ Root Folder</string>
        </widget>
       </widget>
      </widget>
+     <widget class="QPushButton" name="remove">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>460</y>
+        <width>161</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Remove selected Accounts</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QFrame" name="frame_logo">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>0</y>
       <width>172</width>
       <height>43</height>
@@ -2477,8 +3417,8 @@ Root Folder</string>
    <widget class="QFrame" name="frame_status">
     <property name="geometry">
      <rect>
-      <x>172</x>
-      <y>470</y>
+      <x>190</x>
+      <y>490</y>
       <width>659</width>
       <height>20</height>
      </rect>
@@ -2492,7 +3432,7 @@ Root Folder</string>
     <widget class="QLabel" name="label_status">
      <property name="geometry">
       <rect>
-       <x>4</x>
+       <x>10</x>
        <y>2</y>
        <width>651</width>
        <height>16</height>
@@ -2509,7 +3449,7 @@ Root Folder</string>
     <bool>false</bool>
    </property>
    <property name="sizeGripEnabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -2517,7 +3457,7 @@ Root Folder</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>840</width>
+     <width>854</width>
      <height>21</height>
     </rect>
    </property>
@@ -2534,8 +3474,9 @@ Root Folder</string>
      <string>Home Page</string>
     </property>
     <addaction name="actionGithub_Project_URL"/>
-    <addaction name="actionDoccumentation_Video"/>
+    <addaction name="separator"/>
     <addaction name="action_Tutorial_How_to_built"/>
+    <addaction name="actionDoccumentation_Video"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -2623,6 +3564,9 @@ Root Folder</string>
    </property>
   </action>
   <action name="actionGithub_Project_URL">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="icons/InstagramBot.qrc">
      <normaloff>:/Others/github_trans.png</normaloff>:/Others/github_trans.png</iconset>
@@ -2636,7 +3580,7 @@ Root Folder</string>
   </action>
   <action name="actionDoccumentation_Video">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Documentation Video</string>
@@ -2821,7 +3765,6 @@ Root Folder</string>
   <tabstop>line_proxy_port</tabstop>
   <tabstop>line_proxy_user</tabstop>
   <tabstop>line_proxy_password</tabstop>
-  <tabstop>remove</tabstop>
  </tabstops>
  <resources>
   <include location="icons/InstagramBot.qrc"/>

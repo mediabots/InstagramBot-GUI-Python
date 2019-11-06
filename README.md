@@ -137,5 +137,5 @@ alt='Intro to "InstagramBot" for Windows | Portable App(GUI,Multi Tasking) | PyQ
 alt="InstagramBot GUI For Windows - How to handle Multiple Instagram accounts [Tutorial]" width="480" height="360" border="10" /></a>
 
 ### [Tutorial] How to use "Download posts" & "Post Repost Images" Features
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=https://youtu.be/Cuz61VdDBkM" target="_blank"><img src="http://img.youtube.com/vi/https://youtu.be/Cuz61VdDBkM/0.jpg" 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Cuz61VdDBkM" target="_blank"><img src="http://img.youtube.com/vi/Cuz61VdDBkM/0.jpg" 
 alt="InstagramBot GUI For Windows - How to use 'Download posts' & 'Post Repost Images' Features [Tutorial]" width="480" height="360" border="10" /></a>

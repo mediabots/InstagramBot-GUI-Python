@@ -5,6 +5,8 @@ Instagram Bot with Graphical user Interface &amp; Multi tasking; fully written i
 GUI developed with the help of Python module: PySide/PyQt
 
 
+![alt text](https://i.imgur.com/yetW8VJ.png "Screenhot of 'InstagramBOT' from Windows 10") 
+
 
 ## Python Version Support:-
 

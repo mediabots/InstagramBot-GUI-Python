@@ -131,6 +131,8 @@ alt='How to Build and Run "InstagramBot" App for Windows OS [with Python3]' widt
 
 ## Demo Video
 
+### [Tutorial] How to use Basic features of InstagramBot - part 1
+
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=6HdsJ54bfoE" target="_blank"><img src="http://img.youtube.com/vi/6HdsJ54bfoE/0.jpg" 
 alt='Intro to "InstagramBot" for Windows | Portable App(GUI,Multi Tasking) | PyQt4/PySide Python [Part-1]' width="480" height="360" border="10" /></a>
 

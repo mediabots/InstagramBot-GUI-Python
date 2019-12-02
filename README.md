@@ -58,7 +58,7 @@ At last, install requirements ::
 
 For 32bit:
 
-`pip install -r ./requirements/Windows/Python3.4.0_x86.txt`
+`.\scripts\pip.exe install -r ./requirements/Windows/Python3.4.0_x86.txt`
 
 For 64bit:
 
@@ -143,3 +143,6 @@ alt="InstagramBot GUI For Windows - How to handle Multiple Instagram accounts [T
 ### [Tutorial] How to use "Download posts" & "Post Repost Images" Features
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=Cuz61VdDBkM" target="_blank"><img src="http://img.youtube.com/vi/Cuz61VdDBkM/0.jpg" 
 alt="InstagramBot GUI For Windows - How to use 'Download posts' & 'Post Repost Images' Features [Tutorial]" width="480" height="360" border="10" /></a>
+
+### [Tutorial] How to use "Find Suitable Posts" & "Like/Unlike Post & Comments" Features
+Video Coming Soon..

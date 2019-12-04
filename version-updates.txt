@@ -6,14 +6,14 @@ III) Find a list of Following & Followers, as well as Followback & Fans of a spe
 IV) Add your Instagram login information with Proxy
 V) Full Detailed Logs File for everyday
 --------------------
-MediaBOTS.net - version 1.0.2 - Initial(23 Aug 2019)
+MediaBOTS.net - version 1.0.2 - (23 Aug 2019)
 New Features- 
 VI) Download Posts
 VII) Handle Multiple Instagram Accounts
 Bug Fixed for-
 Auto unfollow if the user did not followback within x days
 --------------------
-MediaBOTS.net - version 1.0.3 - Initial(31 October 2019)
+MediaBOTS.net - version 1.0.3 - (31 October 2019)
 New Features- 
 VIII) Post/Repost Images - along with your own #Hashtag, @mentions, Headers, emojis & Watermark.
 Bug Fixed for-
@@ -21,4 +21,17 @@ Bug Fixed for-
 Features Updated for-
 Follow/Unfollow users{"Headers" & "Cookies" are updated for Browser}
 Find Suitable users{New Instagram Mobile "User-Agents" are introduced on Browser}
+--------------------
+MediaBOTS.net - version 1.0.4 - (4 December 2019)
+New Features- 
+IX) Find Suitable Posts to Like/Comment
+X) Like/Unlike Posts 
+Bug Fixed for-
+Proxy
+Features Updated for-
+1)Stop Option introduced for All Features
+2)Scrapping limit introduced for 'Find Followers & Following' Feature
+3)Clear All option introduced for Reposting feature
+4)For Reposting feature, Default Post age changed to 'Todays' from 'Future' under Advanced Options
+5)Auto save & load default Header, #Hashtag and @mentions for Posting & Reposting Feature
 --------------------

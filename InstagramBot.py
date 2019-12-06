@@ -21,9 +21,9 @@ Dependent Python modules:
 License:
 	CC/Open-source/Free
 Version:
-	1.0.3
+	1.0.4
 Release Date:
-	31-Oct-2019
+	5-Dec-2019
 '''	
 
 ########### Python Modules/Packages
@@ -39,7 +39,7 @@ except:
 import os
 import sys
 import time
-
+import math
 import json
 import re
 import string
@@ -72,7 +72,7 @@ import InstagramBot_ui
 
 gui_queue = Queue()
 os_user_directory = os.path.expanduser("~")
-app_version = "1.0.3"
+app_version = "1.0.4"
 directory_chnaged = False
 documents = "Documents"
 
@@ -96,8 +96,14 @@ try:
 	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","userid to username.txt")):
 		with open(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","userid to username.txt"),"w") as f:
 			f.write("")
+	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","postid to shortcode.txt")):
+		with open(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","postid to shortcode.txt"),"w") as f:
+			f.write("")
 	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","user does not exist.txt")):
 		with open(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","user does not exist.txt"),"w") as f:
+			f.write("")
+	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","post does not exist.txt")):
+		with open(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","post does not exist.txt"),"w") as f:
 			f.write("")
 	if not os.path.exists(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","Logs")):
 		os.mkdir(os.path.join(os_user_directory,documents,"MediaBOTS","InstagramBOT","Logs"))
@@ -121,12 +127,27 @@ if os.path.exists(os.path.join(path_app_directory,"userid to username.txt")):
 			if each:
 				id_to_user[each.split(":")[0]]=each.split(":")[1]
 				user_to_id[each.split(":")[1]]=each.split(":")[0]
+				
+id_to_shortcode = dict()
+shortcode_to_id =  dict()
+
+if os.path.exists(os.path.join(path_app_directory,"postid to shortcode.txt")):
+	path = os.path.join(path_app_directory,"postid to shortcode.txt")
+	f = open(path,"r").read().strip()
+	if f:
+		for each in f.split("\n"):
+			if each:
+				id_to_shortcode[each.split(":")[0]]=each.split(":")[1]
+				shortcode_to_id[each.split(":")[1]]=each.split(":")[0]
 
 url_follow = "https://www.instagram.com/web/friendships/%s/follow/"
 url_unfollow = "https://www.instagram.com/web/friendships/%s/unfollow/"
+url_like = "https://www.instagram.com/web/likes/%s/like/"
+url_unlike = "https://www.instagram.com/web/likes/%s/unlike/"
 url_home = "https://www.instagram.com/"
 url_login = "https://www.instagram.com/accounts/login/ajax/"
 url_user_detail = "https://www.instagram.com/%s/"
+url_post_detail = "https://www.instagram.com/p/%s/"
 url_graphql = "https://www.instagram.com/graphql/query/"
 # Google Dev Browser Agents
 list_of_ua = ['Mozilla/5.0 (BB10; Touch) AppleWebKit/537.10+ (KHTML, like Gecko) Version/10.0.9.2372 Mobile Safari/537.10+', 'Mozilla/5.0 (PlayBook; U; RIM Tablet OS 2.1.0; en-US) AppleWebKit/536.2+ (KHTML like Gecko) Version/7.2.1.0 Safari/536.2+', 'Mozilla/5.0 (Linux; U; Android 4.3; en-us; SM-N900T Build/JSS15J) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30', 'Mozilla/5.0 (Linux; U; Android 4.1; en-us; GT-N7100 Build/JRO03C) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30', 'Mozilla/5.0 (Linux; U; Android 4.0; en-us; GT-I9300 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30', 'Mozilla/5.0 (Linux; U; en-us; KFAPWI Build/JDQ39) AppleWebKit/535.19 (KHTML, like Gecko) Silk/3.13 Safari/535.19 Silk-Accelerated=true', 'Mozilla/5.0 (Linux; U; Android 4.4.2; en-us; LGMS323 Build/KOT49I.MS32310c) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3329.0 Mobile Safari/537.36', 'Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; Microsoft; Lumia 550) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Mobile Safari/537.36 Edge/14.14263', 'Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; Microsoft; Lumia 950) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Mobile Safari/537.36 Edge/14.14263', 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 10 Build/MOB31T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3329.0 Safari/537.36', 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3329.0 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3329.0 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 7.1.1; Nexus 6 Build/N6F26U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3329.0 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 8.0.0; Nexus 5X Build/OPR4.170623.006) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3329.0 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 8.0.0; Nexus 6P Build/OPP3.170518.006) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3329.0 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3329.0 Safari/537.36', 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 10 Build/MOB31T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3329.0 Safari/537.36', 'Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; Lumia 520)', 'Mozilla/5.0 (MeeGo; NokiaN9) AppleWebKit/534.13 (KHTML, like Gecko) NokiaBrowser/8.5.0 Mobile Safari/534.13', 'Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53', 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3329.0 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3329.0 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2 XL Build/OPD1.170816.004) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3329.0 Mobile Safari/537.36', 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1', 'Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1', 'Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1']
@@ -144,12 +165,17 @@ shared_resource_lock = threading.Lock()
 my_followers = []
 my_following = []
 my_following_app = []
+my_liked = []
 bad_usernames = []
+bad_shortcodes = []
 exclude_usernames = []
 
 if os.path.exists(os.path.join(path_app_directory,"user does not exist.txt")):
 	path = os.path.join(path_app_directory,"user does not exist.txt")
 	bad_usernames = open(path,"r").read().strip().split("\n")
+if os.path.exists(os.path.join(path_app_directory,"post does not exist.txt")):
+	path = os.path.join(path_app_directory,"post does not exist.txt")
+	bad_shortcodes = open(path,"r").read().strip().split("\n")
 	
 ####### FUNTIONS #######
 
@@ -208,7 +234,7 @@ def get_username_by_user_id_via_api(self,user_id,login=True): #
 	try:
 		_url_info = "https://i.instagram.com/api/v1/users/%s/info/" % (user_id)
 		if login:
-			resp,excep = session_func(self.session_main,_url_info,headers=api_headers_1,redirects=False,wait=0) # <Doc> for API, host must changed to 'i.instagram.com'
+			resp,excep = session_func(self.session_main,_url_info,headers=api_headers_1,redirects=False,wait=0,proxies=proxies) # <Doc> for API, host must changed to 'i.instagram.com'
 		else:
 			resp,excep = session_func(session_temp,_url_info,headers=api_headers_1,redirects=False,wait=0) 
 		if not excep:
@@ -242,7 +268,7 @@ def get_username_by_user_id_via_api(self,user_id,login=True): #
 	return (user_name,ret)
 		
 def get_username_by_user_id(self,user_id): # no login required  # better use get_username_by_user_id_via_api() 
-	##global id_to_user
+	##global id_to_user,proxies
 	user_id = str(user_id)
 	user_name = ""
 	if user_id in id_to_user:
@@ -287,7 +313,7 @@ def get_username_by_user_id(self,user_id): # no login required  # better use get
 #End of the Function get_username_by_user_id()
 
 def get_user_id_by_username(self,user_name):  # no login required
-	##global user_to_id
+	##global user_to_id,proxies
 	user_id = "";is_private = False
 	url_info = url_user_detail % (user_name)
 	_url_info = url_info+"?__a=1"
@@ -340,6 +366,7 @@ def get_user_id_by_username(self,user_name):  # no login required
 #End of the Function get_user_id_by_username()
 
 def get_user_details(self,user_name,login=False): # no login required
+	#global proxies
 	url_info = url_user_detail % (user_name)
 	_url_info = url_info+"?__a=1"
 	try:
@@ -378,6 +405,47 @@ def get_user_details(self,user_name,login=False): # no login required
 	return False
 #End of the Function get_user_details()
 
+def get_post_details_with_logged_in(self,shortcode,login=True): # login required
+	#global proxies
+	url_info = url_post_detail % (shortcode)
+	_url_info = url_info+"?__a=1"
+	try:
+		if login:
+			resp,excep = session_func(self.session_main,_url_info,proxies=proxies)
+		else:
+			resp,excep = session_func(session_temp,_url_info)
+			if not excep:
+				if (not resp.content or resp.text == '{}') or resp.url != _url_info: # if resp is Blank/None Or resp.url is 'https://www.instagram.com/accounts/login/'
+					write_me_log("{} ,redirecting to login page".format(len(resp.content)))
+					resp,excep = session_func(self.session_main,_url_info,proxies=proxies) # try to reopen the web with logged in session 
+			else:
+				write_me_log("[Exception(Exception-I)] ")
+				app_exit()
+		if not excep:
+			if resp and resp.status_code == 200:
+				if (not resp.content or resp.text == '{}'):
+					write_me_log("[Err] Post details not Found!")
+					return (False,False)
+				data = resp.json() # resp.json() may return {} or something else # this may also lead an exception 
+				media = data["graphql"]["shortcode_media"]
+				if login:
+					return ([media["viewer_has_liked"],media["owner"]["username"]])
+				else:
+					return False
+			elif resp.status_code == 404:
+				write_me_log("[Err] No Post Found!!")
+				return (False,False)
+			else:
+				write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+		else:
+			write_me_log("[Exception(Exception-II)] ")
+			app_exit()
+	except Exception as err:
+		write_me_log("[Exception] exception error <during : get_post_details_with_logged_in() >>> {}".format(err))
+		app_exit()
+	return False
+#End of the Function get_post_details_with_logged_in()
+
 def session_func(s,url,headers={},redirects=True,params=None,data=None,proxies=None,method="get",wait=random.randrange(5,10)):
 	'''try:
 		headers = argv[0]
@@ -401,7 +469,7 @@ def session_func(s,url,headers={},redirects=True,params=None,data=None,proxies=N
 				else:
 					response = s.get(url,allow_redirects=redirects,params=params,verify=False, timeout=timeout,proxies=proxies)
 			elif method == "post":
-				response = s.post(url,verify=False, timeout=timeout,data=data,proxies=proxies)
+				response = s.post(url,verify=False,data=data,proxies=proxies) # ,timeout=timeout
 			if response.status_code == 200:
 				get = True
 			else:
@@ -531,6 +599,12 @@ def user_does_not_exist(user_name):
 		f.write("{}\n".format(user_name))
 # End of user_does_not_exist()
 
+def post_does_not_exist(shortcode):
+	bad_shortcodes.append(shortcode)
+	with open(os.path.join(path_app_directory,"post does not exist.txt"),"a+") as f:
+		f.write("{}\n".format(shortcode))
+# End of post_does_not_exist()
+
 def update_file(text_file_path,list,value):
 	list.append(value)
 	with open(text_file_path,"a+") as f:
@@ -580,15 +654,16 @@ def sha256sum(filepath):
 
 class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 	# accessing global variables
-	global url_follow,url_unfollow,url_home,url_login,url_user_detail,url_graphql,list_of_ua,accept_language,queue,path_app_directory,id_to_user,user_to_id,proxies,timeout\
-	,shared_resource_lock,my_followers,my_following,my_following_app,bad_usernames,exclude_usernames,app_version
+	global url_follow,url_unfollow,url_home,url_login,url_user_detail,url_graphql,list_of_ua,accept_language,queue,path_app_directory,id_to_user,user_to_id,id_to_shortcode,shortcode_to_id,proxies,timeout\
+	,shared_resource_lock,my_followers,my_following,my_following_app,my_liked,bad_usernames,bad_shortcodes,exclude_usernames,app_version\
+	,url_like,url_unlike
 	
 	def __init__(self):
 		QMainWindow.__init__(self)
-		self.setFixedSize(QSize(840, 583))
-		self.resize(840, 583)
-		self.setMinimumSize(QSize(840, 583))
-		self.setMaximumSize(QSize(840, 583))
+		'''self.setFixedSize(QSize(860, 600))
+		self.resize(860, 600)
+		self.setMinimumSize(QSize(860, 600))
+		self.setMaximumSize(QSize(860, 600))'''
 		self.setCursor(Qt.PointingHandCursor)
 		self.setupUi(self)
 		
@@ -698,7 +773,18 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 							self.posted_list = open(os.path.join(self.path_users_directory,self.username,"myStatus","posted.txt"),"r").read().strip().split("\n")
 						if os.path.exists(os.path.join(self.path_users_directory,self.username,"myStatus","imagehashes.txt")):
 							self.imagehashes_list = open(os.path.join(self.path_users_directory,self.username,"myStatus","imagehashes.txt"),"r").read().strip().split("\n")	
-						
+						#
+						if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myList","like.txt")):
+							open(os.path.join(self.path_users_directory,self.username,"myList","like.txt"),"w+")
+						if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myList","unlike.txt")):
+							open(os.path.join(self.path_users_directory,self.username,"myList","unlike.txt"),"w+")
+						if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myList","comment.txt")):
+							open(os.path.join(self.path_users_directory,self.username,"myList","comment.txt"),"w+")
+						if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myList","uncomment.txt")):
+							open(os.path.join(self.path_users_directory,self.username,"myList","uncomment.txt"),"w+")
+						if not os.path.exists(os.path.join(self.path_users_directory,self.username,"etc","users_posts_to_be_liked.txt")):
+							with open(os.path.join(self.path_users_directory,self.username,"etc","users_posts_to_be_liked.txt"),"w+") as f:
+								f.write("leomessi,\nshakira,\n")
 		# set tab to index 0 & select 1st item of the list
 		self.listwidget.item(0).setSelected(True)
 		self.tabWidget.setCurrentIndex(0)
@@ -711,13 +797,16 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			self.line_find_users.setText(self.username)
 			self.line_download_type.setText(self.username)
 			self.line_repost_images.setText(self.username)
+			self.line_find_posts.setText(self.username)
 		else:
 			self.line_find_users.setText("[At first, add an Instagram account]")
 			self.line_download_type.setText("[At first, add an Instagram account]")
 			self.line_repost_images.setText("[At first, add an Instagram account]")
+			self.line_find_posts.setText("[At first, add an Instagram account]")
 		self.line_find_users.setReadOnly(True)
 		self.line_download_type.setReadOnly(True)
 		self.line_repost_images.setReadOnly(True)
+		self.line_find_posts.setReadOnly(True)
 		
 		# Account Settings
 		self.logintable.setColumnCount(0)
@@ -758,10 +847,23 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			self.button_enable_multi_account.setEnabled(False)
 			self.button_enable_multi_account.setText("Multiple Account Support Enabled")
 		
+		# Stop buttons
+		self.button_find_users_task_stop.hide()
+		self.button_follow_task_stop.hide()
+		self.button_unfollow_task_stop.hide()
+		self.button_find_following_followers_task_stop.hide()
+		self.button_find_posts_task_stop.hide()
+		self.button_like_posts_task_stop.hide()
+		self.button_unlike_posts_task_stop.hide()
+		self.button_download_post_task_stop.hide()
+		self.button_post_task_stop.hide()
+		self.button_repost_task_stop.hide()
+		#
+		
 		# Find Following & Followers
 		self.browse_find_following_followers.clicked.connect(self.browse_following_followers)
 		self.button_find_following_followers_task.clicked.connect(self.add_find_following_followers_task)
-		
+		##self.button_find_following_followers_task_stop.clicked.connect(self.remove_find_following_followers_task)
 		
 		# Follow/Unfollow
 		self.combo_follow_users.currentIndexChanged.connect(self.select_follow_users)
@@ -791,6 +893,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		#
 		##self.button_follow_users.clicked.connect(self.browse_follow_users) #disabled
 		##self.button_unfollow_users.clicked.connect(self.browse_unfollow_users) #disabled
+		self.button_unfollow_users_whitelist.clicked.connect(self.browse_unfollow_users_whitelist)
 		#
 		self.path_post_images.setReadOnly(True)
 		#
@@ -803,21 +906,47 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		else:
 			self.path_follow_users.setReadOnly(True)
 			self.path_unfollow_users.setReadOnly(True)
+			#self.self.path_post_images.setReadOnly(True)
 			self.button_follow_users.setEnabled(False)
 			self.button_unfollow_users.setEnabled(False)
-		
+		#
+		self.button_follow_task_stop.clicked.connect(self.remove_follow_users_task)
+		self.button_unfollow_task_stop.clicked.connect(self.remove_unfollow_users_task)
 		# Like/Unlike
-		self.combo_like_posts.currentIndexChanged.connect(self.browse_like_posts)
-		self.check_like_posts.hide()
-		self.radio_like_posts1.setChecked(True)
-		self.radio_like_posts1.setEnabled(False)
-		self.radio_like_posts2.setEnabled(False)
-		
+		self.combo_like_posts.currentIndexChanged.connect(self.select_like_posts)
+		self.combo_unlike_posts.currentIndexChanged.connect(self.select_unlike_posts)
+		#
+		if self.username:
+			self.path_like_posts.setText(QDir.toNativeSeparators(os.path.join(self.path_users_directory,self.username,"myList","like.txt")))
+			self.path_unlike_posts.setText(QDir.toNativeSeparators(os.path.join(self.path_users_directory,self.username,"myList","unlike.txt")))
+		else:
+			self.path_like_posts.setReadOnly(True)
+			self.path_unlike_posts.setReadOnly(True)	
+		#
+		self.frame_like_post_frequency.hide()
+		self.radio_like_post_user_type_any.setChecked(True)
+		self.radio_like_post_frequency_all.setChecked(True)
+		self.button_like_posts.setEnabled(True)
+		self.button_unlike_posts.setEnabled(False)
+		#
+		self.frame_unlike_post_user_type.hide()
+		self.check_unlike_post_recently_liked.hide()
+		self.unlike_day_limit.hide()
+		self.check_unlike_post_recently_liked.setChecked(True)
+		#
+		self.button_like_posts.clicked.connect(self.browse_like_posts)
+		#
+		self.button_like_posts_task.clicked.connect(self.add_like_posts_task)
+		#
+		self.button_unlike_posts_task.clicked.connect(self.add_unlike_posts_task)
+		#
+		self.button_like_posts_task_stop.clicked.connect(self.remove_like_posts_task)
+		self.button_unlike_posts_task_stop.clicked.connect(self.remove_unlike_posts_task)
 		# Find suitable users
 		self.combo_find_users.currentIndexChanged.connect(self.select_find_users)
 		#
 		self.button_find_users_task.clicked.connect(self.add_find_users_task)
-		
+		self.button_find_users_task_stop.clicked.connect(self.remove_find_users_task)
 		# Download Posts
 		self.button_download_post_task.clicked.connect(self.add_download_post_task)
 		self.combo_download_type.currentIndexChanged.connect(self.select_download_type)
@@ -826,6 +955,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		self.radio_download_post_age_today.setChecked(True)
 		#
 		self.line_download_post_excel_location.setEnabled(False)
+		self.button_download_post_task_stop.clicked.connect(self.remove_download_post_task)
 		# Post
 		self.button_post_task.clicked.connect(self.add_post_task)	
 		self.button_post_images.clicked.connect(self.browse_post_images)
@@ -838,23 +968,51 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		self.label_opacity_post.setText(self.horizontalSlider_post_opacity.value().__str__())
 		#
 		self.button_post_watermark.clicked.connect(self.browse_post_watermark)
+		#
+		if os.path.exists(os.path.join(self.path_users_directory,self.username,"etc","post_text.txt")):
+			post_text_list = open(os.path.join(self.path_users_directory,self.username,"etc","post_text.txt"),"r").read().split("\n\n")
+			self.check_include_own_hashtag_post.setChecked(True)
+			self.textEdit_header_post.setPlainText(post_text_list[0])
+			self.textEdit_hashtags_post.setPlainText(post_text_list[1])
+			self.textEdit_mentions_post.setPlainText(post_text_list[2])
+		#
+		self.button_post_task_stop.clicked.connect(self.remove_post_task)
 		# Repost
 		self.button_repost_task.clicked.connect(self.add_repost_task)
 		self.combo_repost_images.currentIndexChanged.connect(self.select_repost_images)
 		#
 		self.check_include_own_hashtag_repost.stateChanged.connect(self.include_own_hashtag_repost)
-		self.check_clear_hashtags.setChecked(True)
+		self.radio_clear_all.setChecked(True)
 		self.check_include_own_hashtag_repost.setChecked(True)
 		#
 		self.toolBox_repost.currentChanged.connect(self.change_current_text)
 		self.toolBox_repost.setItemText(0,"˅ Basic Options")
 		#
-		self.radio_repost_post_age_future.setChecked(True)
+		self.radio_repost_post_age_today.setChecked(True)
 		#
 		self.horizontalSlider_repost_opacity.valueChanged.connect(self.repost_opacity)
 		self.label_opacity_repost.setText(self.horizontalSlider_repost_opacity.value().__str__())
 		#
 		self.button_repost_watermark.clicked.connect(self.browse_repost_watermark)
+		#
+		if os.path.exists(os.path.join(self.path_users_directory,self.username,"etc","repost_text.txt")):
+			repost_text_list = open(os.path.join(self.path_users_directory,self.username,"etc","repost_text.txt"),"r").read().split("\n\n")
+			self.check_include_own_hashtag_repost.setChecked(True)
+			self.textEdit_header_repost.setPlainText(repost_text_list[0])
+			self.textEdit_hashtags_repost.setPlainText(repost_text_list[1])
+			self.textEdit_mentions_repost.setPlainText(repost_text_list[2])
+		#
+		self.button_repost_task_stop.clicked.connect(self.remove_repost_task)
+		# Find suitable Posts
+		self.button_find_posts_task.clicked.connect(self.add_find_posts_task)	
+		self.combo_find_posts.currentIndexChanged.connect(self.select_find_posts)
+		self.Button_like.setCheckable(True)
+		self.Button_comment.setCheckable(True)
+		self.Button_like.toggled.connect(self.find_posts_like_set_reset)
+		self.Button_comment.toggled.connect(self.find_posts_comment_set_reset)
+		self.Button_comment.setChecked(True)
+		self.radio_post_type_all.setChecked(True)
+		self.button_find_posts_task_stop.clicked.connect(self.remove_find_posts_task)
 		#QActions
 		self.actionEmail_Us.triggered.connect(self.open_email)
 		self.actionOpen_User_Folder.triggered.connect(self.open_users_folder)
@@ -959,15 +1117,18 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			##exit()
 		else:
 			event.ignore()
-	# ----------------------------------
+	# ---------------------------------- METHODS
 	# Login
 	def login(self):
+		global proxies # global is important, since we need to modify it 
 		# set default path for login user
 		self.counter_path = os.path.join(self.path_users_directory,self.username,"etc","counter",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt") #or use today() instead of utcnow()
 		self.tracker_path = os.path.join(self.path_users_directory,self.username,"etc","tracker",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt") #or use today() instead of utcnow()
 		# setting proxies
 		if self.proxy:
 			proxies = {'http': 'http://'+self.proxy,'https': 'https://'+self.proxy}
+		#print(proxies) # DEBUG 
+		##return # TESTING
 		login_post = {"username": self.username,"password": self.password}
 		#loading saved user agent
 		if not os.path.exists(os.path.join(self.path_users_directory,self.username,"browser_agent(1.0.3).txt")):
@@ -979,7 +1140,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		if os.path.exists(os.path.join(self.path_users_directory,self.username,"cookie(1.0.3).txt")):
 			write_me_log ("Login via Cookies")
 			load_cookies(self.session_main,os.path.join(self.path_users_directory,self.username,"cookie(1.0.3).txt"))
-			r = self.session_main.get(url_home,verify=False,timeout=timeout)
+			r = self.session_main.get(url_home,verify=False,timeout=timeout,proxies=proxies) 
 			if self.username in r.text:
 				self.successful_login = True
 				#update cookies
@@ -991,15 +1152,15 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				self.userid = re.search('(?<="user":{"id":")\w+', r.text).group(0)
 				return
 		else:
-			write_me_log ("Logging in")
+			write_me_log("Logging in")
 		try:
 			time.sleep(5 * random.random())
-			r = self.session_main.get(url_home,verify=False,timeout=timeout)
+			r = self.session_main.get(url_home,verify=False,timeout=timeout,proxies=proxies)
 			if r.status_code == 200:
 				csrf_token = r.cookies['csrftoken'] if r.cookies else id_generator_alnum(32) #OR >>> csrf_token = re.search('(?<="csrf_token":")\w+', r.text).group(0)
 				self.session_main.headers.update({"X-CSRFToken": csrf_token})
 				try:
-					login = self.session_main.post(url_login, data=login_post, allow_redirects=True,verify=False)
+					login = self.session_main.post(url_login, data=login_post, allow_redirects=True,verify=False,proxies=proxies)
 					if login.status_code == 200:
 						loginResponse = login.json()
 						write_me_log (loginResponse)
@@ -1016,7 +1177,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 							self.session_main.cookies["ig_or"] = "landscape-primary"'''
 							try:
 								time.sleep(5 * random.random())
-								r2 = self.session_main.get(url_home,verify=False,timeout=timeout)
+								r2 = self.session_main.get(url_home,verify=False,timeout=timeout,proxies=proxies)
 								if self.username in r2.text:
 									self.successful_login = True
 									write_me_log ("Logged in successfully!")
@@ -1043,7 +1204,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 							verify_choice = "1"
 							try:
 								time.sleep(5 * random.random())
-								login2 = self.session_main.post(url_home[:-1]+login.json()["checkpoint_url"], data={'choice':verify_choice}, allow_redirects=True,verify=False)
+								login2 = self.session_main.post(url_home[:-1]+login.json()["checkpoint_url"], data={'choice':verify_choice}, allow_redirects=True,verify=False,proxies=proxies)
 								if login2.status_code == 200 and ("Enter Security Code" in login2.text or login2.json()['status'] == "ok"):
 									##security_code =  input("Check your {} and enter the CODE : ".format(verify_options[verify_choice]))
 									security_code, ok = QInputDialog.getText(self, 'Enter Email Code', 'The Code(received via Email) :') # security_code will receive a string object
@@ -1053,7 +1214,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 										app_exit()
 									try:
 										time.sleep(5 * random.random())
-										login3 = self.session_main.post(login2.url, data={'security_code':security_code}, allow_redirects=True,verify=False)
+										login3 = self.session_main.post(login2.url, data={'security_code':security_code}, allow_redirects=True,verify=False,proxies=proxies)
 										if login3.status_code == 200 and (self.username in login3.text or login3.json()['status'] == "ok"):
 											write_me_log("Processing IG Login Challenge.....")
 											# checking whether response content is in json or not
@@ -1098,17 +1259,20 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			app_exit()	
 	# Follow a user by its username
 	def follow_user(self): 
+		self.follow_users_task_stop = False
 		if self.combo_follow_users.currentText() == "Follow users from my List":
 			self.follow_unfollow_list()
 		elif self.combo_follow_users.currentText() == "Auto Followback my followers":
 			self.followback()
 	def followback(self):
+		self.follow_users_task_stop = False
 		self.combo_find_following_followers.setCurrentIndex(0) # <Trick> set to followers
 		##my_following = create_or_get_follow_text_file(os.path.join(self.path_users_directory,self.username,"myStatus"),["following.txt"],[[]])[0] # <Doc> get my_following list , which would be required on next step; ie, find_following_followers() 
 		self.find_following_followers(own_account=True,account_file="follow.txt") # <Doc> to get updated my_followers + to get updated follow.txt file
 		self.follow_unfollow_list(followback=True)
 		# Unfollow a user by its username
 	def unfollow_user(self): 
+		self.unfollow_users_task_stop = False
 		if self.combo_unfollow_users.currentText() == "Unfollow users form my List":
 			self.follow_unfollow_list(follow=False)
 		elif self.combo_unfollow_users.currentText() == "Auto Unfollow users those did not followback":
@@ -1116,11 +1280,13 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		elif self.combo_unfollow_users.currentText() == "Unfollow all":
 			self.unfollow_all()
 	def unfollow_if(self):
+		self.unfollow_users_task_stop = False
 		self.combo_find_following_followers.setCurrentIndex(0) # <Trick> set to followers
-		# pass account_file="", because account_file modification not required in ths case
+		# pass account_file="", because account_file modification not required in this case
 		self.find_following_followers(own_account=True) # <Doc> to get updated my_followers. REMEMBER - on next step, follow_unfollow_list() would not read from follow.txt or unfollow.txt file ,so no modification required for any of them
 		self.follow_unfollow_list(follow=False)
 	def unfollow_all(self):
+		self.unfollow_users_task_stop = False
 		#print(self.check_unfollow_users.isHidden(),self.check_unfollow_users.isChecked())
 		#write_me_log(self.check_unfollow_users.isHidden(),self.check_unfollow_users.isChecked())
 		self.combo_find_following_followers.setCurrentIndex(1) # <Trick> set to following
@@ -1149,7 +1315,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			counter_type = "unfollowing"
 			daily_follow_or_unfollow_limit = int(self.daily_unfollow_limit.text())
 			url_follow_unfollow = url_unfollow
-		while True:
+		while True and ((follow and not self.follow_users_task_stop) or (not follow and not self.unfollow_users_task_stop)):
 			# reading unfollow.txt file content
 			if os.path.exists(os.path.join(self.path_users_directory,self.username,"myList","unfollow.txt")):
 				shared_resource_lock.acquire()
@@ -1158,6 +1324,14 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			else:
 				write_me_log("[Error] unfollow.txt file does't exist!")
 				app_exit()
+			# reading whitelist file content
+			if self.path_unfollow_users_whitelist.text() and os.path.exists(self.path_unfollow_users_whitelist.text()):
+				shared_resource_lock.acquire()
+				whitelist_user_list = re.split(r'[ ,|;\n\r]+',open(self.path_unfollow_users_whitelist.text(),"r").read())
+				whitelist_user_list = [each for each in whitelist_user_list if each] 
+				shared_resource_lock.release()
+			else:
+				whitelist_user_list = []
 			# loading follow.txt or unfollow.txt from myList
 			if os.path.exists(text_file_path):
 				shared_resource_lock.acquire()
@@ -1213,7 +1387,8 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			for username_to_follow_or_unfollow in usernames_to_follow_or_unfollow:
 				if (follow and username_to_follow_or_unfollow not in my_following and username_to_follow_or_unfollow not in bad_usernames and \
 				username_to_follow_or_unfollow+",\n" not in unfollow_file_content) or (not follow and username_to_follow_or_unfollow in my_following and \
-				username_to_follow_or_unfollow not in bad_usernames and username_to_follow_or_unfollow not in exclude_usernames): # <Trick>
+				username_to_follow_or_unfollow not in bad_usernames and username_to_follow_or_unfollow not in exclude_usernames and \
+				username_to_follow_or_unfollow not in whitelist_user_list): # <Trick>
 					# specially for unfollow
 					if not follow:
 						# IG user type Conditions
@@ -1305,12 +1480,290 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 							app_exit()
 					else:
 						user_does_not_exist(username_to_follow_or_unfollow)
-			time.sleep(60)				
+				if ((follow and self.follow_users_task_stop) or (not follow and self.unfollow_users_task_stop)):
+					_text = "follow_users()" if follow else "unfollow_users()"
+					write_me_log("Stopping {}".format(_text))
+					break
 			if followback or self.check_unfollow_users.isChecked(): # if only need to followback or unfollow_if, while loop should stop after 1st iteration
 				break
+			time.sleep(60)	
+			write_me_log("")
 	#dialog.counter_path = os.path.join(dialog.path_users_directory,dialog.username,"etc","counter",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt") #or use today() instead of utcnow()
 	#dialog.tracker_path = os.path.join(dialog.path_users_directory,dialog.username,"etc","tracker",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt") #or use today() instead of utcnow()	
-			
+	
+	# Like/Unlike a post by its postid
+	def like_post(self): 
+		self.like_posts_task_stop = False
+		if self.combo_like_posts.currentText() == "Like posts from my List" or self.combo_like_posts.currentText() == "Like Future posts of targeted Users":
+			self.like_unlike_post()
+	def unlike_post(self): 
+		self.unlike_posts_task_stop = False
+		if self.combo_unlike_posts.currentText() == "Unlike posts form my List" or self.combo_unlike_posts.currentText() == "Unlike my recent likes" or self.combo_unlike_posts.currentText() == "Unlike all posts":
+			self.like_unlike_post(like=False)
+	def like_unlike_post(self,like=True):	 # login required
+		global my_liked
+		shortcodes_to_like_or_unlike = list()
+		usernames_to_like_or_unlike = list()
+		get_user_type = ""
+		post_frequency_type = ""
+		#login if user not already logged in 
+		if not self.successful_login: 
+			self.login()
+		# loading counter data on a dict
+		if not os.path.exists(self.counter_path):
+			self.initialize_counter()
+		else:
+			if not self.count_dict: # don't worry #under INSPECTION, this condition might useless, and may cause two(2) unnecessary self.read_counter() call in later section  
+				self.read_counter()
+		# determining like or unlike
+		if like:
+			text_file_path = self.path_like_posts.text()
+			counter_type = "like"
+			daily_like_or_unlike_limit = int(self.daily_like_limit.text())
+			url_like_unlike = url_like
+		else:
+			text_file_path = self.path_unlike_posts.text()
+			counter_type = "unlike"
+			daily_like_or_unlike_limit = int(self.daily_unlike_limit.text())
+			url_like_unlike = url_unlike
+		
+		# reading unlike.txt file content
+		if os.path.exists(os.path.join(self.path_users_directory,self.username,"myList","unlike.txt")):
+			shared_resource_lock.acquire()
+			unlike_file_content = open(os.path.join(self.path_users_directory,self.username,"myList","unlike.txt")).read() # or read from self.path_unlike_posts.text()
+			shared_resource_lock.release()
+		else:
+			write_me_log("[Error] unlike.txt file does't exist!")
+			app_exit()
+		# loading like.txt or unlike.txt from myList
+		if os.path.exists(text_file_path):
+			if (like and self.combo_like_posts.currentText() == "Like posts from my List") or (not like and self.combo_unlike_posts.currentText() == "Unlike posts form my List"):
+				shared_resource_lock.acquire()
+				shortcodes_to_like_or_unlike = re.split(r'[ ,|;\n\r]+',open(text_file_path,"r").read())
+				if "instagram.com/p/" in shortcodes_to_like_or_unlike[0]:
+					shortcodes_to_like_or_unlike = [each.split("/p/")[-1] for each in shortcodes_to_like_or_unlike]
+				shortcodes_to_like_or_unlike = [each for each in shortcodes_to_like_or_unlike if each] # removing '' from list, if it is exist
+				shared_resource_lock.release()
+				if like:
+					get_user_type = 'followers' if self.radio_like_post_user_type_followers.isChecked() else 'non-followers' if self.radio_like_post_user_type_nonfollowers.isChecked() else 'any'
+			elif self.combo_like_posts.currentText() == "Like Future posts of targeted Users":
+				shared_resource_lock.acquire()
+				usernames_to_like_or_unlike = open(text_file_path,"r").read().strip(" ").split(",\n")
+				usernames_to_like_or_unlike = [each for each in usernames_to_like_or_unlike if each] # removing '' from list, if it is exist
+				shared_resource_lock.release()
+				post_frequency_type = 'all' if self.radio_like_post_frequency_all.isChecked() else 'random'
+			elif self.combo_unlike_posts.currentText() == "Unlike all posts" or self.combo_unlike_posts.currentText() == "Unlike my recent likes":
+				get_user_type = 'followers' if self.radio_like_post_user_type_followers.isChecked() else 'non-followers' if self.radio_like_post_user_type_nonfollowers.isChecked() else 'any'
+				shared_resource_lock.acquire()
+				shortcodes_to_like_or_unlike = open(os.path.join(self.path_users_directory,self.username,"myStatus","liked.txt"),"r").read().strip(" ").split(",\n")
+				shortcodes_to_like_or_unlike = [each for each in shortcodes_to_like_or_unlike if each] # removing '' from list, if it is exist 
+				shared_resource_lock.release()
+		else:
+			QMessageBox.warning(self,"Warning!","{} file does not exist!".format(text_file_path))
+			app_exit()
+		# get updated my_liked list
+		##shared_resource_lock.acquire() # <DOC> Lock should not be implemented here, otherwise, it will wait for Infinite time 
+		my_liked = create_or_get_follow_text_file(os.path.join(self.path_users_directory,self.username,"myStatus"),["liked.txt"],[[]])[0] # <Doc> pass [[]] to read(iff exists) or create a blank
+		##shared_resource_lock.release()
+		#write_me_log("to like/unlike : {}".format(shortcodes_to_like_or_unlike)) # for Debug only
+		# only for the condition :- "unlike posts those I liked in last x days"
+		if not like and self.check_unlike_post_recently_liked.isVisible():
+			#postids = []
+			shortcodes = []
+			unlike_day_limit = int(self.unlike_day_limit.text())
+			dates = [(datetime.datetime.utcnow() - datetime.timedelta(days=day)).strftime("%d-%m-%Y") for day in range(unlike_day_limit)]
+			write_me_log(dates) # For Debug
+			for idx,each_date in enumerate(dates):
+				if os.path.exists(os.path.join(self.path_users_directory,self.username,"etc","tracker",each_date+".txt")):
+					tracker_path = os.path.join(self.path_users_directory,self.username,"etc","tracker",each_date+".txt")
+					track_dict = self.read_tracker(tracker_path) 
+					#postids += track_dict["like"] # this would return "like" postids of each_date from read_tracker
+					shortcodes += track_dict["like"] # this would return "like" shortcodes of each_date from read_tracker
+			# overwrite shortcodes_to_like_or_unlike list values
+			##postids_to_like_or_unlike = list(map(lambda x: shortcode_to_id[x],shortcodes)) # <Trick>
+			shortcodes_to_like_or_unlike = shortcodes[:]
+			#write_me_log(shortcodes_to_like_or_unlike) # for Debug	
+		# Endless loop
+		while True and ((like and not self.like_posts_task_stop) or (not like and not self.unlike_posts_task_stop)):
+			if usernames_to_like_or_unlike:
+				# overwrite shortcodes_to_like_or_unlike list values
+				shortcodes_to_like_or_unlike = self.tracking_posts(usernames_to_like_or_unlike)
+				if post_frequency_type == "random":
+					shortcodes_to_like_or_unlike = list( shortcodes_to_like_or_unlike[i] for i in random.sample(range(0, len(shortcodes_to_like_or_unlike)), math.ceil(len(shortcodes_to_like_or_unlike)/2)))
+			for shortcode_to_like_or_unlike in shortcodes_to_like_or_unlike:
+				if (like and shortcode_to_like_or_unlike not in my_liked and shortcode_to_like_or_unlike not in bad_shortcodes and \
+				shortcode_to_like_or_unlike+",\n" not in unlike_file_content) or (not like and shortcode_to_like_or_unlike in my_liked and \
+				shortcode_to_like_or_unlike not in bad_shortcodes): # <Trick>
+					# get latest like info of a particular post from IG itself
+					_liked = get_post_details_with_logged_in(self,shortcode_to_like_or_unlike)
+					if isinstance(_liked,list): # if return is a list, then post details is fetched successfully | return pattern: [Bool,String]
+						# if has to unlike a post and that post already unliked OR if has to like a post and post already liked  
+						if (not like and not _liked[0]) or (like and _liked[0]):
+							write_me_log("{} already {}d".format(shortcode_to_like_or_unlike,counter_type))
+							# update like.txt file as well as update my_liked variable
+							update_follow_text_file(os.path.join(self.path_users_directory,self.username,"myStatus"),["liked.txt"],[my_liked],shortcode_to_like_or_unlike,append=like) # <Doc> 3rd parameter is list ,and its sublist is also a list unless its correspondence .txt file has variable
+							# should not update counter, because that post was not liked/unliked on that day.
+							write_me_log("wait")
+							time.sleep(random.randrange(5,10)) #wait # though default sleep/wait is present, but it might be continued,so sleep externally requires
+							write_me_log("continued") # for DEBUG
+							continue 
+					else:
+						post_does_not_exist(shortcode_to_like_or_unlike)
+						write_me_log("Post does not exist")
+						write_me_log("continued")
+						continue 
+					#write_me_log("00000000000000000000000000") # for DEBUG
+					# no sleep requires, since default sleep/wait is present
+					# handling post user type
+					if get_user_type and get_user_type != "any":
+						# get followers if followers.txt file already exists, otherwise scrape followers of the IG user
+						if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myStatus","followers.txt")):
+							followers_list = create_or_get_follow_text_file(os.path.join(self.path_users_directory,self.username,"myStatus"),["followers.txt"],[[]])[0]	
+							if not followers_list:
+								target_user_id = get_user_id_by_username(self,self.username)[0]
+								#login if user not already logged in 
+								if not self.successful_login:
+									self.login()
+								scraping_limit  = self.scraping_limit.text()	
+								self.scraping_limit.setValue(1000000000)
+								followers_list = self.get_follow_list_of_a_username(target_user_id,"followers") # [!] this would return followers_list of size upto scrape_limit
+								self.scraping_limit.setValue(int(scraping_limit))
+								create_or_get_follow_text_file(os.path.join(self.path_users_directory,self.username,"myStatus"),["followers.txt"],[followers_list]) # create
+						else:
+							followers_list = create_or_get_follow_text_file(os.path.join(self.path_users_directory,self.username,"myStatus"),["followers.txt"],[[]])[0]
+						if get_user_type == 'followers':
+							if _liked[1] not in followers_list:
+								continue
+						elif get_user_type == 'non-followers':
+							if _liked[1] in followers_list:
+								continue
+					# preparing like/unlike URL
+					target_post_id = shortcode_to_id[shortcode_to_like_or_unlike] 
+					_url_like_or_unlike = url_like_unlike % (target_post_id)
+					#wait until next day, if daily like/unlike limit exceeded
+					if self.count_dict[counter_type] >= daily_like_or_unlike_limit:
+						write_me_log("Daily {} limit({}) reached".format(counter_type,daily_like_or_unlike_limit))
+						today = int(datetime.datetime.utcnow().strftime("%d"))
+						tomorrow = today + 1
+						while today != tomorrow:
+							write_me_log("Sleeping on {} for {}".format(self.like_unlike_post.__name__,counter_type))  # for DEBUG purpose
+							time.sleep(5*60) # recheck in every 5 mins
+							today = int(datetime.datetime.utcnow().strftime("%d"))
+							#in case, at later, user updated daily_like_or_unlike_limit variable
+							daily_like_or_unlike_limit = int(self.daily_like_limit.text()) if (like and self.daily_like_limit.text()) else int(self.daily_unlike_limit.text())
+							#self.read_counter() # not essential <- BUG Fixed. Before accessing self.count_dict or self.track_dict ; self.read_counter() is must to make sure self.counter_path and self.tracker_path is up to date.
+							if self.count_dict[counter_type] < daily_like_or_unlike_limit:
+								write_me_log("break")
+								break # exit from while loop & start following
+					try:
+						headers = {"X-IG-App-ID": "936619743392459","X-IG-WWW-Claim": "hmac.AR3-ryqUviS1iP_8wAwgeGlRhSzaib-DHyDNbDZhiTAPlciJ"}
+						resp,excep = session_func(self.session_main,_url_like_or_unlike,headers=headers,method="post",proxies=proxies)
+						if not excep:
+							if resp and resp.status_code == 200: # resp.json() -> {'status': 'ok'}
+								#print(resp.json()) # DEBUG only
+								write_me_log ("{} {}".format(resp.json().get('status'),shortcode_to_like_or_unlike))
+								# update liked.txt file as well as update my_liked variable
+								update_follow_text_file(os.path.join(self.path_users_directory,self.username,"myStatus"),["liked.txt"],[my_liked],shortcode_to_like_or_unlike,append=like) # <Doc> 3rd parameter is list ,and its sublist is also a list unless its correspondence .txt file has variable
+								self.update_counter(counter_type,shortcode_to_like_or_unlike)
+								min_time_interval,max_time_interval = (int(self.min_like_interval.text()),int(self.max_like_interval.text())) if like \
+								else (int(self.min_unlike_interval.text()),int(self.max_unlike_interval.text())) 
+								# checking if max value is less than min value 
+								if  max_time_interval > min_time_interval:
+									sleep = random.randint(min_time_interval,max_time_interval)
+								else:
+									sleep = random.randint(max_time_interval,max_time_interval)
+								write_me_log("Sleeping for {} mins".format(sleep))# for DEBUG
+								time.sleep(sleep*60)
+							else:
+								write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+						else:
+							write_me_log("[Exception] Exception! <during : like_unlike_post()>")
+							app_exit()
+					except Exception as err:
+						write_me_log("[Exception] exception error <during : like_unlike_post()>>> {}".format(err))
+						app_exit()
+				if ((like and self.like_posts_task_stop) or (not like and self.unlike_posts_task_stop)):
+					_text = "like_post()" if like else "unlike_post()"
+					write_me_log("stopping {}".format(_text))
+					break
+			# Endless loop break only for Unlike all likes or Unlike my recent likes options
+			if not like and self.frame_unlike_post_user_type.isVisible():
+				write_me_log("break like_unlike_post() while loop") # For DEBUG
+				break
+			time.sleep(60)	
+			write_me_log("")
+	def tracking_posts(self,usernames_to_like_or_unlike):
+		#dictionary = dict()
+		self.post_list_shortcodes2 = list()
+		post_list_shortcodes2 = list()
+		new_posts_shortcodes = list()
+		while True:
+			for username_to_like_or_unlike in usernames_to_like_or_unlike:
+				if username_to_like_or_unlike not in bad_usernames:
+					self.scanning_posts(username_to_like_or_unlike)
+			if not post_list_shortcodes2:
+				post_list_shortcodes2 = self.post_list_shortcodes2.copy()
+			else:
+				new_posts_shortcodes = list(set(self.post_list_shortcodes2) - set(post_list_shortcodes2))
+			# if new posts found, break out from while
+			if new_posts_shortcodes:
+				write_me_log("new Posts found")
+				write_me_log(new_posts_shortcodes)
+				break
+			else:
+				if self.like_posts_task_stop:
+					write_me_log("Stopping like_post() for liking future postss")
+					break
+				write_me_log("next Scan will start within few minutes")
+				time.sleep(4*60)
+		return new_posts_shortcodes		
+	def scanning_posts(self,target_user):
+		# variables
+		self.page_num = 1
+		user_id = ""
+		data_type = "user"
+		hash = "f2405b236d85e8296cf30347c9f08c2a" #hash is public
+		edge__by = "edge_owner_to_timeline_media"
+		first = 12
+		_type = "post feed"
+		user_name = target_user
+		if user_name:
+			user_id = get_user_id_by_username(self,user_name)[0]
+			# no sleep/wait gap required , since it only called for once
+		if not user_id:
+			user_does_not_exist(user_name)
+			write_me_log("returned") # For DEBUG
+			return
+		write_me_log(">>> Scanning {}: {} to {}".format(_type,((self.page_num-1)*first)+1,(self.page_num*first-1)+1))
+		params = {'query_hash':hash,'variables':'{"first":'+str(first)+'}'}
+		params.update({'variables':params["variables"][:-1]+',"id":"'+user_id+'"}'})
+		#print(params) # DEBUG
+		try:
+			resp,excep = session_func(session_temp,url_graphql,redirects=False,params=params)
+			if not excep:
+				if resp and resp.status_code == 200:
+					#print(resp.url) For GEBUG
+					data = resp.json()
+					post_lists = data["data"][data_type][edge__by]["edges"]
+					for post in post_lists: 
+						if post["node"]["shortcode"] not in self.post_list_shortcodes2:
+							# print(post["node"]["shortcode"]) # DEBUG
+							self.post_list_shortcodes2.append(post["node"]["shortcode"])
+							shared_resource_lock.acquire()
+							with open(os.path.join(path_app_directory,"postid to shortcode.txt"),"a+") as f:
+								f.write("{}:{}\n".format(post["node"]["id"],post["node"]["shortcode"]))
+								id_to_shortcode[post["node"]["id"]] = post["node"]["shortcode"]
+								shortcode_to_id[post["node"]["shortcode"]] = post["node"]["id"]
+							shared_resource_lock.release()
+				else:
+					write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
+			else:
+				write_me_log("[Exception] Exception! <during : scanning_posts()>")
+				app_exit()
+		except Exception as err:
+			write_me_log("[Exception] exception error <during : scanning_posts() >>> {}".format(err))
+			app_exit()
+	# Counter	
 	def initialize_counter(self):
 		shared_resource_lock.acquire()
 		self.counter_path = os.path.join(self.path_users_directory,dialog.username,"etc","counter",datetime.datetime.utcnow().strftime("%d-%m-%Y")+".txt")
@@ -1375,7 +1828,13 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			f.write(','.join("{}:{}".format(each[0],';'.join(each[1])) for each in list(self.track_dict.items())))
 		shared_resource_lock.release()
 	# Find/Search suitable users from user own explore, other users comments & likes
-	def find_suitable_users(self): # Partial Login required
+	def find_suitable_users(self):
+		self.find_suitable_users_stop = False
+		self.find_suitable_users_and_posts()
+	def find_suitable_posts(self):
+		self.find_suitable_posts_stop = False
+		self.find_suitable_users_and_posts(users=False)
+	def find_suitable_users_and_posts(self,users=True): # Partial Login required
 		# variables
 		page_num = 1
 		has_next_page = True
@@ -1383,9 +1842,10 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		hashtag = ""
 		data_type = "user"
 		after = ""
+		self.more_posts_to_lookout2 = True
 		
 		# choices
-		if self.combo_find_users.currentText() == "Explore":
+		if (users and self.combo_find_users.currentText() == "Explore") or (not users and self.combo_find_posts.currentText() == "Explore"):
 			#login if user not already logged in 
 			if not self.successful_login: 
 				self.login()
@@ -1394,12 +1854,15 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			first = 24
 			_type = "explore"
 			after = 0
-		elif (self.combo_find_users.currentText() == "Comments List from a User post feed" or self.combo_find_users.currentText() == "Likes List from a User post feed"):
+		elif (users and (self.combo_find_users.currentText() == "Comments List from a User post feed" or self.combo_find_users.currentText() == "Likes List from a User post feed")) or (not users and self.combo_find_posts.currentText() == "Username"):
 			hash = "f2405b236d85e8296cf30347c9f08c2a" #hash is public
 			edge__by = "edge_owner_to_timeline_media"
 			first = 12
 			_type = "post feed"
-			user_name = self.line_find_users.text()
+			if users:
+				user_name = self.line_find_users.text()
+			else:
+				user_name = self.line_find_posts.text()
 			if user_name:
 				user_id = get_user_id_by_username(self,user_name)[0]
 				# no sleep/wait gap required , since it only called for once
@@ -1408,20 +1871,26 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				write_me_log("returned") # For Debug
 				return # since it is unable to fetch user_id , no need to continue
 				
-		elif (self.combo_find_users.currentText() == "Comments List from a Hashtag" or self.combo_find_users.currentText() == "Likes List from a Hashtag"):
+		elif (users and (self.combo_find_users.currentText() == "Comments List from a Hashtag" or self.combo_find_users.currentText() == "Likes List from a Hashtag")) or (not users and self.combo_find_posts.currentText() == "Hashtag"):
 			hash = "f12c9ec5e46a3173b2969c712ad84744" #for ...
 			edge__by = "edge_hashtag_to_media"
 			first = 9
 			_type = "hashtag feed"
-			hashtag = str(self.line_find_users.text()).lower().replace("#","").strip() # wrapped str() to support python 2.7
+			if users:
+				hashtag = str(self.line_find_users.text()).lower().replace("#","").strip() # wrapped str() to support python 2.7
+			else:
+				hashtag = str(self.line_find_posts.text()).lower().replace("#","").strip() # wrapped str() to support python 2.7
 			data_type = "hashtag"
 		
 		write_me_log(_type) 
-		#print(self.min_followers.text(),self.max_followers.text(),self.follow_ratio.text()) # for Debug
-		write_me_log(self.min_followers.text(),self.max_followers.text(),self.follow_ratio.text()) # for Debug
-		
-		while has_next_page:
-			write_me_log(">>> Scanning {}: {} to {}".format(_type,((page_num-1)*first)+1,(page_num*first-1)+1))
+		if users:
+			#print(self.min_followers.text(),self.max_followers.text(),self.follow_ratio.text()) # for Debug
+			write_me_log(self.min_followers.text(),self.max_followers.text(),self.follow_ratio.text()) # for Debug
+		else:
+			write_me_log(self.min_likes.text(),self.max_likes.text(),self.min_comments.text(),self.max_comments.text()) # for Debug
+		while (has_next_page and (users or (not users and self.more_posts_to_lookout2))) and ((users and not self.find_suitable_users_stop) or (not users and not self.find_suitable_posts_stop)):
+			_type2 = "users" if users else "posts"
+			write_me_log(">>> Scanning {}->{}: {} to {}".format(_type,_type2,((page_num-1)*first)+1,(page_num*first-1)+1))
 			if not after:
 				params = {'query_hash':hash,'variables':'{"first":'+str(first)+'}'}
 			else:
@@ -1450,37 +1919,94 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 							if _type == "post feed" or _type == "hashtag feed":
 								shortcode = post["node"]["shortcode"]
 								write_me_log(shortcode) # For DEBUG
-								res = None
-								if self.combo_find_users.currentText() in ["Comments List from a User post feed","Comments List from a Hashtag"] and post["node"]["edge_media_to_comment"]["count"] > 0:
-									write_me_log(post["node"]["edge_media_to_comment"]["count"]) # for DEBUG purpose
-									res = get_post_details(shortcode,"comments","list") # return list of username's those who commented
-								elif self.combo_find_users.currentText() in ["Likes List from a User post feed","Likes List from a Hashtag"] and post["node"]["edge_media_preview_like"]["count"] > 0:
-									write_me_log(post["node"]["edge_media_preview_like"]["count"]) # for DEBUG purpose
-									res = get_post_details(shortcode,"likes","list") # return list of username's those who liked
-								if res:
-									write_me_log(res) # For DEBUG
-									for each_user_name in res:
-										self.find_suitable_users_conditions(each_user_name)
+								if users:
+									res = None
+									if self.combo_find_users.currentText() in ["Comments List from a User post feed","Comments List from a Hashtag"] and post["node"]["edge_media_to_comment"]["count"] > 0:
+										write_me_log(post["node"]["edge_media_to_comment"]["count"]) # for DEBUG purpose
+										res = get_post_details(shortcode,"comments","list") # return list of username's those who commented
+									elif self.combo_find_users.currentText() in ["Likes List from a User post feed","Likes List from a Hashtag"] and post["node"]["edge_media_preview_like"]["count"] > 0:
+										write_me_log(post["node"]["edge_media_preview_like"]["count"]) # for DEBUG purpose
+										res = get_post_details(shortcode,"likes","list") # return list of username's those who liked
+									if res:
+										write_me_log(res) # For DEBUG
+										for each_user_name in res:
+											self.find_suitable_users_conditions(each_user_name)
+								else:
+									if self.more_posts_to_lookout2:
+										self.find_suitable_posts_conditions(post)
+									else:
+										write_me_log("No more posts found within this post period.")
+										break
 								continue # its work is done here
 							# For explore choice
-							user_id  = post["node"]["owner"]["id"]
-							user_name,ret = get_username_by_user_id_via_api(self,user_id)
-							if not user_name:
-								user_name = get_username_by_user_id(self,user_id)
-							if user_name:
-								self.find_suitable_users_conditions(user_name,ret)	
+							if users:
+								user_id  = post["node"]["owner"]["id"]
+								user_name,ret = get_username_by_user_id_via_api(self,user_id)
+								if not user_name:
+									user_name = get_username_by_user_id(self,user_id)
+								if user_name:
+									self.find_suitable_users_conditions(user_name,ret)	
+							else:
+								self.find_suitable_posts_conditions(post,non_explore=False)
 						page_num+=1
 					else:
 						write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
 				else:
-					write_me_log("[Exception] Exception! <during : find_suitable_users()>")
+					write_me_log("[Exception] Exception! <during : find_suitable_users_and_posts()>")
 					app_exit()
 			except Exception as err:
-				write_me_log("[Exception] exception error <during : find_suitable_users() >>> {}".format(err))
+				write_me_log("[Exception] exception error <during : find_suitable_users_and_posts() >>> {}".format(err))
 				app_exit()
 			time.sleep(random.randrange(5,10)) 
 		# End of while loop
-		
+	def find_suitable_posts_conditions(self,post,non_explore=True):
+		# Load scrapped list
+		shared_resource_lock.acquire()
+		my_list_like_comment = list(set(open(os.path.join(self.path_users_directory,self.username,"myList","like.txt"),"r").read().strip(" ").split(",\n")))[:-1]
+		shared_resource_lock.release()
+		#
+		if post["node"]["shortcode"] not in my_list_like_comment:
+			t1 = datetime.datetime.utcfromtimestamp(post["node"]["taken_at_timestamp"]).replace(microsecond=0)
+			t2 = datetime.datetime.utcnow().replace(microsecond=0)
+			post_age = (t2-t1).days
+			if post_age < int(self.find_posts_age.text()): # checking post age criteria	
+				get_post_type = 'GraphImage' if self.radio_post_type_image.isChecked() else 'GraphSidecar' if self.radio_post_type_slider.isChecked() else 'GraphVideo' if self.radio_post_type_video.isChecked() else 'All'
+				if get_post_type != post["node"]["__typename"] and get_post_type != "All": # checking post type criteria
+					write_me_log("returning")
+					return
+				flag_1 = 0
+				flag_2 = 0
+				if not self.Button_like.isChecked():
+					flag_1 = "set"
+					likes_count = post["node"]["edge_media_preview_like"]["count"]
+					if likes_count >= int(self.min_likes.text()) and likes_count <= int(self.max_likes.text()):
+						flag_1 = 1
+				if not self.Button_comment.isChecked():	
+					flag_2 = "set"
+					comments_count = post["node"]["edge_media_to_comment"]["count"]
+					if comments_count >= int(self.min_comments.text()) and comments_count <= int(self.max_comments.text()):
+						flag_2 = 1
+				if (flag_1 or flag_2) and isinstance(flag_1,int) and (type(flag_1) == type(flag_2)): # <Trick>
+					# min & max criteria satisfied#
+					write_me_log(" {}".format(post["node"]["shortcode"]))  # For DEBUG |  "__typename" , "id" ,"is_video" , ["owner"]["id"]
+					##my_list_like_comment.append(post["node"]["shortcode"])
+					shared_resource_lock.acquire()
+					with open(os.path.join(path_app_directory,"postid to shortcode.txt"),"a+") as f:
+						f.write("{}:{}\n".format(post["node"]["id"],post["node"]["shortcode"]))
+						id_to_shortcode[post["node"]["id"]] = post["node"]["shortcode"]
+						shortcode_to_id[post["node"]["shortcode"]] = post["node"]["id"]
+					shared_resource_lock.release()
+					shared_resource_lock.acquire()
+					with open(os.path.join(self.path_users_directory,self.username,"myList","like.txt"),"a+") as f:
+						f.write("{},\n".format(post["node"]["shortcode"]))
+					shared_resource_lock.release()
+					shared_resource_lock.acquire()
+					with open(os.path.join(self.path_users_directory,self.username,"myList","comment.txt"),"a+") as f:
+						f.write("{},\n".format(post["node"]["shortcode"]))
+					shared_resource_lock.release()
+			else:
+				if non_explore:
+					self.more_posts_to_lookout2 = False
 	def find_suitable_users_conditions(self,user_name,ret=()):
 		# Load scrapped list
 		shared_resource_lock.acquire()
@@ -1505,7 +2031,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				if (ret[0] >= int(self.min_followers.text()) and ret[0] <= int(self.max_followers.text()) and ret[1]/followers >= float(self.follow_ratio.text().replace(",","."))):
 					# set this suitable user to myList
 					write_me_log(user_name)  # For DEBUG
-					my_list_follow.append(user_name)
+					##my_list_follow.append(user_name)
 					shared_resource_lock.acquire()
 					with open(os.path.join(self.path_users_directory,self.username,"myList","follow.txt"),"a+") as f:
 						f.write("{},\n".format(user_name))
@@ -1531,7 +2057,9 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				user_names+=[os.path.basename(each).strip().lower() for each in self.textEdit_find_following_followers.toPlainText().strip().split("\n") if each and not each.endswith("/")]
 			elif self.path_find_following_followers.text() and os.path.exists(self.path_find_following_followers.text()) and (self.path_find_following_followers.text().endswith(".txt") or self.path_find_following_followers.text().endswith(".csv")):
 				file_content = open(self.path_find_following_followers.text(),"r").read().strip()
-				if "," in file_content:
+				if ",\n" in file_content:
+					splitter = ",\n"
+				elif "," in file_content:
 					splitter = ","
 				elif ";" in file_content:
 					splitter = ";"
@@ -1540,8 +2068,6 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				elif " " in file_content:
 					splitter = " "
 				user_names = [each.strip().lower() for each in file_content.split(splitter) if each]
-			else:
-				QMessageBox.warning(self,"Warning!","Username field can't be blank")
 		else:
 			user_names = [self.username] # find followers of own account 
 		write_me_log(user_names) # For Debug usage
@@ -1609,39 +2135,40 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		has_next_page = True
 		after = ""
 		first = 24
-		write_me_log(_type) 
-		
-		while has_next_page:
+		write_me_log(_type,self.scraping_limit.text()) 
+		scraping_limit = int(self.scraping_limit.text())
+		while has_next_page and first*page_num < scraping_limit:
 			write_me_log(">>> Scanning {}: {} to {}".format(_type,((page_num-1)*first)+1,(page_num*first-1)+1))
 			if not after:
 				params = {'query_hash':private_hash,'variables':'{"include_highlight_reels":false,"include_reel":true,"id":'+target_user_id+',"fetch_mutual":true,"first":'+str(first)+'}'}
 			else:
 				params = {'query_hash':private_hash,'variables':'{"include_highlight_reels":false,"include_reel":true,"id":'+target_user_id+',"fetch_mutual":true,"first":'+str(first)+',"after":"'+after+'"}'}
-			#try
-			resp,excep = session_func(self.session_main,url_graphql,params=params,redirects=False,proxies=proxies)
-			if not excep:
-				if resp and resp.status_code == 200:
-					data = resp.json()
-					has_next_page = bool(data["data"]["user"][edge__by]["page_info"]["has_next_page"])
-					if has_next_page:
-						after = data["data"]["user"][edge__by]["page_info"]["end_cursor"]
-					user_lists = data["data"]["user"][edge__by]["edges"]	
-					for user in user_lists:
-						id_to_user[user["node"]["id"]] = user["node"]["username"]
-						follow_list.append(user["node"]["username"])
-					page_num+=1
+			try:
+				resp,excep = session_func(self.session_main,url_graphql,params=params,redirects=False,proxies=proxies)
+				if not excep:
+					if resp and resp.status_code == 200:
+						data = resp.json()
+						has_next_page = bool(data["data"]["user"][edge__by]["page_info"]["has_next_page"])
+						if has_next_page:
+							after = data["data"]["user"][edge__by]["page_info"]["end_cursor"]
+						user_lists = data["data"]["user"][edge__by]["edges"]	
+						for user in user_lists:
+							id_to_user[user["node"]["id"]] = user["node"]["username"]
+							follow_list.append(user["node"]["username"])
+						page_num+=1
+					else:
+						write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
 				else:
-					write_me_log("[Err] {} Page not responding properly! \r\nStatus Code: {}".format(resp.url,resp.status_code))
-			else:
-				write_me_log("[Exception] Exception! <during : get_follow_list_of_a_username()>")
+					write_me_log("[Exception] Exception! <during : get_follow_list_of_a_username()>")
+					app_exit()
+			except Exception as err:
+				write_me_log("[Exception] exception error <during : get_follow_list_of_a_username() >>> {}".format(err))
 				app_exit()
-			#except Exception as err:
-			#write_me_log("[Exception] exception error <during : get_follow_list_of_a_username() >>> {}".format(err))
-			#app_exit()
 			time.sleep(random.randrange(5,10))
 		# End of while loop
 		
 		return follow_list
+	
 	# Download posts
 	def downloading_posts(self,download=True,repost=False): # Partial Login required
 		# variables
@@ -1653,6 +2180,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		self.after = ""
 		self.more_posts_to_lookout = True
 		self.post_list_shortcodes = list()
+		self.downloading_posts_stop =  False
 		if download:
 			choices = self.combo_download_type.currentText()
 			target_text = self.line_download_type.text()
@@ -1731,6 +2259,13 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				write_me_log("[Exception] exception error <during : downloading_posts() >>> {}".format(err))
 				app_exit()
 			time.sleep(random.randrange(5,10)) 
+			# considering downloading only
+			if download and self.downloading_posts_stop:
+				write_me_log("stopping downloading_posts()") # Debug
+				break
+			if repost and self.repost_task_stop:
+				write_me_log("stopping reposting()") # Debug
+				break
 		# End of while loop
 	def download_posts(self,post_lists,choices,target_text,repost=False): # No Login required
 		#print(len(post_lists)) # DEBUG
@@ -1769,7 +2304,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			self.page_num = 0
 			#print(self.after,self.page_num) # DEBUG
 			if not post_lists: # if post_lists is empty return otherwise download & post
-				write_me_log("returning")
+				write_me_log("next Scan will start with next few minutes")
 				time.sleep(4*60)
 				return
 		# creating mandatory directory for posts
@@ -1913,13 +2448,14 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 					else: # elif post_age >= get_post_age:
 						if "Explore" not in choices:
 							self.more_posts_to_lookout =  False
-							write_me_log("break | download_posts()")
+							write_me_log("No more posts found to download within this post period")
 							break
 			except Exception as err:
 				write_me_log("[Exception] exception error <during : download_posts() >>> {}".format(err))
 				app_exit()
 	# Posting
 	def posting(self,directory_path=None,repost=False):
+		self.post_task_stop = False
 		#login if user not already logged in 
 		if not self.successful_login: 
 			self.login()
@@ -1986,20 +2522,24 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 					# checking whether text file exist
 					if text_files:
 						text_file=text_files[0]
-						content_text = open(os.path.join(directory_path,each_folder,text_file),"rb").read().decode("utf-8")
-						content_text = content_text.split("----# InstagramBot Text :")[-1].strip()
-						# clearing existing #hashtag ,@mentions & URLs
-						if repost and self.check_clear_hashtags.isChecked():
-							all = list()
-							# grab all #hashes  & @mentions
-							all+=[_each for _each in content_text.replace("\n"," ").replace("#"," #").strip().split("\n")[-1].split(" ") if _each.startswith("#")] # <Trick> replace # with [SPACE]#, so if hashes exist without any space, it will create a space(which is splitting value here) between them in the text.
-							all+=[_each for _each in content_text.replace("\n"," ").replace("@"," @").strip().split("\n")[-1].split(" ") if _each.startswith("@")] # <Trick> replace @ with [SPACE]@, so if mentions exist without any space, it will create a space(which is splitting value here) between them in the text.
-							# grab all urls
-							all+=re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', content_text)
-							# remove each url from text if exist
-							#write_me_log(all) # DEBUG
-							for each in all:
-								content_text = content_text.replace(each.strip(),"").strip()
+						if os.path.exists(os.path.join(directory_path,each_folder,text_file)):
+							content_text = open(os.path.join(directory_path,each_folder,text_file),"rb").read().decode("utf-8")
+							content_text = content_text.split("----# InstagramBot Text :")[-1].strip()
+							# clearing existing #hashtag ,@mentions & URLs
+							if repost:
+								if self.radio_clear_hashtags.isChecked():
+									all = list()
+									# grab all #hashes  & @mentions
+									all+=[_each for _each in content_text.replace("\n"," ").replace("#"," #").strip().split("\n")[-1].split(" ") if _each.startswith("#")] # <Trick> replace # with [SPACE]#, so if hashes exist without any space, it will create a space(which is splitting value here) between them in the text.
+									all+=[_each for _each in content_text.replace("\n"," ").replace("@"," @").strip().split("\n")[-1].split(" ") if _each.startswith("@")] # <Trick> replace @ with [SPACE]@, so if mentions exist without any space, it will create a space(which is splitting value here) between them in the text.
+									# grab all urls
+									all+=re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', content_text)
+									# remove each url from text if exist
+									#write_me_log(all) # DEBUG
+									for each in all:
+										content_text = content_text.replace(each.strip(),"").strip()
+								else: # clear all
+									content_text = ""
 					# including own header, #hashtag & @mentions
 					if include_own_hashtag:
 						content_text = header + content_text # prepend
@@ -2032,6 +2572,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 								write_me_log("break | posting")
 								break # exit from while loop & start posting
 					write_me_log("Posting on IG")
+					#write_me_log(content_text) #before doing this, must set clear all # For DEBUG only
 					shortcode = self.post_on_instagram(image_file_path,content_text)
 					if shortcode:
 						# updating posted_list + posted.txt file
@@ -2060,14 +2601,19 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 							sleep = random.randint(max_time_interval,max_time_interval)
 						write_me_log("Sleeping for {} mins".format(sleep))# for DEBUG
 						time.sleep(sleep*60)
-						
-						
+				if not repost and self.post_task_stop:
+					write_me_log("Stopping Posting()")
+					break
 			time.sleep(60)	
 			# break unless it is monitoring(post mode) the folder
 			if repost: ## and not self.radio_repost_post_age_future.isChecked():
 				break
+			if not repost and self.post_task_stop:
+				write_me_log("Stopping Posting()")
+				break
 	# Reposting
 	def reposting(self,repost=True): # login required
+		self.repost_task_stop = False
 		if not self.successful_login: 
 			self.login()
 		# download posts
@@ -2143,19 +2689,37 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			write_me_log("[Exception] exception error <during : post_on_instagram() >>> {}".format(err))
 			app_exit()
 		return shortcode
+	# @@@@@@@@@@@@@@@@@ QUEUE Processing
 	# Find suitable users
 	def add_find_users_task(self):
 		#checking whether user added an IG account or not 
 		if not self.username:
 			QMessageBox.warning(self,"Warning!","To search suitable users, at first you have to add a user account in 'Accounts Settings' Panel")
 		else:
-			queue.put(self.find_suitable_users)
+			if self.min_followers.text() > self.max_followers.text():
+				QMessageBox.warning(self,"Warning!","maximum number of Followers value should be greater than its minimum value")
+				return
+			if self.line_find_users.text():
+				queue.put(self.find_suitable_users)
+			else:
+				QMessageBox.warning(self,"Warning!","Input field can't be blanked")
+	def remove_find_users_task(self):
+		QMessageBox.information(self,"Information","A request made to stop 'Find Suitable Users'")
+		self.find_suitable_users_stop = True
+		self.button_find_users_task_stop.setEnabled(False)
 	# Find Following & Followers
 	def add_find_following_followers_task(self):
 		if not self.username:
 			QMessageBox.warning(self,"Warning!","To find following/followers of a IG user, at first you have to add a user account in 'Accounts Settings' Panel")
 		else:
-			queue.put(self.find_following_followers)
+			if self.line_find_following_followers.text() or self.textEdit_find_following_followers.toPlainText() or self.path_find_following_followers.text():
+				queue.put(self.find_following_followers)
+			else:
+				QMessageBox.warning(self,"Warning!","One of the Input field should be filled")
+	def remove_find_following_followers_task(self): # not used
+		QMessageBox.information(self,"Information","A request made to stop 'Find Following & Followers'\nWould stop the process for Next user in the list")
+		self.find_following_followers_stop = True
+		self.button_find_following_followers_task_stop.setEnabled(False)
 	# Follow/Unfollow
 	def add_unfollow_task(self):
 		if not self.username:
@@ -2167,23 +2731,126 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			QMessageBox.warning(self,"Warning!","To follow others, at first you have to add a user account in 'Accounts Settings' Panel")
 		else:
 			queue.put(self.follow_user)
-			###queue.put(self.temp_to_do)
+	def remove_follow_users_task(self):
+		QMessageBox.information(self,"Information","A request made to stop 'Follow Users'")
+		self.follow_users_task_stop = True
+		self.button_follow_task_stop.setEnabled(False)
+	def remove_unfollow_users_task(self):
+		QMessageBox.information(self,"Information","A request made to stop 'Unfollow Users'")
+		self.unfollow_users_task_stop = True
+		self.button_unfollow_task_stop.setEnabled(False)
 	# Download Posts
 	def add_download_post_task(self):
-		queue.put(self.downloading_posts)	
+		if self.line_download_type.text():
+			queue.put(self.downloading_posts)	
+		else:
+			QMessageBox.warning(self,"Warning!","Input field can't be blanked")
+	def remove_download_post_task(self):
+		QMessageBox.information(self,"Information","A request made to stop 'Downloading Posts'")
+		self.downloading_posts_stop = True
+		self.button_download_post_task_stop.setEnabled(False)
 	# Post
 	def add_post_task(self):
 		if not self.username:
 			QMessageBox.warning(self,"Warning!","To Post, at first you have to add a user account in 'Accounts Settings' Panel")
 		else:
+			if self.check_include_own_hashtag_post.isChecked():
+				with open(os.path.join(self.path_users_directory,self.username,"etc","post_text.txt"),"w+") as f:
+					f.write("{}\n\n{}\n\n{}\n\n".format(self.textEdit_header_post.toPlainText(),self.textEdit_hashtags_post.toPlainText(),self.textEdit_mentions_post.toPlainText()))
 			queue.put(self.posting)	
+	def remove_post_task(self):
+		QMessageBox.information(self,"Information","A request made to stop 'Posting'")
+		self.post_task_stop = True
+		self.button_post_task_stop.setEnabled(False)
 	# Repost
 	def add_repost_task(self):
 		if not self.username:
 			QMessageBox.warning(self,"Warning!","To Re-post, at first you have to add a user account in 'Accounts Settings' Panel")
 		else:
-			queue.put(self.reposting)
-	# @@@@@@@@@@@@@@@@@@@@@@@@
+			if self.line_repost_images.text():
+				if self.check_include_own_hashtag_repost.isChecked():
+					with open(os.path.join(self.path_users_directory,self.username,"etc","repost_text.txt"),"w+") as f:
+						f.write("{}\n\n{}\n\n{}\n\n".format(self.textEdit_header_repost.toPlainText(),self.textEdit_hashtags_repost.toPlainText(),self.textEdit_mentions_repost.toPlainText()))
+				queue.put(self.reposting)
+			else:
+				QMessageBox.warning(self,"Warning!","Input field can't be blanked")
+	def remove_repost_task(self):
+		QMessageBox.information(self,"Information","A request made to stop 'Re-posting'")
+		self.repost_task_stop = True
+		self.button_repost_task_stop.setEnabled(False)
+	# Find posts
+	def add_find_posts_task(self):
+		if not self.username:
+			QMessageBox.warning(self,"Warning!","To find suitable posts, at first you have to add a user account in 'Accounts Settings' Panel")
+		else:
+			if self.line_find_posts.text():
+				if self.min_likes.text() > self.max_likes.text():
+					QMessageBox.warning(self,"Warning!","maximum number of Likes value should be greater than its minimum value")
+					return
+				if self.min_comments.text() > self.max_comments.text():
+					QMessageBox.warning(self,"Warning!","maximum number of Comments value should be greater than its minimum value")
+					return
+				if self.Button_like.isChecked() and self.Button_comment.isChecked():
+					QMessageBox.warning(self,"Warning!","Either Likes or Comments field should be set")
+				else:
+					queue.put(self.find_suitable_posts)
+			else:
+				QMessageBox.warning(self,"Warning!","Input field can't be blanked")
+	def remove_find_posts_task(self):
+		QMessageBox.information(self,"Information","A request made to stop 'Find Suitable Posts'")
+		self.find_suitable_posts_stop = True
+		#print(self.find_suitable_posts_stop) # DEBUG
+		self.button_find_posts_task_stop.setEnabled(False)
+	# Like/Unlike
+	def add_like_posts_task(self):
+		if not self.username:
+			QMessageBox.warning(self,"Warning!","To like posts, at first you have to add a user account in 'Accounts Settings' Panel")
+		else:
+			queue.put(self.like_post)
+	def add_unlike_posts_task(self):
+		if not self.username:
+			QMessageBox.warning(self,"Warning!","To unlike posts, at first you have to add a user account in 'Accounts Settings' Panel")
+		else:
+			queue.put(self.unlike_post)
+	def remove_like_posts_task(self):
+		QMessageBox.information(self,"Information","A request made to stop 'Like Posts'")
+		self.like_posts_task_stop = True
+		self.button_like_posts_task_stop.setEnabled(False)
+	def remove_unlike_posts_task(self):
+		QMessageBox.information(self,"Information","A request made to stop 'Unlike Posts'")
+		self.unlike_posts_task_stop = True
+		self.button_unlike_posts_task_stop.setEnabled(False)
+	# @@@@@@@@@@@@@@@@@@@@@@@@ SLOTS 
+	# Find Posts
+	def select_find_posts(self):
+		if (self.combo_find_posts.currentText() == "Explore"):
+			if self.username:
+				self.line_find_posts.setText(self.username)
+			else:
+				self.line_find_posts.setText("[At first, add an Instagram account]")
+			self.line_find_posts.setReadOnly(True)
+		elif (self.combo_find_posts.currentText() == "Username"):
+			self.line_find_posts.clear()
+			self.line_find_posts.setReadOnly(False)
+			self.line_find_posts.setPlaceholderText("Add a username (eg, ronaldo)")
+		elif (self.combo_find_posts.currentText() == "Hashtag"):
+			self.line_find_posts.clear()
+			self.line_find_posts.setReadOnly(False)
+			self.line_find_posts.setPlaceholderText("Add a hashtag (eg, #ok)")
+	def find_posts_like_set_reset(self):
+		if self.Button_like.isChecked():
+			self.min_likes.setEnabled(False)
+			self.max_likes.setEnabled(False)
+		else:
+			self.min_likes.setEnabled(True)
+			self.max_likes.setEnabled(True)
+	def find_posts_comment_set_reset(self):
+		if self.Button_comment.isChecked():
+			self.min_comments.setEnabled(False)
+			self.max_comments.setEnabled(False)
+		else:
+			self.min_comments.setEnabled(True)
+			self.max_comments.setEnabled(True)
 	# Post
 	def browse_post_images(self):
 		file_location = QFileDialog.getExistingDirectory(self,caption="Select the target Folder",directory=".")
@@ -2264,38 +2931,38 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			self.line_find_users.setReadOnly(False)
 			self.line_find_users.setPlaceholderText("Add a hashtag (eg, #ok)")
 	# Like/Unlike	
-	def browse_like_posts(self):
-		if (self.combo_like_posts.currentText() == "Like Posts from my List"):
-			self.button_like_posts.show()
-			self.check_like_posts.hide()
-			self.radio_like_posts1.setChecked(True)
-			self.radio_like_posts1.setEnabled(False)
-			self.radio_like_posts2.setEnabled(False)
+	def select_like_posts(self):
+		if (self.combo_like_posts.currentText() == "Like posts from my List"):
+			self.frame_like_post_frequency.hide()
+			self.frame_like_post_user_type.show()
+			self.path_like_posts.clear()
+			self.path_like_posts.setText(os.path.join(self.path_users_directory,self.username,"myList","like.txt"))
 		else:
-			self.button_like_posts.hide()
-			self.check_like_posts.show()
-			self.radio_like_posts2.setChecked(True)
-			self.radio_like_posts1.setEnabled(True)
-			self.radio_like_posts2.setEnabled(True)
-			
-		if (self.combo_like_posts.currentText() == "Like Posts from Hashtags"):
+			self.frame_like_post_frequency.show()
+			self.frame_like_post_user_type.hide()
 			self.path_like_posts.clear()
-			self.path_like_posts.setPlaceholderText("Add a hashtag (eg, #ok)")
-			self.path_like_posts.setReadOnly(False)
-		elif (self.combo_like_posts.currentText() == "Like Posts from User post feeds"):
-			self.path_like_posts.clear()
-			self.path_like_posts.setPlaceholderText("Add a username (eg, ronaldo)")
-			self.path_like_posts.setReadOnly(False)
-		elif (self.combo_like_posts.currentText() == "Like Posts from Explore"):
-			if self.username:
-				self.path_like_posts.setText(self.username)
+			self.path_like_posts.setText(os.path.join(self.path_users_directory,self.username,"etc","users_posts_to_be_liked.txt"))
+	def select_unlike_posts(self):
+		if (self.combo_unlike_posts.currentText() == "Unlike posts form my List"):
+			self.path_unlike_posts.show()
+			self.button_unlike_posts.show()
+			self.frame_unlike_post_user_type.hide()
+			self.check_unlike_post_recently_liked.hide()
+			self.unlike_day_limit.hide()
+		else:
+			self.path_unlike_posts.hide()
+			self.button_unlike_posts.hide()
+			self.frame_unlike_post_user_type.show()
+			if (self.combo_unlike_posts.currentText() == "Unlike my recent likes"):
+				self.check_unlike_post_recently_liked.show()
+				self.unlike_day_limit.show()
 			else:
-				self.path_like_posts.setText("[At first, add an Instagram account]")
-			self.path_like_posts.setReadOnly(True)
-		else:
-			self.path_like_posts.clear()
-			self.path_like_posts.setPlaceholderText("Text(.txt) file location")
-			self.path_like_posts.setReadOnly(False)
+				self.check_unlike_post_recently_liked.hide()
+				self.unlike_day_limit.hide()
+	def browse_like_posts(self):
+		file_location = QFileDialog.getOpenFileName(self,caption="Load Text file",directory=".",filter=".txt file (*.txt)")
+		self.path_like_posts.setText(QDir.toNativeSeparators(file_location[0]))
+		
 	# Follow/Unfollow
 	def select_follow_users(self):
 		if (self.combo_follow_users.currentText() == "Follow users from my List"):
@@ -2314,7 +2981,6 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			self.check_unfollow_users.hide()
 			self.followback_day_limit.hide()
 			self.check_unfollow_users.setChecked(False)
-			
 		if (self.combo_unfollow_users.currentText() == "Unfollow users form my List"):
 			self.path_unfollow_users.show()
 			self.button_unfollow_users.show()
@@ -2353,14 +3019,15 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 	def browse_unfollow_users(self):
 		file_location = QFileDialog.getOpenFileName(self,caption="Load Text file",directory=".",filter=".txt file (*.txt)")
 		self.path_unfollow_users.setText(QDir.toNativeSeparators(file_location[0]))
-		
+	def browse_unfollow_users_whitelist(self):
+		file_location = QFileDialog.getOpenFileName(self,caption="Load Text file",directory=".",filter=".txt file (*.txt)")
+		self.path_unfollow_users_whitelist.setText(QDir.toNativeSeparators(file_location[0]))	
 	# Find Following & Followers
 	def browse_following_followers(self):
 		file_location = QFileDialog.getOpenFileName(self,caption="Load Text or CSV file",directory=".",filter=".txt or .csv file (*.txt *.csv)")
 		self.path_find_following_followers.setText(QDir.toNativeSeparators(file_location[0]))
-	# Account Settings
-	
 		
+	# Account Settings
 	def addAccount(self):
 		_proxy = ""
 		if not self.username: # if no user added previously
@@ -2411,6 +3078,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 				self.line_find_users.setText(self.username)
 				self.line_download_type.setText(self.username)
 				self.line_repost_images.setText(self.username)
+				self.line_find_posts.setText(self.username)
 			else:
 				QMessageBox.warning(self,"Warning!","username & password field can't be empty.")
 		else:
@@ -2441,6 +3109,18 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 		if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myList","unfollow.txt")):
 			with open(os.path.join(self.path_users_directory,self.username,"myList","unfollow.txt"),"w+") as f:
 				f.write("")
+		if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myList","like.txt")):
+			with open(os.path.join(self.path_users_directory,self.username,"myList","like.txt"),"w+") as f:
+				f.write("")
+		if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myList","unlike.txt")):
+			with open(os.path.join(self.path_users_directory,self.username,"myList","unlike.txt"),"w+") as f:
+				f.write("")
+		if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myList","comment.txt")):
+			with open(os.path.join(self.path_users_directory,self.username,"myList","comment.txt"),"w+") as f:
+				f.write("")
+		if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myList","uncomment.txt")):
+			with open(os.path.join(self.path_users_directory,self.username,"myList","uncomment.txt"),"w+") as f:
+				f.write("")
 		if not os.path.exists(os.path.join(self.path_users_directory,self.username,"myStatus")):
 			os.mkdir(os.path.join(self.path_users_directory,self.username,"myStatus"))
 		if not os.path.exists(os.path.join(self.path_users_directory,self.username,"etc")):
@@ -2453,34 +3133,48 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			os.mkdir(os.path.join(self.path_users_directory,self.username,"etc","to be posted"))
 		if not os.path.exists(os.path.join(self.path_users_directory,self.username,"etc","temp")):
 			os.mkdir(os.path.join(self.path_users_directory,self.username,"etc","temp"))
+		if not os.path.exists(os.path.join(self.path_users_directory,self.username,"etc","users_posts_to_be_liked.txt")):
+			with open(os.path.join(self.path_users_directory,self.username,"etc","users_posts_to_be_liked.txt"),"w+") as f:
+				f.write("leomessi,\nshakira,\n")
 	def removeAccount(self):
-		index_list = []
-		user_ids = []
-		for each_select in self.logintable.selectionModel().selectedRows():
-			user_ids.append(each_select.data())
-			index = QPersistentModelIndex(each_select)      
-			index_list.append(index)
-		for index in index_list:
-			self.logintable.removeRow(index.row())
-		self.removeAccountFromFile(user_ids) # remove user details from text file
-		self.username = "" # reset self.username
-		self.path_follow_users.clear() # clear slef.path_follow_users filed
-		self.path_unfollow_users.clear() # clear slef.path_unfollow_users filed
-		self.path_post_images.clear() # clear slef.path_post_images filed
-		self.button_follow_users.setEnabled(False) # browse button disabled
-		self.button_unfollow_users.setEnabled(False) # browse button disabled
-		self.button_post_images.setEnabled(True) 
-		#unset username in lineEdit fields
-		self.path_like_posts.setText("[At first, add an Instagram account]")
-		self.line_find_users.setText("[At first, add an Instagram account]")
-		self.line_download_type.setText("[At first, add an Instagram account]")
-		self.line_repost_images.setText("[At first, add an Instagram account]")
+		if not thread_list:
+			index_list = []
+			user_ids = []
+			for each_select in self.logintable.selectionModel().selectedRows():
+				user_ids.append(each_select.data())
+				index = QPersistentModelIndex(each_select)      
+				index_list.append(index)
+			for index in index_list:
+				self.logintable.removeRow(index.row())
+			self.removeAccountFromFile(user_ids) # remove user details from text file
+			self.username = "" # reset self.username
+			self.path_follow_users.clear() # clear slef.path_follow_users filed
+			self.path_unfollow_users.clear() # clear slef.path_unfollow_users filed
+			self.path_post_images.clear() # clear slef.path_post_images filed
+			self.button_follow_users.setEnabled(False) # browse button disabled
+			self.button_unfollow_users.setEnabled(False) # browse button disabled
+			self.button_post_images.setEnabled(True) 
+			#unset username in lineEdit fields
+			self.path_like_posts.setText("[At first, add an Instagram account]")
+			self.path_unlike_posts.setText("[At first, add an Instagram account]")
+			self.line_find_users.setText("[At first, add an Instagram account]")
+			self.line_download_type.setText("[At first, add an Instagram account]")
+			self.line_repost_images.setText("[At first, add an Instagram account]")
+			self.line_find_posts.setText("[At first, add an Instagram account]")
+		else:
+			QMessageBox.warning(self,"Warning","You can't delete account details, while some tasks are already processing!")
+		
 	def removeAccountFromFile(self,user_ids):
 		for folder_ in os.listdir(self.path_users_directory):
 				if os.path.isdir(os.path.join(self.path_users_directory,folder_)) and folder_ in user_ids:
 					for file_ in os.listdir(os.path.join(self.path_users_directory,folder_)):
+						# deleting username.txt file 
 						if os.path.isfile(os.path.join(self.path_users_directory,folder_,file_)) and file_.endswith(".txt") and os.path.splitext(file_)[0] in user_ids: # splitext() to discard extension
 							os.remove(os.path.join(self.path_users_directory,folder_,file_))
+						# deleting cookie.txt &  cookie(1.0.3).txt file
+						if os.path.isfile(os.path.join(self.path_users_directory,folder_,file_)) and file_.endswith(".txt") and (file_ == "cookie(1.0.3).txt" or file_ == "cookie.txt"):
+							os.remove(os.path.join(self.path_users_directory,folder_,file_))
+				
 				
 		
 	def removeAccount_(self): # deprecated, not working properly
@@ -2490,14 +3184,18 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 			#write_me_log(each_.data())
 			
 	def login_data_changed(self):
-		item = self.logintable.currentItem()
-		try:
-			proxy = item.text()
-			username = self.logintable.item(item.row(),0).text() # <Doc> format item(row,column).text() ;where column -> 0, because username is in column 0
-			self.updateAccountToFile(username,proxy)
-		except:
-			pass
-		
+		if not thread_list:
+			item = self.logintable.currentItem()
+			try:
+				proxy = item.text()
+				username = self.logintable.item(item.row(),0).text() # <Doc> format item(row,column).text() ;where column -> 0, because username is in column 0
+				self.proxy = proxy
+				self.updateAccountToFile(username,proxy)
+			except:
+				pass
+		else:
+			##self.logintable.clearContents()
+			QMessageBox.warning(self,"Warning","You can't change account details, while some tasks are already processing!")
 	def updateAccountToFile(self,username,proxy):
 		for folder_ in os.listdir(self.path_users_directory):
 			if os.path.isdir(os.path.join(self.path_users_directory,folder_)) and folder_ == username:
@@ -2507,10 +3205,13 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 						file_content = open(file_path,"r").read()
 						with open(file_path,"w+") as f:
 							f.write("") # clear previous content (may be not required due to w+ mode)
-							if file_content.split(",")[2].strip() == "" : #in case no proxy was not there
+							if file_content.split(",")[2].strip() == "" : #in case proxy was not there
 								f.write(file_content.replace(file_content.split(",")[2],proxy+"\n")) # update new proxy
 							else:
 								f.write(file_content.replace(file_content.split(",")[2].strip(),proxy)) # update new proxy
+					if os.path.isfile(os.path.join(self.path_users_directory,folder_,file_)) and file_.endswith(".txt") and (file_ == "cookie(1.0.3).txt" or file_ == "cookie.txt"):
+						os.remove(os.path.join(self.path_users_directory,folder_,file_))
+						
 	def enable_multi_account(self):
 		if thread_list.__len__():
 			QMessageBox.warning(self,"Warning","Currently App is processing some task.\n To enable this feature, either wait for completion of the task or Restart the App")	
@@ -2620,24 +3321,43 @@ class MyThread(Thread):
 						if each.name == "find_suitable_users":
 							dialog.button_find_users_task.setEnabled(True)
 							dialog.button_find_users_task.setText("Add Job to the Queue")
+							dialog.button_find_users_task_stop.hide()
 						elif each.name == "follow_user":
 							dialog.button_follow_task.setEnabled(True)
 							dialog.button_follow_task.setText("Add Job to the Queue")
+							dialog.button_follow_task_stop.hide()
 						elif each.name == "unfollow_user":
 							dialog.button_unfollow_task.setEnabled(True)
 							dialog.button_unfollow_task.setText("Add Job to the Queue")
+							dialog.button_unfollow_task_stop.hide()
 						elif each.name == "find_following_followers":
 							dialog.button_find_following_followers_task.setEnabled(True)
 							dialog.button_find_following_followers_task.setText("Add Job to the Queue")
+							dialog.button_find_following_followers_task_stop.hide()
 						elif each.name == "downloading_posts":
 							dialog.button_download_post_task.setEnabled(True)
 							dialog.button_download_post_task.setText("Add Job to the Queue")
+							dialog.button_download_post_task_stop.hide()
 						elif each.name == "posting":
 							dialog.button_post_task.setEnabled(True)
 							dialog.button_post_task.setText("Add Job to the Queue")
+							dialog.button_post_task_stop.hide()
 						elif each.name == "reposting":
 							dialog.button_repost_task.setEnabled(True)
 							dialog.button_repost_task.setText("Add Job to the Queue")
+							dialog.button_repost_task_stop.hide()
+						elif each.name == "find_suitable_posts":
+							dialog.button_find_posts_task.setEnabled(True)
+							dialog.button_find_posts_task.setText("Add Job to the Queue")
+							dialog.button_find_posts_task_stop.hide()
+						elif each.name == "like_post":
+							dialog.button_like_posts_task.setEnabled(True)
+							dialog.button_like_posts_task.setText("Add Job to the Queue")
+							dialog.button_like_posts_task_stop.hide()
+						elif each.name == "unlike_post":
+							dialog.button_unlike_posts_task.setEnabled(True)
+							dialog.button_unlike_posts_task.setText("Add Job to the Queue")
+							dialog.button_unlike_posts_task_stop.hide()
 					c+=1
 			if not queue.empty():
 				item = queue.get()
@@ -2658,24 +3378,53 @@ class MyThread(Thread):
 			if thread_list[len(thread_list)-1].name == "find_suitable_users":
 				_instance.button_find_users_task.setEnabled(False)
 				_instance.button_find_users_task.setText("Job is processing")
+				_instance.button_find_users_task_stop.show()
+				_instance.button_find_users_task_stop.setEnabled(True)
 			elif thread_list[len(thread_list)-1].name == "follow_user":
 				_instance.button_follow_task.setEnabled(False)
 				_instance.button_follow_task.setText("Job is processing")
+				_instance.button_follow_task_stop.show()
+				_instance.button_follow_task_stop.setEnabled(True)
 			elif thread_list[len(thread_list)-1].name == "unfollow_user":
 				_instance.button_unfollow_task.setEnabled(False)
 				_instance.button_unfollow_task.setText("Job is processing")
+				_instance.button_unfollow_task_stop.show()
+				_instance.button_unfollow_task_stop.setEnabled(True)
 			elif thread_list[len(thread_list)-1].name == "find_following_followers":
 				_instance.button_find_following_followers_task.setEnabled(False)
 				_instance.button_find_following_followers_task.setText("Job is processing")
+				##_instance.button_find_following_followers_task_stop.show() # disabled
+				_instance.button_find_following_followers_task_stop.setEnabled(True)
 			elif thread_list[len(thread_list)-1].name == "downloading_posts":
 				_instance.button_download_post_task.setEnabled(False)
 				_instance.button_download_post_task.setText("Job is processing")
+				_instance.button_download_post_task_stop.show()
+				_instance.button_download_post_task_stop.setEnabled(True)
 			elif thread_list[len(thread_list)-1].name == "posting":
 				_instance.button_post_task.setEnabled(False)
 				_instance.button_post_task.setText("Job is processing")
+				_instance.button_post_task_stop.show()
+				_instance.button_post_task_stop.setEnabled(True)
 			elif thread_list[len(thread_list)-1].name == "reposting":
 				_instance.button_repost_task.setEnabled(False)
 				_instance.button_repost_task.setText("Job is processing")
+				_instance.button_repost_task_stop.show()
+				_instance.button_repost_task_stop.setEnabled(True)
+			if thread_list[len(thread_list)-1].name == "find_suitable_posts":
+				_instance.button_find_posts_task.setEnabled(False)
+				_instance.button_find_posts_task.setText("Job is processing")
+				_instance.button_find_posts_task_stop.show()
+				_instance.button_find_posts_task_stop.setEnabled(True)
+			if thread_list[len(thread_list)-1].name == "like_post":
+				_instance.button_like_posts_task.setEnabled(False)
+				_instance.button_like_posts_task.setText("Job is processing")
+				_instance.button_like_posts_task_stop.show()
+				_instance.button_like_posts_task_stop.setEnabled(True)
+			if thread_list[len(thread_list)-1].name == "unlike_post":
+				_instance.button_unlike_posts_task.setEnabled(False)
+				_instance.button_unlike_posts_task.setText("Job is processing")
+				_instance.button_unlike_posts_task_stop.show()
+				_instance.button_unlike_posts_task_stop.setEnabled(True)
 class MyGuiThreadTwo(QThread):
 	##global gui_queue,dialog
 	def __init__(self,name):
@@ -2797,34 +3546,3 @@ if __name__=='__main__':
 	splash.finish(dialog)
 	
 	sys.exit(app.exec_())
-
-########### D E B U G ################
-
-#login
-#non_gui_main_thread = InstagramBot()
-#if not non_gui_main_thread.successful_login:
-#	non_gui_main_thread.login()
-
-'''
->>> from PySide.QtCore import *
->>> import sys
->>> from PySide.QtGui import *
->>> mw=QMainWindow()
->>> cw=QWidget(mw)
->>> listwidget = QListWidget(cw)
->>> item = QListWidgetItem(listwidget)
->>> item.setSelected(True)
->>> tabWidget = QTabWidget(cw)
->>> tab = QWidget()
->>> tabWidget.addTab(tab, "")
-0
->>> tab_2 = QWidget()
->>> tabWidget.addTab(tab_2,"")
-1
->>> item.isSelected()
-True
-tabWidget.currentIndex()
-1
->>> tabWidget.currentChanged
-<PySide.QtCore.SignalInstance object at 0x0341AF50>
-'''

@@ -1440,7 +1440,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 							write_me_log("Daily {} limit({}) reached".format(counter_type,daily_follow_or_unfollow_limit))
 							today = int(datetime.datetime.utcnow().strftime("%d"))
 							tomorrow = today + 1
-							while today != tomorrow:
+							while today != tomorrow and ((follow and not self.follow_users_task_stop) or (not follow and not self.unfollow_users_task_stop)):
 								write_me_log("Sleeping on {} for {}".format(self.follow_unfollow_list.__name__,counter_type))  # for DEBUG purpose
 								time.sleep(5*60) # recheck in every 5 mins
 								today = int(datetime.datetime.utcnow().strftime("%d"))
@@ -1645,7 +1645,7 @@ class InstagramBot(QMainWindow,InstagramBot_ui.Ui_InstagramBot):
 						write_me_log("Daily {} limit({}) reached".format(counter_type,daily_like_or_unlike_limit))
 						today = int(datetime.datetime.utcnow().strftime("%d"))
 						tomorrow = today + 1
-						while today != tomorrow:
+						while today != tomorrow and ((like and not self.like_posts_task_stop) or (not like and not self.unlike_posts_task_stop)):
 							write_me_log("Sleeping on {} for {}".format(self.like_unlike_post.__name__,counter_type))  # for DEBUG purpose
 							time.sleep(5*60) # recheck in every 5 mins
 							today = int(datetime.datetime.utcnow().strftime("%d"))
@@ -3546,3 +3546,34 @@ if __name__=='__main__':
 	splash.finish(dialog)
 	
 	sys.exit(app.exec_())
+
+########### D E B U G ################
+
+#login
+#non_gui_main_thread = InstagramBot()
+#if not non_gui_main_thread.successful_login:
+#	non_gui_main_thread.login()
+
+'''
+>>> from PySide.QtCore import *
+>>> import sys
+>>> from PySide.QtGui import *
+>>> mw=QMainWindow()
+>>> cw=QWidget(mw)
+>>> listwidget = QListWidget(cw)
+>>> item = QListWidgetItem(listwidget)
+>>> item.setSelected(True)
+>>> tabWidget = QTabWidget(cw)
+>>> tab = QWidget()
+>>> tabWidget.addTab(tab, "")
+0
+>>> tab_2 = QWidget()
+>>> tabWidget.addTab(tab_2,"")
+1
+>>> item.isSelected()
+True
+tabWidget.currentIndex()
+1
+>>> tabWidget.currentChanged
+<PySide.QtCore.SignalInstance object at 0x0341AF50>
+'''

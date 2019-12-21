@@ -21,9 +21,9 @@ Dependent Python modules:
 License:
 	CC/Open-source/Free
 Version:
-	1.0.4
+	1.0.41
 Release Date:
-	5-Dec-2019
+	21-Dec-2019
 '''	
 
 ########### Python Modules/Packages
@@ -72,7 +72,7 @@ import InstagramBot_ui
 
 gui_queue = Queue()
 os_user_directory = os.path.expanduser("~")
-app_version = "1.0.4"
+app_version = "1.0.41"
 directory_chnaged = False
 documents = "Documents"
 

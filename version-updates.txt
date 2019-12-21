@@ -35,3 +35,7 @@ Features Updated for-
 4)For Reposting feature, Default Post age changed to 'Todays' from 'Future' under Advanced Options
 5)Auto save & load default Header, #Hashtag and @mentions for Posting & Reposting Feature
 --------------------
+MediaBOTS.net - version 1.0.41 - (21 December 2019)
+Bug Fixed for
+Failed to execute the script error
+--------------------

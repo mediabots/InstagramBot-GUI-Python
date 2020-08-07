@@ -1,5 +1,5 @@
 requests
-https://ia800903.us.archive.org/25/items/WS2012R2/WS2012R2.ISO
+https://ia601402.us.archive.org/16/items/py-side-1.2.4-cp-35-cp-35m-win-32/PySide-1.2.4-cp35-cp35m-win32.whl
 PyInstaller==3.5
 Pillow
 emojis==0.4.0
